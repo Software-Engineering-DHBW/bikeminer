@@ -3,7 +3,7 @@ This repository is for the advanced software engineering lecture 2022 at DHBW-Ma
 
 ## Getting Started
 1. AndroidStudio herunterladen und installieren
-2. Repository klonen "<https://github.com/Software-Engineering-DHBW/BonoboBoard.git>"
+2. Repository klonen "<https://github.com/Software-Engineering-DHBW/bikeminer.git>"
 3. Geklonten Ordner als Projekt in AndroidStudio öffnen
 4. Android Smartphone an Rechner anschließen (oder Virtuelles Gerät im Device Manager erstellen)
     - **Achtung:** Gerät muss Google Play fähig sein
