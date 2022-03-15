@@ -1,4 +1,4 @@
-# flutter_application_1
+# bikeminer
 
 A new Flutter project.
 

@@ -1,11 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.flutter_application_1">
-
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-
+    package="com.example.bikeminer">
    <application
-        android:label="BikeMiner"
+        android:label="bikeminer"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -34,7 +30,5 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-        <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyBHAYaXX5iTqyrMpVeGI40JeUTTq7xBN5c"/>
     </application>
 </manifest>
