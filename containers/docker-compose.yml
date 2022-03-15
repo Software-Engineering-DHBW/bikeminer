@@ -1,10 +1,16 @@
+#version: '2'
 version: '3.3'
+
   #volumes:
   # nextcloud:
   #nextcloud-db:
+
 services:
 
   bikedb:
+    build:
+      context: .
+      dockerfile: dev.dockerfile
     image: mariadb:10.5
     restart: always
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
@@ -19,6 +25,6 @@ services:
       - default
     ports:
       - 8080:3306
-        # first hostport then containerport
+        # first hostport then 3306
 
 
