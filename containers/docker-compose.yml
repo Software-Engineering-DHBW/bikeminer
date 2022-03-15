@@ -1,0 +1,24 @@
+version: '3.3'
+  #volumes:
+  # nextcloud:
+  #nextcloud-db:
+services:
+
+  bikedb:
+    image: mariadb:10.5
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    volumes:
+      - ./db/:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=akhd2010root#
+      - MYSQL_PASSWORD=bikeminerdb
+      - MYSQL_DATABASE=bikeminer
+      - MYSQL_USER=profi
+    networks:
+      - default
+    ports:
+      - 8080:3306
+        # first hostport then containerport
+
+
