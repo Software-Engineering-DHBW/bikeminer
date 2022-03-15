@@ -1,11 +1,16 @@
-# Bikeminer
-This repository is for the advanced software engineering lecture 2022 at DHBW-Mannheim
+# flutter_application_1
+
+A new Flutter project.
 
 ## Getting Started
-1. AndroidStudio herunterladen und installieren
-2. Repository klonen "<https://github.com/Software-Engineering-DHBW/bikeminer.git>"
-3. Geklonten Ordner als Projekt in AndroidStudio öffnen
-4. Android Smartphone an Rechner anschließen (oder Virtuelles Gerät im Device Manager erstellen)
-    - **Achtung:** Gerät muss Google Play fähig sein
-    - Alte Geräte müssen ggf. zunächst ein Google Services Update durchführen    
-5. MapsActivity.java Datei ausführen bzw. "Run App" Button klicken 
+
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+
+For help getting started with Flutter, view our
+[online documentation](https://flutter.dev/docs), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
