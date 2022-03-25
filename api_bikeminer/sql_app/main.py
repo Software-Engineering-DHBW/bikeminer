@@ -9,18 +9,21 @@ import json
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 from fastapi.responses import StreamingResponse
+from jose import JWTError, jwt
 
+# needed for create_access_token()
+SECRET_KEY = "55e52afbc03148bafc1c6f430c40041548ece633da626d5126738888239afe10"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-#work on this
 
 # needed for pw hashing
-"""
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 models.Base.metadata.create_all(bind=engine)
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-f = open("tags_meta.conf", "r")
-tags_metadata = json.loads(f.read())
-"""
+#f = open("tags_meta.conf", "r")
+#tags_metadata = json.loads(f.read())
+
 
 
 #start api
@@ -39,8 +42,57 @@ def get_db():
     finally:
         db.close()
 
+# Authentication:
+# this function needs attention hash cannnot verified  , kopple das zusamen mit create_user
+# um hashed passwords in der db zu speichern
+def verify_password(plain_password, hashed_password):
+    return pwd_context.verify(plain_password, hashed_password)
 
-@app.post("/users/", response_model=schemas.User)
+
+def get_password_hash(password):
+    return pwd_context.hash(password)
+
+
+def authenticate_user(username: str, password: str, db):
+    user = crud.get_user_byname(db, username)
+    if not user:
+        return False
+    if not verify_password(password, user.password):
+        return False
+    return user
+
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None, client_token: bool = False):
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes=15)
+    to_encode.update({"exp": expire})
+
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+@app.post("/token", response_model=schemas.Token, tags=['users'])
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    user = authenticate_user(form_data.username, form_data.password, db)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+
+    # !!! -- attention  -- user.name not know , should be user.userName or something like this
+    access_token = create_access_token(
+        data={"sub": user.name}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token, "token_type": "bearer"}
+
+
+## create_user muss angepasst werden damit hashed passwords in der db stehen
+
+@app.post("/users/create", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
     if db_user:
@@ -48,7 +100,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return crud.create_user(db=db, user=user)
 
 
-@app.get("/users/", response_model=list[schemas.User])
+@app.get("/users/all", response_model=list[schemas.User])
 def read_users(db: Session = Depends(get_db)):
     users = crud.get_users(db)
     return users
@@ -76,73 +128,3 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
 
 
 
-
-
-
-
-##### kkkkk kk kkkk kk kk------------------------------
-
-# Authentication:
-#def verify_password(plain_password, hashed_password):
-#    return pwd_context.verify(plain_password, hashed_password)
-
-
-#def get_password_hash(password):
-#    return pwd_context.hash(password)
-
-
-#def authenticate_user(username: str, password: str, db):
-#    user = crud.get_user_byname(db, username)
-#    if not user:
-#        return False
-#    if not verify_password(password, user.password):
-#        return False
-#    return user
-
-
-
-
-# API Routes:
-#@app.post("/token", response_model=schema.Token, tags=['users'])
-#async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-#    user = authenticate_user(form_data.username, form_data.password, db)
-#    if not user:
-#        raise HTTPException(
-#            status_code=status.HTTP_401_UNAUTHORIZED,
-#            detail="Incorrect username or password",
-#            headers={"WWW-Authenticate": "Bearer"},
-#        )
-#    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-#    access_token = create_access_token(
-#        data={"sub": user.name}, expires_delta=access_token_expires
-#    )
-#    return {"access_token": access_token, "token_type": "bearer"}
-
-
-#@app.post("/token/{project_accesskey}", response_model=schema.Token, tags=['project'])
-#def login_for_access_token(project_accesskey: str, db: Session = Depends(get_db)):
-#    project = crud.get_projects_byaccesskey(db, project_accesskey)
-#    if not project:
-#        raise HTTPException(
-#            status_code=status.HTTP_401_UNAUTHORIZED,
-#            detail="Incorrect Project access key",
-#            headers={"WWW-Authenticate": "Bearer"},
-#        )
-#    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-#    access_token = create_access_token(
-#        data={"sub": project_accesskey}, expires_delta=access_token_expires, client_token=True
-#    )
-#    return {"access_token": access_token, "token_type": "bearer"}
-
-
-#@app.get("/users/me/", response_model=schema.UserBase, tags=['users'])
-#async def read_users_me(current_user: schema.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-#    user = await get_current_user(db=db, token=current_user)
-#    if not current_user:
-#        raise HTTPException(
-#            status_code=status.HTTP_401_UNAUTHORIZED,
-#            detail="Incorrect username or password",
-#            headers={"WWW-Authenticate": "Bearer"},
-#        )
-#    return schema.UserBase(id=user.id, name=user.name, role=user.role,
- #                          password=user.password)

@@ -41,6 +41,15 @@ class History(HistoryBase):
         orm_mode = True
 
 
+## for authentication
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    username: Optional[str] = None
+    project: Optional[str] = None
 
 
 

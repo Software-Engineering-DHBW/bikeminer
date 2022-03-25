@@ -37,6 +37,9 @@ def get_users(db: Session):
 def get_user_byid(db: Session, user_id: int):
     return db.query(models.Users).filter(models.Users.id == user_id).first()
 
+def get_user_byname(db: Session, user_name: str):
+    return db.query(models.Users).filter(models.Users.userName == user_name).first()
+
 def create_user(db: Session, user: schemas.UserCreate):
     fake_hashed_password = user.password
     db_user = models.Users(email=user.email, password=fake_hashed_password, userName=user.userName, coins=user.coins)
