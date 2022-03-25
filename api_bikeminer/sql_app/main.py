@@ -14,12 +14,13 @@ from fastapi.responses import StreamingResponse
 #work on this
 
 # needed for pw hashing
+"""
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 models.Base.metadata.create_all(bind=engine)
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 f = open("tags_meta.conf", "r")
 tags_metadata = json.loads(f.read())
-
+"""
 
 
 #start api

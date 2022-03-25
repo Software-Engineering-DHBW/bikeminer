@@ -9,8 +9,8 @@ from fastapi.responses import FileResponse
 class UserBase(BaseModel):
     userName: str
     email: str
-    userID: int
     coins: float
+
 class UserCreate(UserBase):
     userName: str
     password: str
