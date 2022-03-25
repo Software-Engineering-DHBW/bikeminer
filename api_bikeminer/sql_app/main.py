@@ -5,9 +5,21 @@ from fastapi import Depends, FastAPI, HTTPException, status, Request, File, Uplo
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from .database import SessionLocal, engine
 from . import crud, models, schemas
-
+import json
 from sqlalchemy.orm import Session
+from passlib.context import CryptContext
 from fastapi.responses import StreamingResponse
+
+
+#work on this
+
+# needed for pw hashing
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+models.Base.metadata.create_all(bind=engine)
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+f = open("tags_meta.conf", "r")
+tags_metadata = json.loads(f.read())
+
 
 
 #start api
@@ -51,13 +63,6 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
 
 
 
-
-#@app.get("/users/{user_id}", response_model=schemas.User)
-#def read_user(user_id: int, db: Session = Depends(get_db)):
-#    db_user = crud.get_user(db, user_id=user_id)
-#    if db_user is None:
-#        raise HTTPException(status_code=404, detail="User not found")
-#    return db_user
 
 
 #@app.post("/users/{user_id}/History/", response_model=schemas.History)
