@@ -19,9 +19,12 @@ from sqlalchemy.orm import Session
 
 
 
-
+# This function might not be used much
 def get_user(db: Session, user_id: int):
     return db.query(models.Users).filter(models.Users.userID == user_id).first()
+
+def get_user_by_name(db: Session, user_name: str):
+    return db.query(models.Users).filter(models.Users.userName == user_name).first()
 
 def get_user_by_email(db: Session, email: str):
     return db.query(models.Users).filter(models.Users.email == email).first()
@@ -47,6 +50,20 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.commit()
     db.refresh(db_user)
     return db_user
+
+def get_history_by_user_name(db: Session, user_name: str):
+    # db.query
+    pass
+
+    """
+    
+select h.recievedCoins, h.distanceTraveled, h.dateTime
+from History as h
+left join Users as u
+on h.userID = u.userID
+where u.userName = 'testUser';
+    """
+    pass
 
 ### create user
 #def create_user(db: Session, user: schemas.UserCreate):

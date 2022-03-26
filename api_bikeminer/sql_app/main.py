@@ -72,7 +72,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None, c
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-@app.post("/token", response_model=schemas.Token, tags=['users'])
+@app.post("/authenticate", response_model=schemas.Token, tags=['users'])
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = authenticate_user(form_data.username, form_data.password, db)
     if not user:
@@ -85,16 +85,19 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 
     # !!! -- attention  -- user.name not know , should be user.userName or something like this
     access_token = create_access_token(
-        data={"sub": user.name}, expires_delta=access_token_expires
+        data={"sub": user.userName}, expires_delta=access_token_expires
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-## create_user muss angepasst werden damit hashed passwords in der db stehen
-
 @app.post("/users/create", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
+
+    # Hash password and write it into the user
+    hashed_pwd = pwd_context.hash(user.password)
+    user.password = hashed_pwd
+
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     return crud.create_user(db=db, user=user)
@@ -102,6 +105,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 @app.get("/users/all", response_model=list[schemas.User])
 def read_users(db: Session = Depends(get_db)):
+    print("in query all users")
     users = crud.get_users(db)
     return users
 
@@ -112,6 +116,15 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
+
+
+# Get history for a user TODO
+@app.get("/history/{user_name}", response_model=schemas.History)
+def get_history(user_name: str, db: Session = Depends(get_db)):
+    db_user = crud.get_user_by_name(db, user_name=user_name)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    
 
 
 
