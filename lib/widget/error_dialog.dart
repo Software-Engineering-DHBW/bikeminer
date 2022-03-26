@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
 /// error dialog
-// ignore: unused_element
 Future<void> showMyDialog(
     BuildContext context, String title, String text, String text2) {
   return showDialog(
     context: context,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
+    barrierDismissible: true,
+    builder: (BuildContext allertcontext) {
       return AlertDialog(
         title: Text(title),
         content: SingleChildScrollView(
@@ -18,14 +17,6 @@ Future<void> showMyDialog(
             ],
           ),
         ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('OK'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
       );
     },
   );

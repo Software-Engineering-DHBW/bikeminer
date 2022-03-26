@@ -1,3 +1,4 @@
+import 'package:bikeminer/backend/api_connector.dart';
 import 'package:bikeminer/main.dart';
 import 'package:flutter/material.dart';
 import 'package:bikeminer/pages/map.dart';
@@ -13,6 +14,7 @@ const String registrationPage = 'regist';
 const String mapPage = 'map';
 const String walletPage = 'wallet';
 StorageAdapter _sa = StorageAdapter();
+APIConnector _api = APIConnector();
 
 // controller function with switch statement to control page route flow
 Route<dynamic> controller(RouteSettings settings) {

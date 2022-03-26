@@ -58,15 +58,7 @@ class _LoadingPageState extends State<LoadingPage> {
             alignment: Alignment.bottomCenter,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment: CrossAxisAlignment.center,
               children: const [
-                // Image.asset(
-                //   "assets/bikeminer_icon.png",
-                //   width: 240,
-                // ),
-                // const SizedBox(
-                //   height: 20,
-                // ),
                 Text(
                   "BikeMiner",
                   style: TextStyle(

@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:typed_data';
-
 import 'package:bikeminer/backend/storage_adapter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bikeminer/widget/navigation_drawer_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:flutter_background/flutter_background.dart';
+import '../widget/error_dialog.dart';
 
 class Map extends StatefulWidget {
   final StorageAdapter _sa;
@@ -31,6 +32,21 @@ class _MapState extends State<Map> {
   double zoomlevel = 10.0;
   bool follow = false;
   bool riding = false;
+  late BuildContext _mapcontext;
+
+  // bool _serviceEnabled = false;
+  // late PermissionStatus _permissionGranted;
+
+  bool backgroundenabled = false;
+  bool backgroundpermission = false;
+  bool backgroundinit = false;
+  final androidConfig = const FlutterBackgroundAndroidConfig(
+    notificationTitle: "BikeMiner",
+    notificationText: "BikeMiner is recording your Route!",
+    notificationImportance: AndroidNotificationImportance.Default,
+    notificationIcon:
+        AndroidResource(name: 'background_icon', defType: 'drawable'),
+  );
 
   /// first CameraPosition
   ///
@@ -48,6 +64,9 @@ class _MapState extends State<Map> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      _mapcontext = context;
+    });
     return Scaffold(
       drawer: NavigationDrawerWidget(context, () => logout()),
       appBar: AppBar(
@@ -143,13 +162,116 @@ class _MapState extends State<Map> {
     );
   }
 
+  /// initialize FlutterBackground
+  ///
+  /// ask the user to run the app in the background
+  Future<void> initializeBackground() async {
+    if (!backgroundpermission) {
+      bool initializebool =
+          await FlutterBackground.initialize(androidConfig: androidConfig);
+      setState(() {
+        backgroundinit = initializebool;
+        backgroundpermission = initializebool;
+      });
+    }
+    enableBackgroundMode();
+  }
+
+  /// enable BackgoundMode
+  ///
+  /// if the user allow by usage the settings are opened for selecting alows always
+  /// for the backgroundusage
+  Future<bool> enableBackgroundMode() async {
+    bool _bgModeEnabled = await _locationTracker.isBackgroundModeEnabled();
+    if (_bgModeEnabled) {
+      return true;
+    } else {
+      try {
+        await _locationTracker.enableBackgroundMode();
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+      try {
+        _bgModeEnabled = await _locationTracker.enableBackgroundMode();
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+      debugPrint("$_bgModeEnabled"); //True!
+      return _bgModeEnabled;
+    }
+  }
+
+  /// check if the app has the permission to run in the background
+  // void permissionBackground() {
+  //   FlutterBackground.hasPermissions.then((value) {
+  //     setState(() {
+  //       backgroundpermission = value;
+  //     });
+  //     debugPrint("BackgroundPermission id: $value!");
+  //   }).catchError((error) {
+  //     setState(() {
+  //       backgroundpermission = false;
+  //     });
+  //     debugPrint("Get BackgroundPermission failed!");
+  //   });
+  // }
+
   /// set the current zoom level
   Future<void> setzoomlevel() async {
     zoomlevel = await _controller.getZoomLevel();
   }
 
+  // /// Permission Location
+  // bool getLocationPermission() {
+  //   try {
+  //     _locationTracker.serviceEnabled().then((value) {
+  //       _serviceEnabled = value;
+
+  //       if (!_serviceEnabled) {
+  //         _locationTracker.requestService().then((value) {
+  //           _serviceEnabled = value;
+  //           if (!_serviceEnabled) return false;
+  //         });
+  //       }
+  //     });
+  //     _locationTracker.hasPermission().then((value) {
+  //       _permissionGranted = value;
+
+  //       if (_permissionGranted == PermissionStatus.denied) {
+  //         _locationTracker.requestPermission().then((value) {
+  //           setState(() {
+  //             _permissionGranted = value;
+  //           });
+  //         });
+  //         if (_permissionGranted != PermissionStatus.granted) {
+  //           showMyDialog(
+  //               context,
+  //               "Permission ERROR",
+  //               "Die App besitzt momentan nicht die Berechtigungen die sie benötigt!",
+  //               "Damit Sie den vollen Funktionsumfang der App nutzen können, erlauben sie der App in den Einstellungen unter Settings > Apps & notifications Zugriff auf ihre Standortdaten!");
+
+  //           return false;
+  //         } else {
+  //           return true;
+  //         }
+  //       }
+  //     });
+  //   } catch (err) {
+  //     showMyDialog(
+  //         context,
+  //         "ERROR",
+  //         "Ein Fehler bei der Abfrage der Berechtigung ist aufgetreten!",
+  //         "$err");
+  //   }
+
+  //   return false;
+  // }
+
   /// subscripe the location data and set the
   void getCurrentLocation() async {
+    setState(() {
+      follow = true;
+    });
     try {
       Uint8List imageData = await getMarker();
       var location = await _locationTracker.getLocation();
@@ -176,7 +298,41 @@ class _MapState extends State<Map> {
           }
           updatePosition(newLocalData, imageData);
           if (riding) {
-            startRiding(newLocalData);
+            if (!backgroundpermission) {
+              riding = false;
+              await initializeBackground();
+              if (!backgroundpermission) {
+                setState(() {
+                  riding = false;
+                });
+                showMyDialog(
+                    _mapcontext,
+                    "Permission Warning",
+                    "The App needs the Permission to run in Background for recording your route!",
+                    "You can change the Permission from Settings > Apps & notifications!");
+              }
+            }
+            if (backgroundpermission) {
+              riding = true;
+              if (!backgroundenabled) {
+                FlutterBackground.enableBackgroundExecution().then((value) {
+                  setState(() {
+                    backgroundenabled = value;
+                  });
+                });
+              }
+              // debugPrint(
+              //     "BackgroundExecution is: ${FlutterBackground.isBackgroundExecutionEnabled}");
+              startRiding(newLocalData);
+            }
+          } else if (backgroundenabled) {
+            debugPrint("disable background!");
+            _locationTracker.enableBackgroundMode(enable: false);
+            FlutterBackground.disableBackgroundExecution().then((value) {
+              setState(() {
+                backgroundenabled = !value;
+              });
+            });
           }
         }
       });
@@ -205,8 +361,9 @@ class _MapState extends State<Map> {
 
   /// for start the intervall gps location upload to the server
   void startRiding(LocationData newLocalData) {
+    int timestamp = DateTime.now().millisecondsSinceEpoch;
     debugPrint(
-        "Lat: ${newLocalData.latitude}, Long: ${newLocalData.longitude}");
+        "Timestamp: $timestamp, Lat: ${newLocalData.latitude}, Long: ${newLocalData.longitude}");
   }
 
   /// for updating the positionmarker on the map

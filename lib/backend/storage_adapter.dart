@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-/// Class to Controll the Flutter Storage
+/// Class to Controll the Flutter Secure Storage
+///
+/// Class to store data in sharedPreferences
+/// which encrypt keys and values
+/// It handles AES encryption to generate a secret key encrypted with RSA and stored in KeyStore.
 class StorageAdapter {
   /// Definition of the Storage and the AccountNameController
   final _storage = const FlutterSecureStorage();
