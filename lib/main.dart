@@ -1,38 +1,92 @@
+import 'package:bikeminer/backend/storage_adapter.dart';
 import 'package:flutter/material.dart';
 import 'package:bikeminer/route.dart' as route;
-// import 'package:flutter_application_1/pages/loginscreen.dart';
-// import 'package:flutter_application_1/pages/test_gps_page.dart';
-// import 'package:flutter_application_1/pages/map.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
+/// SplashScreen
+class LoadingPage extends StatefulWidget {
+  final StorageAdapter _sa;
+  const LoadingPage(this._sa, {Key? key}) : super(key: key);
 
-//   /// This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//         title: 'BikeMiner',
-//         theme: ThemeData(
-//           // This is the theme of your application.
-//           //
-//           // Try running your application with "flutter run". You'll see the
-//           // application has a blue toolbar. Then, without quitting the app, try
-//           // changing the primarySwatch below to Colors.green and then invoke
-//           // "hot reload" (press "r" in the console where you ran "flutter run",
-//           // or simply save your changes to "hot reload" in a Flutter IDE).
-//           // Notice that the counter didn't reset back to zero; the application
-//           // is not restarted.
-//           primarySwatch: Colors.green,
-//         ),
-//         home:
-//             const LoginPage() //const Map(title: 'BikeMiner'), // const MyHomePage(title: 'BikeMiner'), //
-//         );
-//   }
-// }
+  @override
+  State<LoadingPage> createState() => _LoadingPageState();
+}
+
+class _LoadingPageState extends State<LoadingPage> {
+  // final StorageAdapter _sa = StorageAdapter();
+  late String? _password;
+  late BuildContext _context;
+
+  @override
+  void initState() {
+    widget._sa.readAll().then((ready) {
+      var username = widget._sa.getElementwithkey("Username");
+      if (username == "") {
+        Navigator.pop(_context);
+        Navigator.pushNamed(_context, route.loginPage);
+      } else {
+        var password = widget._sa.getElementwithkey("Password");
+        debugPrint("Logindata are available in Storage!");
+        debugPrint("Try to Login!");
+
+        try {
+          // TODO: LOGIN to API
+          debugPrint("Loged in!");
+        } catch (e) {
+          debugPrint("Login failed!");
+          widget._sa.deleteAll();
+          Navigator.pop(_context);
+          Navigator.pushNamed(_context, route.loginPage);
+        }
+      }
+    }).timeout(const Duration(seconds: 3));
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _context = context;
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Colors.green,
+        body: SafeArea(
+          child: Container(
+            alignment: Alignment.bottomCenter,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              children: const [
+                // Image.asset(
+                //   "assets/bikeminer_icon.png",
+                //   width: 240,
+                // ),
+                // const SizedBox(
+                //   height: 20,
+                // ),
+                Text(
+                  "BikeMiner",
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                CircularProgressIndicator(),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -75,7 +129,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       onGenerateRoute: route.controller,
-      initialRoute: route.loginPage,
+      initialRoute: route.loadingPage,
     );
     // home: const LoginPage());
   }

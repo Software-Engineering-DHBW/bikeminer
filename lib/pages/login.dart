@@ -1,9 +1,11 @@
+import 'package:bikeminer/backend/storage_adapter.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:bikeminer/route.dart' as route;
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final StorageAdapter _sa;
+  const LoginPage(this._sa, {Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -12,6 +14,17 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _hidePassword = true;
   bool _remember = false;
+  final TextEditingController _passController = TextEditingController();
+  final _passKey = GlobalKey<FormState>();
+  final _userKey = GlobalKey<FormState>();
+  final TextEditingController _userController = TextEditingController();
+
+  @override
+  void dispose() {
+    _userController.dispose();
+    _passController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,24 +51,27 @@ class _LoginPageState extends State<LoginPage> {
                           blurRadius: 20),
                     ],
                   ),
-                  child: Form(
-                    child: Column(
-                      children: <Widget>[
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Text(
-                          "Login",
-                          style: Theme.of(context).textTheme.headline2,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
-                          keyboardType: TextInputType.text,
+                  child: Column(
+                    children: <Widget>[
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      Text(
+                        "Login",
+                        style: Theme.of(context).textTheme.headline2,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+
+                      Form(
+                        key: _userKey,
+                        child: TextFormField(
+                          controller: _userController,
+                          // keyboardType: TextInputType.text,
                           // onSaved: ,
                           validator: (input) => input!.length < 8
-                              ? "Username should be longer than 8 characters"
+                              ? "Password should be longer than 8 characters"
                               : null,
                           decoration: InputDecoration(
                             hintText: "Username",
@@ -77,13 +93,17 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
 
-                        // Passwordfield
-                        TextFormField(
-                          keyboardType: TextInputType.text,
+                      // Passwordfield
+                      Form(
+                        key: _passKey,
+                        child: TextFormField(
+                          controller: _passController,
+                          // keyboardType: TextInputType.text,
                           // onSaved: ,
                           validator: (input) => input!.length < 8
                               ? "Password should be longer than 8 characters"
@@ -123,74 +143,88 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
+                      ),
 
-                        // Remember Checkbutton
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Checkbox(
-                              onChanged: (value) {
-                                setState(
-                                  () {
-                                    _remember = value!;
-                                  },
-                                );
-                              },
-                              value: _remember,
-                            ),
-                            const Text("Remember?")
-                          ],
-                        ),
+                      // Remember Checkbutton
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Checkbox(
+                            onChanged: (value) {
+                              setState(
+                                () {
+                                  _remember = value!;
+                                },
+                              );
+                            },
+                            value: _remember,
+                          ),
+                          const Text("Remember?")
+                        ],
+                      ),
 
-                        // Abstand
-                        const SizedBox(
-                          height: 5,
-                        ),
+                      // Abstand
+                      const SizedBox(
+                        height: 5,
+                      ),
 
-                        // Loginbutton
-                        ElevatedButton(
-                          onPressed: () {
+                      // Loginbutton
+                      ElevatedButton(
+                        onPressed: () {
+                          // TODO: login validation aktivieren
+                          bool user = true; //_userKey.currentState!.validate();
+                          bool passwd =
+                              true; //_passKey.currentState!.validate();
+                          if (user && passwd) {
+                            var _user = _userController.text;
+                            var _passwd = _passController.text;
+                            if (_remember) {
+                              widget._sa
+                                  .updateElementwithKey("Username", _user);
+                              widget._sa
+                                  .updateElementwithKey("Password", _passwd);
+                            }
                             Navigator.pop(context);
                             Navigator.pushNamed(context, route.mapPage);
-                          },
-                          child: const Text(
-                            "Login",
-                            style: TextStyle(color: Colors.white),
+                          }
+                        },
+                        child: const Text(
+                          "Login",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Theme.of(context).colorScheme.secondary,
+                          shape: const StadiumBorder(),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 80,
                           ),
-                          style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context).colorScheme.secondary,
-                            shape: const StadiumBorder(),
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 12,
-                              horizontal: 80,
-                            ),
-                          ),
                         ),
+                      ),
 
-                        // Abstand
-                        const SizedBox(
-                          height: 5,
-                        ),
+                      // Abstand
+                      const SizedBox(
+                        height: 5,
+                      ),
 
-                        RichText(
-                          text: TextSpan(
-                              text: "Need an accound?",
-                              style: const TextStyle(
-                                  fontSize: 15, color: Colors.black),
-                              children: <TextSpan>[
-                                TextSpan(
-                                    text: "Sign Up!",
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = (() {
-                                        Navigator.pop(context);
-                                        Navigator.pushNamed(
-                                            context, route.registrationPage);
-                                      }),
-                                    style: const TextStyle(color: Colors.blue))
-                              ]),
-                        ),
-                      ],
-                    ),
+                      RichText(
+                        text: TextSpan(
+                            text: "Need an accound? ",
+                            style: const TextStyle(
+                                fontSize: 15, color: Colors.black),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: "Sign Up!",
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = (() {
+                                      Navigator.pop(context);
+                                      Navigator.pushNamed(
+                                          context, route.registrationPage);
+                                    }),
+                                  style: const TextStyle(color: Colors.blue))
+                            ]),
+                      ),
+                    ],
                   ),
                 )
               ],

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:bikeminer/backend/storage_adapter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bikeminer/widget/navigation_drawer_widget.dart';
@@ -8,7 +9,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
 class Map extends StatefulWidget {
-  const Map({Key? key}) : super(key: key);
+  final StorageAdapter _sa;
+  const Map(this._sa, {Key? key}) : super(key: key);
 
   @override
   State<Map> createState() => _MapState();
@@ -28,6 +30,7 @@ class _MapState extends State<Map> {
   late GoogleMapController _controller;
   double zoomlevel = 10.0;
   bool follow = false;
+  bool riding = false;
 
   /// first CameraPosition
   ///
@@ -38,88 +41,106 @@ class _MapState extends State<Map> {
   );
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: NavigationDrawerWidget(context, () => logout()),
-        appBar: AppBar(
-          title: const Text(
-            "BikeMiner",
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: const Color.fromARGB(255, 30, 134, 49),
+      drawer: NavigationDrawerWidget(context, () => logout()),
+      appBar: AppBar(
+        title: const Text(
+          "BikeMiner",
+          style: TextStyle(color: Colors.white),
         ),
-        body: Stack(
-          children: <Widget>[
-            GoogleMap(
-              compassEnabled: true,
-              initialCameraPosition: initialLocation,
-              zoomControlsEnabled: false,
-              markers: Set.of((isiniti) ? [marker] : []),
-              circles: Set.of((isiniti) ? [circle] : []),
-              onMapCreated: (GoogleMapController controller) {
-                _controller = controller;
-                controllerisinit = true;
-              },
-              onCameraIdle: () {
-                setState(() {
-                  setzoomlevel();
-                });
-              },
-            ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Wrap(
-                      //will break to another line on overflow
-                      direction: Axis
-                          .vertical, //use vertical to show  on vertical axis
-                      children: <Widget>[
-                        Container(
-                            margin: const EdgeInsets.all(10),
-                            child: FloatingActionButton(
-                              heroTag: "1",
-                              child: const Icon(Icons.location_searching),
-                              onPressed: () {
-                                setState(() {
-                                  follow = !follow;
-                                });
-                              },
-                              elevation: 10.0,
-                            )),
-                        Container(
-                            margin: const EdgeInsets.all(10),
-                            child: FloatingActionButton(
-                              heroTag: "2",
-                              child: const Icon(Icons.near_me),
-                              onPressed: () {
-                                setState(() {
-                                  follow = true;
-                                });
-                                getCurrentLocation();
-                              },
-                              elevation: 10.0,
-                            )),
-                      ])),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: FloatingActionButton.extended(
-                  heroTag: "3",
-                  icon: const Icon(Icons.directions_bike_rounded),
-                  label: const Text('Start riding!'),
-                  tooltip: 'Increment',
-                  foregroundColor: const Color.fromARGB(255, 255, 255, 255),
-                  backgroundColor: const Color.fromARGB(255, 31, 148, 40),
-                  elevation: 10.0,
-                  onPressed: () {},
-                ),
+        backgroundColor: const Color.fromARGB(255, 30, 134, 49),
+      ),
+      body: Stack(
+        children: <Widget>[
+          GoogleMap(
+            compassEnabled: true,
+            initialCameraPosition: initialLocation,
+            zoomControlsEnabled: false,
+            markers: Set.of((isiniti) ? [marker] : []),
+            circles: Set.of((isiniti) ? [circle] : []),
+            onMapCreated: (GoogleMapController controller) {
+              _controller = controller;
+              controllerisinit = true;
+            },
+            onCameraIdle: () {
+              setState(() {
+                setzoomlevel();
+              });
+            },
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Wrap(
+                    //will break to another line on overflow
+                    direction:
+                        Axis.vertical, //use vertical to show  on vertical axis
+                    children: <Widget>[
+                      Container(
+                          margin: const EdgeInsets.all(10),
+                          child: FloatingActionButton(
+                            heroTag: "1",
+                            child: follow
+                                ? const Icon(Icons.near_me)
+                                : const Icon(Icons.near_me_disabled),
+                            onPressed: () {
+                              setState(() {
+                                follow = !follow;
+                              });
+                            },
+                            elevation: 10.0,
+                          )),
+                      Container(
+                          margin: const EdgeInsets.all(10),
+                          child: FloatingActionButton(
+                            heroTag: "2",
+                            child: const Icon(Icons.location_searching),
+                            onPressed: () {
+                              setState(() {
+                                follow = true;
+                              });
+                              getCurrentLocation();
+                            },
+                            elevation: 10.0,
+                          )),
+                    ])),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: FloatingActionButton.extended(
+                heroTag: "3",
+                icon: const Icon(Icons.directions_bike_rounded),
+                label: riding
+                    ? const Text('Stop riding!')
+                    : const Text('Start riding!'),
+                tooltip: 'Increment',
+                foregroundColor: const Color.fromARGB(255, 255, 255, 255),
+                backgroundColor: const Color.fromARGB(255, 31, 148, 40),
+                elevation: 10.0,
+                onPressed: () {
+                  if (!riding) {
+                    getCurrentLocation();
+                  }
+                  setState(() {
+                    riding = !riding;
+                  });
+                },
               ),
-            )
-          ],
-        ));
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   /// set the current zoom level
@@ -142,7 +163,7 @@ class _MapState extends State<Map> {
       zoomlevel = 15.0;
       _islocationsubscriped = true;
       _locationSubscription =
-          _locationTracker.onLocationChanged.listen((newLocalData) {
+          _locationTracker.onLocationChanged.listen((newLocalData) async {
         if (controllerisinit) {
           if (follow) {
             _controller.animateCamera(CameraUpdate.newCameraPosition(
@@ -154,6 +175,9 @@ class _MapState extends State<Map> {
                     zoom: zoomlevel)));
           }
           updatePosition(newLocalData, imageData);
+          if (riding) {
+            startRiding(newLocalData);
+          }
         }
       });
     } on PlatformException catch (e) {
@@ -179,8 +203,11 @@ class _MapState extends State<Map> {
     return byteData.buffer.asUint8List();
   }
 
-  /// for start the intervall gps upload to the server
-  void startRiding() {}
+  /// for start the intervall gps location upload to the server
+  void startRiding(LocationData newLocalData) {
+    debugPrint(
+        "Lat: ${newLocalData.latitude}, Long: ${newLocalData.longitude}");
+  }
 
   /// for updating the positionmarker on the map
   void updatePosition(LocationData newLocalData, Uint8List imageData) {

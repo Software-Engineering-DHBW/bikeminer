@@ -16,59 +16,64 @@ class NavigationDrawerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     const username = 'Florian-0tt';
 
-    return Drawer(
+    return SafeArea(
+      child: Drawer(
         child: Material(
-      color: Theme.of(supercontext).colorScheme.secondary,
-      child: ListView(
-        padding: padding,
-        reverse: false,
-        children: <Widget>[
-          buildHeader(
-            username: username,
-            onClicked: () {},
+          color: Theme.of(supercontext).colorScheme.secondary,
+          child: ListView(
+            padding: padding,
+            reverse: false,
+            children: <Widget>[
+              buildHeader(
+                username: username,
+                onClicked: () {},
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Divider(
+                color: Colors.white70,
+                height: 5,
+              ),
+              buildMenuItem(
+                text: "Wallet",
+                icon: Icons.account_balance_wallet_rounded,
+                onClicked: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              const WalletPage()));
+                },
+              ),
+              buildMenuItem(
+                text: "Rides",
+                icon: Icons.directions_bike,
+                onClicked: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              const RidesPage()));
+                },
+              ),
+              buildMenuItem(
+                text: "Abmelden",
+                icon: Icons.logout,
+                onClicked: () {
+                  Navigator.pop(context);
+                  logout();
+                  Navigator.pop(supercontext);
+                  Navigator.pushNamed(context, route.loginPage);
+                },
+              ),
+            ],
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Divider(
-            color: Colors.white70,
-            height: 5,
-          ),
-          buildMenuItem(
-            text: "Wallet",
-            icon: Icons.account_balance_wallet_rounded,
-            onClicked: () {
-              Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => const WalletPage()));
-            },
-          ),
-          buildMenuItem(
-            text: "Rides",
-            icon: Icons.directions_bike,
-            onClicked: () {
-              Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => const RidesPage()));
-            },
-          ),
-          buildMenuItem(
-            text: "Abmelden",
-            icon: Icons.logout,
-            onClicked: () {
-              Navigator.pop(context);
-              logout();
-              Navigator.pop(supercontext);
-              Navigator.pushNamed(context, route.loginPage);
-            },
-          ),
-        ],
+        ),
       ),
-    ));
+    );
   }
 
   Widget buildHeader(
