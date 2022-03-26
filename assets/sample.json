@@ -1,19 +1,68 @@
-{
-  "items": [
-    {
-      "id": "p1",
-      "name": "Item 1",
-      "description": "Description 1"
-    },
-    {
-      "id": "p2",
-      "name": "Item 2",
-      "description": "Description 2"
-    },
-    {
-      "id": "p3",
-      "name": "Item 3",
-      "description": "Description 3"
-    }
-  ]
-}
+[
+  {
+    "userName": "testUser",
+    "email": "t@gmx.de",
+    "coins": 10.5,
+    "userID": 1
+  },
+  {
+    "userName": "jens",
+    "email": "jens@jens",
+    "coins": 0,
+    "userID": 5
+  },
+  {
+    "userName": "daniel",
+    "email": "daniel@daniel",
+    "coins": 0,
+    "userID": 6
+  },
+  {
+    "userName": "lol",
+    "email": "email",
+    "coins": 0,
+    "userID": 7
+  },
+  {
+    "userName": "florian",
+    "email": "flo@flo",
+    "coins": 0,
+    "userID": 8
+  },
+  {
+    "userName": "a_test_user",
+    "email": "some@test",
+    "coins": 100,
+    "userID": 9
+  },
+  {
+    "userName": "andererNutzer",
+    "email": "anderer@qwe",
+    "coins": 0,
+    "userID": 10
+  },
+  {
+    "userName": "nocheinen",
+    "email": "ncoh@usrt",
+    "coins": 0,
+    "userID": 11
+  },
+  {
+    "userName": "danielVallelonga",
+    "email": "valle@daniel",
+    "coins": 0,
+    "userID": 12
+  },
+  {
+    "userName": "dieserUseristdumm",
+    "email": "gmx@gmx.de",
+    "coins": 10.5,
+    "userID": 13
+  },
+  {
+    "userName": "tobiB",
+    "email": "tob@barz",
+    "coins": 0,
+    "userID": 14
+  }
+]

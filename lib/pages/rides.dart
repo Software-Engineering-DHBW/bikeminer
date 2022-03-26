@@ -1,5 +1,6 @@
-import 'package:bikeminer/pages/ride.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:timelines/timelines.dart';
 
 class RidesPage extends StatefulWidget {
@@ -11,6 +12,24 @@ class RidesPage extends StatefulWidget {
 
 /// Stateful Widget "RidesPageState" stellt das Grundgerüst der Seite zur gefahrenen Strecken anhand einer Timeline dar
 class _RidesPageState extends State<RidesPage> {
+  List _items = [];
+  @override
+  void initState(){
+      readJson();
+      super.initState();
+  }
+  /// Lese inhalt aus der hinterlegten JSON-Datei
+  Future<void> readJson() async {
+    /// Lade den JSON-String von jeweiligenm Datei-Pfad
+    final String response = await rootBundle.loadString('assets/sample.json');
+
+    /// Dekodiere das JSON-Format
+    final data = await json.decode(response);
+
+    setState(() {
+      _items = data;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     const title = 'Rides';
@@ -28,18 +47,56 @@ class _RidesPageState extends State<RidesPage> {
             },
           ),
         ),
-        body: const RidingHistory(),
+        body: Padding(
+          padding: const EdgeInsets.all(5),
+          child: Column(
+            children: [
+              // Display the data loaded from sample.json
+              _items.isNotEmpty
+                  ? Expanded(
+                child: ListView.builder(
+                  itemCount: _items.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: ListTile(
+                        leading: Column(
+                          children: [
+                            const Text("Strecke: "),Text(_items[index]["userName"].toString())
+                          ],
+                        ),
+                        title: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Startzeit: "),
+                            Text(_items[index]["email"].toString())
+                          ],
+                        ),
+                        subtitle: Column(
+                          children: [
+                            Text("Coins: "+_items[index]["coins"].toString()),
+                          ],
+                        ),
+                        trailing: Column(
+                          children:[
+                              Text("Dauer: "),
+                              Text(_items[index]["userID"].toString())
+                          ],
+                      ),
+
+                      ),
+                    );
+                  },
+                ),
+              )
+                  : Container()
+            ],
+          ),
+        ),
       ),
     );
   }
 }
-/// Der Inhalt (Body: "RidingHistory") der "RidesPageState"-Seite
-class RidingHistory extends StatelessWidget {
-  const RidingHistory({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    ///Erstellung der Timeline (Zeitlinie teilt den Body der Seite in zwei Hälften) mit bestimmten Stil
+    /*///Erstellung der Timeline (Zeitlinie teilt den Body der Seite in zwei Hälften) mit bestimmten Stil
     return Timeline.tileBuilder(builder: TimelineTileBuilder.fromStyle(
       contentsAlign: ContentsAlign.alternating,
       contentsBuilder: (context, index) => Padding(
@@ -70,7 +127,7 @@ class RidingHistory extends StatelessWidget {
   }
 
 }
-
+*/
 
 /*class MyStatelessWidget extends StatelessWidget {
   const MyStatelessWidget({Key? key}) : super(key: key);
