@@ -111,18 +111,18 @@ class _MyHomePageState extends State<MyHomePage> {
         child: buttontext);
   }
 
-  // StreamBuilder stream(BuildContext context) {
-  //   return StreamBuilder(
-  //       stream: location.onLocationChanged,
-  //       builder: (context, snapshot) {
-  //         if (snapshot.connectionState != ConnectionState.waiting) {
-  //           var data = snapshot.data as LocationData;
-  //           return Text('Location: ${data.latitude}/${data.longitude}');
-  //         } else {
-  //           return const Center(
-  //             child: CircularProgressIndicator(),
-  //           );
-  //         }
-  //       });
-  // }
+  StreamBuilder stream(BuildContext context) {
+    return StreamBuilder(
+        stream: location.onLocationChanged,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.waiting) {
+            var data = snapshot.data as LocationData;
+            return Text('Location: ${data.latitude}/${data.longitude}');
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
+  }
 }
