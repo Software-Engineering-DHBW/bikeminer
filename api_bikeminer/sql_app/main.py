@@ -105,7 +105,6 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 @app.get("/users/all", response_model=list[schemas.User])
 def read_users(db: Session = Depends(get_db)):
-    print("in query all users")
     users = crud.get_users(db)
     return users
 
@@ -121,9 +120,37 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
 # Get history for a user TODO
 @app.get("/history/{user_name}", response_model=schemas.History)
 def get_history(user_name: str, db: Session = Depends(get_db)):
-    db_user = crud.get_user_by_name(db, user_name=user_name)
-    if db_user is None:
-        raise HTTPException(status_code=404, detail="User not found")
+    # db_user = crud.get_user_by_name(db, user_name=user_name)
+    # if db_user is None:
+    #     raise HTTPException(status_code=404, detail="User not found")
+    history = crud.get_history_by_user_name(db, user_name=user_name)
+    if history is None:
+        raise HTTPException(status_code=404, detail="User has no History")
+    return history
+
+# TODO: Create function for making history entries
+
+
+# TODO: We need a new table for saving coordinates
+"""
+CREATE TABLE `Coordinates` (
+  `coordID` int(11) NOT NULL AUTO_INCREMENT,
+  `tourID` int(11) NOT NULL,
+  `tourNumber` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `longitude` float NOT NULL,
+  `latitude` float NOT NULL,
+  `datetime` datetime NOT NULL,
+  PRIMARY KEY (`coordID`),
+  KEY `userID_idx` (`userID`),
+  CONSTRAINT `userID` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+"""# I dont know of that table is correct, but this is the gist
+
+# tourID for grouping different points together
+# tourNumber to order the points
+# userID as FK
+# TODO: Then add functions to add to this table
     
 
 

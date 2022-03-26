@@ -1,3 +1,4 @@
+import re
 from sqlalchemy.orm import Session
 from sqlalchemy.sql.expression import func
 #from passlib.context import CryptContext
@@ -53,17 +54,24 @@ def create_user(db: Session, user: schemas.UserCreate):
 
 def get_history_by_user_name(db: Session, user_name: str):
     # db.query
-    pass
+    user = db.query(models.Users).filter(models.Users.userName == user_name).first()
+    print("userID: " + str(user.userID))
+    hist = []
+    hist = [history for history in db.query(models.History).filter(models.History.userID == user.userID).all()]
+    return hist
 
-    """
-    
+    # Why does this not work??
+    # return db.query(models.History, models.Users).join(models.Users, models.History.userID == models.Users.userID, isouter=True).filter(models.Users.userName == user_name).all()
+
+
+""" 
 select h.recievedCoins, h.distanceTraveled, h.dateTime
 from History as h
 left join Users as u
 on h.userID = u.userID
 where u.userName = 'testUser';
-    """
-    pass
+"""
+
 
 ### create user
 #def create_user(db: Session, user: schemas.UserCreate):
