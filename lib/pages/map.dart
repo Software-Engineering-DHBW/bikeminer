@@ -346,6 +346,7 @@ class _MapState extends State<Map> {
   /// for canceling the location subscription and for logging out
   void logout() {
     if (_islocationsubscriped) {
+      riding = false;
       _locationSubscription.cancel();
     }
   }
