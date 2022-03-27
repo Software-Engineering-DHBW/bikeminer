@@ -18,7 +18,7 @@ class Users(Base):
 class History(Base):
     __tablename__ = "History"
     historyID = Column(Integer, primary_key=True, index=True)
-    userID = Column(String, ForeignKey("Users.UserID"), index=True)
+    userID = Column(String, ForeignKey("Users.userID"), index=True)
     recievedCoins = Column(String)
     distanceTraveled = Column(Float)
     dateTime = Column(DateTime)
