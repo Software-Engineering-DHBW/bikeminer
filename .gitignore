@@ -18,3 +18,5 @@ gradle.xml
 local.properties
 /containers/db
 containers/db
+api_bikeminer/sql_app/__pycache__/
+venv/
