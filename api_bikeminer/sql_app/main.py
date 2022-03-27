@@ -44,8 +44,6 @@ def get_db():
         db.close()
 
 # Authentication:
-# this function needs attention hash cannnot verified  , kopple das zusamen mit create_user
-# um hashed passwords in der db zu speichern
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
@@ -73,6 +71,8 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None, c
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
+#-------------- API-Routes --------------------------------------------------##
+
 @app.post("/authenticate", response_model=schemas.Token, tags=['users'])
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = authenticate_user(form_data.username, form_data.password, db)
@@ -91,7 +91,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@app.post("/users/create", response_model=schemas.User)
+@app.post("/users/create", response_model=schemas.User, tags=['users'])
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
 
@@ -104,13 +104,13 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return crud.create_user(db=db, user=user)
 
 
-@app.get("/users/all", response_model=list[schemas.User])
+@app.get("/users/all", response_model=list[schemas.User], tags=['users'])
 def read_users(db: Session = Depends(get_db)):
     users = crud.get_users(db)
     return users
 
 # get user by id
-@app.get("/users/{user_id}", response_model=schemas.User)
+@app.get("/users/{user_id}", response_model=schemas.User, tags=['users'])
 def read_user(user_id: int, db: Session = Depends(get_db)):
     db_user = crud.get_user(db, user_id=user_id)
     if db_user is None:
@@ -120,7 +120,7 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
 
 # Get history for a user TODO
 # Fixed! We dont need a response_model here
-@app.get("/history/{user_name}")
+@app.get("/history/{user_name}", tags=['history'])
 def get_history(user_name: str, db: Session = Depends(get_db)):
     # db_user = crud.get_user_by_name(db, user_name=user_name)
     # if db_user is None:
@@ -131,7 +131,7 @@ def get_history(user_name: str, db: Session = Depends(get_db)):
     return history
 
 
-@app.post("/history/create", response_model=schemas.History)
+@app.post("/history/create", response_model=schemas.History, tags=['history'])
 def create_history(history: schemas.HistoryCreate, db: Session = Depends(get_db)):
     return crud.create_history(db=db, history=history)
 
