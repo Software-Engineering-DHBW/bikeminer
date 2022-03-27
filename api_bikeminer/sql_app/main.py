@@ -125,7 +125,7 @@ def get_history(user_name: str, db: Session = Depends(get_db)):
     # if db_user is None:
     #     raise HTTPException(status_code=404, detail="User not found")
     history = crud.get_history_by_user_name(db, user_name=user_name)
-    if history is None:
+    if history == []:
         raise HTTPException(status_code=404, detail="User has no History")
     return history
 
