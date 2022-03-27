@@ -18,3 +18,4 @@ gradle.xml
 local.properties
 /containers/db
 containers/db
+/venv
