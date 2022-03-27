@@ -1,23 +1,5 @@
 import 'dart:convert';
-// import 'dart:html';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-class APIConnectorclass extends StatefulWidget {
-  const APIConnectorclass({Key? key}) : super(key: key);
-
-  @override
-  State<APIConnectorclass> createState() => _APIConnectorclassState();
-}
-
-class _APIConnectorclassState extends State<APIConnectorclass> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Container(),
-    );
-  }
-}
 
 class APIConnector {
   final _server_url = Uri.parse(
@@ -49,6 +31,11 @@ class APIConnector {
   }
 
   bool login(username, password) {
-    return true;
+    if (_logedin) {
+      return true;
+    } else {
+      return false;
+    }
+    return false;
   }
 }

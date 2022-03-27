@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:bikeminer/backend/api_connector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class WalletPage extends StatefulWidget {
-  const WalletPage({Key? key}) : super(key: key);
+  final APIConnector _api;
+  const WalletPage(this._api, {Key? key}) : super(key: key);
 
   @override
   State<WalletPage> createState() => _WalletPageState();
@@ -22,7 +24,8 @@ class _WalletPageState extends State<WalletPage> {
   /// Lese inhalt aus der hinterlegten JSON-Datei
   Future<void> readJson() async {
     /// Lade den JSON-String von jeweiligenm Datei-Pfad
-    final String response = await rootBundle.loadString('assets/walletSample.json');
+    final String response =
+        await rootBundle.loadString('assets/walletSample.json');
 
     /// Dekodiere das JSON-Format
     final data = await json.decode(response);
@@ -54,23 +57,22 @@ class _WalletPageState extends State<WalletPage> {
                       itemBuilder: (context, index) {
                         return Card(
                           child: ListTile(
-                            leading:Column(
+                            leading: Column(
                               children: [
                                 const Text("User: "),
                                 Text(_items[index]["userName"].toString())
-
                               ],
                             ),
-                            title:Column(
+                            title: Column(
                               children: [
                                 const Text("Coins: "),
-                                Text( _items[index]["email"].toString())
-
+                                Text(_items[index]["email"].toString())
                               ],
                             ),
                             subtitle: Column(
                               children: [
-                                Text("Datum: " + _items[index]["coins"].toString()),
+                                Text("Datum: " +
+                                    _items[index]["coins"].toString()),
                               ],
                             ),
                             trailing: Column(

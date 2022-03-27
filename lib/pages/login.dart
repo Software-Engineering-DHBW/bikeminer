@@ -1,3 +1,4 @@
+import 'package:bikeminer/backend/api_connector.dart';
 import 'package:bikeminer/backend/storage_adapter.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,8 @@ import 'package:bikeminer/route.dart' as route;
 /// LoginPage
 class LoginPage extends StatefulWidget {
   final StorageAdapter _sa;
-  const LoginPage(this._sa, {Key? key}) : super(key: key);
+  final APIConnector _api;
+  const LoginPage(this._sa, this._api, {Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -71,9 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                           controller: _userController,
                           // keyboardType: TextInputType.text,
                           // onSaved: ,
-                          validator: (input) => input!.length < 8
-                              ? "Password should be longer than 8 characters"
-                              : null,
+                          validator: (input) => validateusername(input),
                           decoration: InputDecoration(
                             hintText: "Username",
                             enabledBorder: UnderlineInputBorder(
@@ -106,9 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                           controller: _passController,
                           // keyboardType: TextInputType.text,
                           // onSaved: ,
-                          validator: (input) => input!.length < 8
-                              ? "Password should be longer than 8 characters"
-                              : null,
+                          validator: (input) => validatepassword(input),
                           obscureText: _hidePassword,
                           decoration: InputDecoration(
                             hintText: "Password",
@@ -171,24 +169,7 @@ class _LoginPageState extends State<LoginPage> {
 
                       // Loginbutton
                       ElevatedButton(
-                        onPressed: () {
-                          // TODO: login validation aktivieren
-                          bool user = true; //_userKey.currentState!.validate();
-                          bool passwd =
-                              true; //_passKey.currentState!.validate();
-                          if (user && passwd) {
-                            var _user = _userController.text;
-                            var _passwd = _passController.text;
-                            if (_remember) {
-                              widget._sa
-                                  .updateElementwithKey("Username", _user);
-                              widget._sa
-                                  .updateElementwithKey("Password", _passwd);
-                            }
-                            Navigator.pop(context);
-                            Navigator.pushNamed(context, route.mapPage);
-                          }
-                        },
+                        onPressed: () => login(),
                         child: const Text(
                           "Login",
                           style: TextStyle(color: Colors.white),
@@ -234,5 +215,33 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  String? validatepassword(input) {
+    return input!.length < 8
+        ? "Password should be longer than 8 characters"
+        : null;
+  }
+
+  String? validateusername(input) {
+    return input!.length < 8
+        ? "Password should be longer than 8 characters"
+        : null;
+  }
+
+  void login() {
+    // TODO: login validation aktivieren
+    bool user = true; //_userKey.currentState!.validate();
+    bool passwd = true; //_passKey.currentState!.validate();
+    if (user && passwd) {
+      var _user = _userController.text;
+      var _passwd = _passController.text;
+      if (_remember) {
+        widget._sa.updateElementwithKey("Username", _user);
+        widget._sa.updateElementwithKey("Password", _passwd);
+      }
+      Navigator.pop(context);
+      Navigator.pushNamed(context, route.mapPage);
+    }
   }
 }

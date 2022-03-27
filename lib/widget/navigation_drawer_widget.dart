@@ -40,11 +40,12 @@ class NavigationDrawerWidget extends StatelessWidget {
                 icon: Icons.account_balance_wallet_rounded,
                 onClicked: () {
                   Navigator.pop(context);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              const WalletPage()));
+                  Navigator.pushNamed(context, route.walletPage);
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (BuildContext context) =>
+                  //             const WalletPage()));
                 },
               ),
               buildMenuItem(
@@ -52,11 +53,12 @@ class NavigationDrawerWidget extends StatelessWidget {
                 icon: Icons.directions_bike,
                 onClicked: () {
                   Navigator.pop(context);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              const RidesPage()));
+                  Navigator.pushNamed(context, route.ridesPage);
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (BuildContext context) =>
+                  //             const RidesPage()));
                 },
               ),
               buildMenuItem(

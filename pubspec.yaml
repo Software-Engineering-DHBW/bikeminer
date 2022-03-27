@@ -1,5 +1,5 @@
 name: bikeminer
-description: A new Flutter project.
+description: An App for getting BikeCoins for riding a bike.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -66,7 +66,6 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/bikeminer_location_icon.png
     - assets/location_icon_2.png
     - assets/location_icon.png
     - assets/bikeminer_icon.png

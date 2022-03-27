@@ -1,10 +1,13 @@
+import 'package:bikeminer/backend/api_connector.dart';
+// import 'package:bikeminer/backend/storage_adapter.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:bikeminer/route.dart' as route;
 
 /// RegistrationPage
 class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({Key? key}) : super(key: key);
+  final APIConnector _api;
+  const RegistrationPage(this._api, {Key? key}) : super(key: key);
 
   @override
   State<RegistrationPage> createState() => _RegistrationPageState();

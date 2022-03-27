@@ -9,8 +9,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class StorageAdapter {
   /// Definition of the Storage and the AccountNameController
   final _storage = const FlutterSecureStorage();
-  final _accountNameController =
-      TextEditingController(text: 'flutter_secure_storage_service');
 
   /// Lists of Elements
   List<_SecItem> _items = [];
@@ -51,36 +49,29 @@ class StorageAdapter {
     }
   }
 
+  /// deletes the items in the storage
   void deleteAll() async {
-    await _storage.deleteAll(
-        iOptions: _getIOSOptions(), aOptions: _getAndroidOptions());
+    await _storage.deleteAll(aOptions: _getAndroidOptions());
     readAll();
   }
-
-  IOSOptions _getIOSOptions() => IOSOptions(
-        accountName: _getAccountName(),
-      );
 
   AndroidOptions _getAndroidOptions() => const AndroidOptions(
         encryptedSharedPreferences: true,
       );
-
-  String? _getAccountName() =>
-      _accountNameController.text.isEmpty ? null : _accountNameController.text;
 
   /// Write Element to the Storage
   Future<void> writeToSecureStorage(_SecItem secitem) async {
     await _storage.write(
         key: secitem.key,
         value: secitem.value,
-        iOptions: _getIOSOptions(),
+        // iOptions: _getIOSOptions(),
         aOptions: _getAndroidOptions());
   }
 
   /// read Element with key from Flutter Storage
   Future<_SecItem?> readFromSecureStorage(String key) async {
-    String? secret = await _storage.read(
-        key: key, iOptions: _getIOSOptions(), aOptions: _getAndroidOptions());
+    String? secret =
+        await _storage.read(key: key, aOptions: _getAndroidOptions());
     if (secret == null) {
       debugPrint("readfromSecureStorage: secret = $secret");
       secret = "";

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
+import 'package:bikeminer/backend/api_connector.dart';
 import 'package:bikeminer/backend/storage_adapter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,7 +12,8 @@ import '../widget/error_dialog.dart';
 
 class Map extends StatefulWidget {
   final StorageAdapter _sa;
-  const Map(this._sa, {Key? key}) : super(key: key);
+  final APIConnector _api;
+  const Map(this._sa, this._api, {Key? key}) : super(key: key);
 
   @override
   State<Map> createState() => _MapState();
@@ -21,18 +23,20 @@ class Map extends StatefulWidget {
 ///
 /// Google Maps Card with mylocation marker
 class _MapState extends State<Map> {
+  late BuildContext _mapcontext;
   late StreamSubscription _locationSubscription;
-  bool _islocationsubscriped = false;
+
   final Location _locationTracker = Location();
+  late GoogleMapController _controller;
   late Marker marker;
   late Circle circle;
   bool isiniti = false;
   bool controllerisinit = false;
-  late GoogleMapController _controller;
+  bool _islocationsubscriped = false;
+
   double zoomlevel = 10.0;
   bool follow = false;
   bool riding = false;
-  late BuildContext _mapcontext;
 
   // bool _serviceEnabled = false;
   // late PermissionStatus _permissionGranted;
@@ -186,11 +190,11 @@ class _MapState extends State<Map> {
     if (_bgModeEnabled) {
       return true;
     } else {
-      try {
-        await _locationTracker.enableBackgroundMode();
-      } catch (e) {
-        debugPrint(e.toString());
-      }
+      // try {
+      //   await _locationTracker.enableBackgroundMode();
+      // } catch (e) {
+      //   debugPrint(e.toString());
+      // }
       try {
         _bgModeEnabled = await _locationTracker.enableBackgroundMode();
       } catch (e) {
@@ -346,7 +350,9 @@ class _MapState extends State<Map> {
   /// for canceling the location subscription and for logging out
   void logout() {
     if (_islocationsubscriped) {
-      riding = false;
+      setState(() {
+        riding = false;
+      });
       _locationSubscription.cancel();
     }
   }

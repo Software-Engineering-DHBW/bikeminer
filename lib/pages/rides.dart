@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'package:bikeminer/backend/api_connector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:timelines/timelines.dart';
 
 class RidesPage extends StatefulWidget {
-  const RidesPage({Key? key}) : super(key: key);
+  final APIConnector _api;
+  const RidesPage(this._api, {Key? key}) : super(key: key);
 
   @override
   State<RidesPage> createState() => _RidesPageState();
@@ -14,10 +16,11 @@ class RidesPage extends StatefulWidget {
 class _RidesPageState extends State<RidesPage> {
   List _items = [];
   @override
-  void initState(){
-      readJson();
-      super.initState();
+  void initState() {
+    readJson();
+    super.initState();
   }
+
   /// Lese inhalt aus der hinterlegten JSON-Datei
   Future<void> readJson() async {
     /// Lade den JSON-String von jeweiligenm Datei-Pfad
@@ -30,16 +33,23 @@ class _RidesPageState extends State<RidesPage> {
       _items = data;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     const title = 'Rides';
     return MaterialApp(
       title: title,
       home: Scaffold(
-        appBar: AppBar(backgroundColor: const Color.fromARGB(255, 30, 134, 49), title: const Text(title,style: TextStyle(color: Colors.white),),
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 30, 134, 49),
+          title: const Text(
+            title,
+            style: TextStyle(color: Colors.white),
+          ),
+
           /// Button in der AppBar um zur vorherigen Seite zu gelangen
           automaticallyImplyLeading: false,
-          leading: IconButton (
+          leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
               /// Navigiere zur vorherigen Seite
@@ -54,40 +64,41 @@ class _RidesPageState extends State<RidesPage> {
               // Display the data loaded from sample.json
               _items.isNotEmpty
                   ? Expanded(
-                child: ListView.builder(
-                  itemCount: _items.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: ListTile(
-                        leading: Column(
-                          children: [
-                            const Text("Strecke: "),Text(_items[index]["userName"].toString())
-                          ],
-                        ),
-                        title: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Startzeit: "),
-                            Text(_items[index]["email"].toString())
-                          ],
-                        ),
-                        subtitle: Column(
-                          children: [
-                            Text("Coins: "+_items[index]["coins"].toString()),
-                          ],
-                        ),
-                        trailing: Column(
-                          children:[
-                              Text("Dauer: "),
-                              Text(_items[index]["userID"].toString())
-                          ],
+                      child: ListView.builder(
+                        itemCount: _items.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            child: ListTile(
+                              leading: Column(
+                                children: [
+                                  const Text("Strecke: "),
+                                  Text(_items[index]["userName"].toString())
+                                ],
+                              ),
+                              title: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Startzeit: "),
+                                  Text(_items[index]["email"].toString())
+                                ],
+                              ),
+                              subtitle: Column(
+                                children: [
+                                  Text("Coins: " +
+                                      _items[index]["coins"].toString()),
+                                ],
+                              ),
+                              trailing: Column(
+                                children: [
+                                  Text("Dauer: "),
+                                  Text(_items[index]["userID"].toString())
+                                ],
+                              ),
+                            ),
+                          );
+                        },
                       ),
-
-                      ),
-                    );
-                  },
-                ),
-              )
+                    )
                   : Container()
             ],
           ),
