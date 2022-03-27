@@ -31,7 +31,8 @@ class HistoryBase(BaseModel):
     distanceTraveled: float
 
 class HistoryCreate(HistoryBase):
-    pass
+    userName: str
+    recievedCoins: float
 
 class History(HistoryBase):
     historyID: int

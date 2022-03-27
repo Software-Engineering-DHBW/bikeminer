@@ -118,7 +118,8 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
 
 
 # Get history for a user TODO
-@app.get("/history/{user_name}", response_model=schemas.History)
+# Fixed! We dont need a response_model here
+@app.get("/history/{user_name}")
 def get_history(user_name: str, db: Session = Depends(get_db)):
     # db_user = crud.get_user_by_name(db, user_name=user_name)
     # if db_user is None:
@@ -127,6 +128,12 @@ def get_history(user_name: str, db: Session = Depends(get_db)):
     if history is None:
         raise HTTPException(status_code=404, detail="User has no History")
     return history
+
+
+@app.post("/history/create", response_model=schemas.History)
+def create_history(history: schemas.HistoryCreate, db: Session = Depends(get_db)):
+    return crud.create_history(db=db, history=history)
+
 
 # TODO: Create function for making history entries
 

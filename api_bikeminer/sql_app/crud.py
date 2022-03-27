@@ -52,12 +52,27 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.refresh(db_user)
     return db_user
 
+def create_history(db: Session, history: schemas.HistoryCreate):
+    user = db.query(models.Users).filter(models.Users.userName == history.userName).first()
+    print("-------")
+    print(user.userID)
+    print(type(user.userID))
+    print("------ " + history.userName)
+    db_history = models.History(userID=user.userID, recievedCoins=history.recievedCoins,
+                                 distanceTraveled=history.distanceTraveled, dateTime=history.dateTime)
+    print(db_history)
+    db.add(db_history)
+    db.commit()
+    db.refresh(db_history)
+    return db_history
+
+# TODO: Fix this function
 def get_history_by_user_name(db: Session, user_name: str):
     # db.query
     user = db.query(models.Users).filter(models.Users.userName == user_name).first()
     print("userID: " + str(user.userID))
     hist = []
-    hist = [history for history in db.query(models.History).filter(models.History.userID == user.userID).all()]
+    hist = [history for history in db.query(models.History).all()]
     return hist
 
     # Why does this not work??
