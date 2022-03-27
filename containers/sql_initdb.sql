@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS `History`;
 CREATE TABLE `Users` (
   `userID` int(11) NOT NULL AUTO_INCREMENT,
   `userName` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
+  `password` varchar(61) NOT NULL,
   `email` varchar(45) NOT NULL,
   `coins` float NOT NULL,
   PRIMARY KEY (`userID`),
@@ -13,7 +13,7 @@ CREATE TABLE `Users` (
 CREATE TABLE `History` (
   `historyID` int(11) NOT NULL AUTO_INCREMENT,
   `userID` int(11) NOT NULL,
-  `recievedCoins` float NOT NULL,
+  `receivedCoins` float NOT NULL,
   `distanceTraveled` float NOT NULL,
   `dateTime` datetime NOT NULL,
   PRIMARY KEY (`historyID`),
