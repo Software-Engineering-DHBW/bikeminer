@@ -54,8 +54,6 @@ def create_user(db: Session, user: schemas.UserCreate):
 
 def create_history(db: Session, history: schemas.HistoryCreate):
     user = db.query(models.Users).filter(models.Users.userName == history.userName).first()
-    print("-------")
-    print("------ " + history.userName)
     db_history = models.History(userID=user.userID, recievedCoins=history.recievedCoins,
                                  distanceTraveled=history.distanceTraveled, dateTime=history.dateTime)
     print(db_history)
@@ -64,12 +62,11 @@ def create_history(db: Session, history: schemas.HistoryCreate):
     db.refresh(db_history)
     return db_history
 
-# TODO: Fix this function
 def get_history_by_user_name(db: Session, user_name: str):
     # db.query
     try:
         user = db.query(models.Users).filter(models.Users.userName == user_name).first()
-        
+
         hist = []
         hist = [history for history in db.query(models.History).filter(models.History.userID == user.userID).all()]
     except AttributeError:
@@ -80,13 +77,17 @@ def get_history_by_user_name(db: Session, user_name: str):
     # return db.query(models.History, models.Users).join(models.Users, models.History.userID == models.Users.userID, isouter=True).filter(models.Users.userName == user_name).all()
 
 
-""" 
-select h.recievedCoins, h.distanceTraveled, h.dateTime
-from History as h
-left join Users as u
-on h.userID = u.userID
-where u.userName = 'testUser';
-"""
+def delete_history(db: Session, user_name: str, tour_id: int):
+    result = None
+    try:
+        user = db.query(models.Users).filter(models.Users.userName == user_name).first()
+        print(user.userID)
+        result = db.query(models.History).filter(models.History.userID == user.userID,
+                                                    models.History.historyID == tour_id).delete()
+        db.commit()
+    except AttributeError:
+        print("can't delete")
+    return result
 
 
 ### create user

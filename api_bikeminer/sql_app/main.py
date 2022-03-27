@@ -1,5 +1,6 @@
 from typing import Optional, List
 from datetime import datetime, timedelta
+import rsa
 import uvicorn
 from fastapi import Depends, FastAPI, HTTPException, status, Request, File, UploadFile
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -135,27 +136,20 @@ def create_history(history: schemas.HistoryCreate, db: Session = Depends(get_db)
     return crud.create_history(db=db, history=history)
 
 
-# TODO: Create function for making history entries
+# Delete history 
+@app.post("/history/delete")
+def delete_history(user_name: str, tour_id: int, db: Session = Depends(get_db)):
+    res = crud.delete_history(db, user_name=user_name, tour_id=tour_id)
+    if res == 0:
+        raise HTTPException(status_code=404, detail="Could not delete history entry")
+    return res
 
+# Delete user
+# Add coordinate point
 
-# TODO: We need a new table for saving coordinates
-"""
-CREATE TABLE `Coordinates` (
-  `coordID` int(11) NOT NULL AUTO_INCREMENT,
-  `tourID` int(11) NOT NULL,
-  `tourNumber` int(11) NOT NULL,
-  `userID` int(11) NOT NULL,
-  `longitude` float NOT NULL,
-  `latitude` float NOT NULL,
-  `datetime` datetime NOT NULL,
-  PRIMARY KEY (`coordID`),
-  KEY `userID_idx` (`userID`),
-  CONSTRAINT `userID` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
-);
-"""# I dont know of that table is correct, but this is the gist
 
 # tourID for grouping different points together
-# tourNumber to order the points
+# tourNumber to order the points (end token is -1)
 # userID as FK
 # TODO: Then add functions to add to this table
     
