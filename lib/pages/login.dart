@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:bikeminer/route.dart' as route;
 
+/// LoginPage
 class LoginPage extends StatefulWidget {
   final StorageAdapter _sa;
   const LoginPage(this._sa, {Key? key}) : super(key: key);

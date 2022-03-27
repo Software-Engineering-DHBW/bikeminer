@@ -14,7 +14,7 @@ const String registrationPage = 'regist';
 const String mapPage = 'map';
 const String walletPage = 'wallet';
 StorageAdapter _sa = StorageAdapter();
-APIConnector _api = APIConnector();
+APIConnectorclass _api = APIConnectorclass();
 
 // controller function with switch statement to control page route flow
 Route<dynamic> controller(RouteSettings settings) {
