@@ -180,8 +180,9 @@ async def get_history(current_user: schemas.UserBase = Depends(oauth2_scheme), d
 
 
 @app.post("/history/create", response_model=schemas.History, tags=['history'])
-def create_history(history: schemas.HistoryCreate, db: Session = Depends(get_db)):
-    return crud.create_history(db=db, history=history)
+async def create_history(history: schemas.HistoryCreate,current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    user = await get_current_user(db=db, token=current_user)
+    return crud.create_history(db=db, user_name=user, history=history)
 
 
 # Delete history 
