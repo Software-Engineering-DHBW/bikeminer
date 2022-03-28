@@ -20,6 +20,22 @@ CREATE TABLE `History` (
   KEY `userID_idx` (`userID`),
   CONSTRAINT `userID` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
 );
+CREATE TABLE bikeminer.Coordinates (
+  coordID INT NOT NULL AUTO_INCREMENT,
+  tourID INT NOT NULL,
+  tourNumber INT NOT NULL,
+  userID INT NOT NULL,
+  longitude FLOAT NOT NULL,
+  latitude FLOAT NOT NULL,
+  datetime DATETIME NOT NULL,
+  PRIMARY KEY (coordID),
+  INDEX userID_idx (userID ASC) VISIBLE,
+  CONSTRAINT userID_FK_coords
+    FOREIGN KEY (userID)
+    REFERENCES bikeminer.Users (userID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
 INSERT INTO `Users` VALUES (1,'testUser','password123','t@gmx.de',10.5);
 INSERT INTO `History` VALUES (1,1,0.5,12000,'2022-03-11 15:25:00');
 GRANT ALL PRIVILEGES ON *.* TO 'profi'@'%';
