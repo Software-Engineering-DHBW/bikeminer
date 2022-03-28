@@ -1,5 +1,5 @@
 from lib2to3.pgen2 import token
-from msilib.schema import Error
+#from msilib.schema import Error
 from typing import Optional, List
 from datetime import datetime, timedelta
 from wsgiref import headers
@@ -228,9 +228,9 @@ async def delete_history(tour_id: int, current_user: schemas.UserBase = Depends(
 # Add coordinate point
 #-------------------------- Coordinate Routes ------------------------------------------------
 
-@app.post("/coordinates/create", response_model=schemas.CoordinatesCreate , tags=['coordinates'])
-async def create_coord_data(coordinates: schemas.CoordinatesCreate, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-    # TODO: I dont need that
+@app.post("/coordinates/create", tags=['history'])
+async def create_coord_data(coordinates: schemas.CoordinatesCreate, current_user: schemas.UserBase = Depends(oauth2_scheme),
+                         db: Session = Depends(get_db)):
     user = await get_current_user(db=db, token=current_user)
 
     if not current_user:
@@ -240,9 +240,8 @@ async def create_coord_data(coordinates: schemas.CoordinatesCreate, current_user
             headers={"WWW-Authenticate": "Bearer"}
         )
 
-    # coordinates.userID = user.userID
-    
-    return crud.create_coordinate_entry(db=db, coordinates=coordinates)
+    return crud.create_coordinate_entry(db=db, user_id=user.userID, coordinates=coordinates)
+
 
 @app.post("/coordinates/calculateDistance", tags=['coordinates'])
 async def calculate_distance(tour_id: int, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
