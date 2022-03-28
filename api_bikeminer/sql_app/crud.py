@@ -17,9 +17,6 @@ from sqlalchemy.orm import Session
 # User Methods
 
 
-
-
-
 # This function might not be used much
 def get_user(db: Session, user_id: int):
     return db.query(models.Users).filter(models.Users.userID == user_id).first()
@@ -54,7 +51,7 @@ def create_user(db: Session, user: schemas.UserCreate):
 
 def create_history(db: Session, history: schemas.HistoryCreate):
     user = db.query(models.Users).filter(models.Users.userName == history.userName).first()
-    db_history = models.History(userID=user.userID, recievedCoins=history.recievedCoins,
+    db_history = models.History(userID=user.userID, receivedCoins=history.receivedCoins,
                                  distanceTraveled=history.distanceTraveled, dateTime=history.dateTime)
     print(db_history)
     db.add(db_history)
@@ -90,14 +87,18 @@ def delete_history(db: Session, user_name: str, tour_id: int):
     return result
 
 
-### create user
-#def create_user(db: Session, user: schemas.UserCreate):
-#    fake_hashed_password = user.password + "notreallyhashed"
-#    db_user = models.User(email=user.email, hashed_password=fake_hashed_password)
-#    db.add(db_user)
-#    db.commit()
-#    db.refresh(db_user)
-#    return db_user
+
+
+def create_coordinate_entry(db: Session, coordinates: schemas.Coordinates):
+    user = db.query(models.Users).filter(models.Users.userID == coordinates.userID).first()
+    db_coordinates = models.Coordinates(userID=user.userID, tourID=coordinates.tourID, tourNumber=coordinates.tourNumber,
+                                        longitude=coordinates.longitude, latitude=coordinates.latitude, datetime=coordinates.datetime)
+
+    print(db_coordinates)
+    db.add(db_coordinates)
+    db.commit()
+    db.refresh(db_coordinates)
+    return db_coordinates
 
 
 

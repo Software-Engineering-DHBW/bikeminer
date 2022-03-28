@@ -32,7 +32,7 @@ class HistoryBase(BaseModel):
 
 class HistoryCreate(HistoryBase):
     userName: str
-    recievedCoins: float
+    receivedCoins: float
 
 class History(HistoryBase):
     historyID: int
@@ -40,6 +40,17 @@ class History(HistoryBase):
 
     class Config:
         orm_mode = True
+
+
+class Coordinates(BaseModel):
+    coordID: int
+    tourID: int
+    tourNumber: int
+    userID: int
+    longitude: float
+    latitude: float
+    datetime: datetime
+
 
 
 ## for authentication

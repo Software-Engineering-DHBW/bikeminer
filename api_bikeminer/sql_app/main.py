@@ -60,6 +60,25 @@ def authenticate_user(username: str, password: str, db):
         return False
     return user
 
+async def get_current_user(db: Session, token: str = Depends(oauth2_scheme)):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            raise credentials_exception
+        token_data = schemas.TokenData(username=username)
+    except JWTError:
+        raise credentials_exception
+    user = crud.get_user_byname(user_name=token_data.username, db=db)
+    if user is None:
+        raise credentials_exception
+    return user
+
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None, client_token: bool = False):
     to_encode = data.copy()
     if expires_delta:
@@ -91,6 +110,19 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     return {"access_token": access_token, "token_type": "bearer"}
 
 ##--------------------------------- User Routes -------------------------------------------------------------#
+@app.get("/users/me/", response_model=schemas.UserBase, tags=['users'])
+async def read_users_me(current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    user = await get_current_user(db=db, token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqdyIsImV4cCI6MTY0ODQ2Mjg5M30.LrHlogUCg9PFH-JHYO2BsIxD9xTv6oZnmcVNZD0-wjQ")
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return schemas.UserBase(id=user.id, name=user.name, role=user.role,
+                           password=user.password)
+
+
 @app.post("/users/create", response_model=schemas.User, tags=['users'])
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
@@ -148,10 +180,11 @@ def delete_history(user_name: str, tour_id: int, db: Session = Depends(get_db)):
 
 # Delete user
 # Add coordinate point
+#-------------------------- Coordinate Routes ------------------------------------------------
 
-@app.post("/coordinates/create", response_model=schemas.History, tags=['history'])
-def create_history(history: schemas.HistoryCreate, db: Session = Depends(get_db)):
-    return crud.create_history(db=db, history=history)
+@app.post("/coordinates/create", tags=['coordinates'])
+def create_coord_data(coordinates: schemas.Coordinates, user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    return crud.create_coordinate_entry(db=db, coordinates=coordinates)
 
 
 
