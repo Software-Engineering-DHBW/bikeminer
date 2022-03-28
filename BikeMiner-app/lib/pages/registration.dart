@@ -3,6 +3,7 @@ import 'package:bikeminer/backend/api_connector.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:bikeminer/route.dart' as route;
+import 'package:email_validator/email_validator.dart';
 
 /// RegistrationPage
 class RegistrationPage extends StatefulWidget {
@@ -16,10 +17,13 @@ class RegistrationPage extends StatefulWidget {
 class _RegistrationPageState extends State<RegistrationPage> {
   bool _hidePassword = true;
   final TextEditingController _userController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwdController = TextEditingController();
   final TextEditingController _passwdvController = TextEditingController();
-  final _passKey = GlobalKey<FormState>();
+
   final _userKey = GlobalKey<FormState>();
+  final _emailKey = GlobalKey<FormState>();
+  final _passKey = GlobalKey<FormState>();
   final _passvalidKey = GlobalKey<FormState>();
 
   @override
@@ -100,7 +104,42 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ),
 
                       const SizedBox(
-                        height: 20,
+                        height: 10,
+                      ),
+
+                      Form(
+                        key: _emailKey,
+                        child: TextFormField(
+                          controller: _emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          // onSaved: ,
+                          validator: (input) => EmailValidator.validate(email)
+                              ? "Email is not valid"
+                              : null,
+                          decoration: InputDecoration(
+                            hintText: "E-Mail",
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context)
+                                    .backgroundColor
+                                    .withOpacity(0.2),
+                              ),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
+                            ),
+                            prefixIcon: Icon(
+                              Icons.supervised_user_circle,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(
+                        height: 15,
                       ),
 
                       Form(

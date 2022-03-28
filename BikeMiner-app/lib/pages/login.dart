@@ -17,6 +17,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _hidePassword = true;
   bool _remember = false;
+  String _login_error_text = "";
   final TextEditingController _passController = TextEditingController();
   final _passKey = GlobalKey<FormState>();
   final _userKey = GlobalKey<FormState>();
@@ -167,6 +168,17 @@ class _LoginPageState extends State<LoginPage> {
                         height: 5,
                       ),
 
+                      // Errortext
+                      Text(
+                        _login_error_text,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+
+                      // Abstand
+                      const SizedBox(
+                        height: 5,
+                      ),
+
                       // Loginbutton
                       ElevatedButton(
                         onPressed: () => login(),
@@ -222,24 +234,24 @@ class _LoginPageState extends State<LoginPage> {
     if (input!.length < 1) {
       return "The Password is too short!";
     }
-    widget._api
-        .getlogintoken(_userController.text, _passController.text)
-        .then((value) {
-      var statuscode = value["statusCode"];
-      if (statuscode == 200) {
-        debugPrint("Loged in");
-        return null;
-      } else {
-        return "${value['detail']}";
-      }
-    }).catchError((onError) {
-      return onError;
-    });
+
     // return "Anything failed!";
   }
 
   String? validateusername(input) {
     return input!.length < 1 ? "The Username is too short!" : null;
+  }
+
+  Future<String> validate_login(user, password) async {
+    var value = await widget._api.getlogintoken(user, password);
+
+    var statuscode = value["statusCode"];
+    if (statuscode == 200) {
+      debugPrint("Loged in");
+      return "";
+    } else {
+      return "${value['detail']}";
+    }
   }
 
   void login() {
@@ -248,18 +260,28 @@ class _LoginPageState extends State<LoginPage> {
     if (user && pass) {
       var _user = _userController.text;
       var _passwd = _passController.text;
-      if (_remember) {
-        debugPrint("Writing to storage?");
-        widget._sa.updateElementwithKey("Username", _user).then((value) {
-          widget._sa.updateElementwithKey("Password", _passwd).then((value) {
+      validate_login(_user, _passwd).then((value) {
+        if (value == "") {
+          if (_remember) {
+            debugPrint("Writing to storage?");
+            widget._sa.updateElementwithKey("Username", _user).then((value) {
+              widget._sa
+                  .updateElementwithKey("Password", _passwd)
+                  .then((value) {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, route.mapPage);
+              });
+            });
+          } else {
             Navigator.pop(context);
             Navigator.pushNamed(context, route.mapPage);
+          }
+        } else {
+          setState(() {
+            _login_error_text = value;
           });
-        });
-      } else {
-        Navigator.pop(context);
-        Navigator.pushNamed(context, route.mapPage);
-      }
+        }
+      });
     }
   }
 }
