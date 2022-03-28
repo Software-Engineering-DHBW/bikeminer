@@ -1,3 +1,5 @@
+from lib2to3.pgen2 import token
+# from msilib.schema import Error
 from typing import Optional, List
 from datetime import datetime, timedelta
 from wsgiref import headers
@@ -12,6 +14,7 @@ from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 from fastapi.responses import StreamingResponse
 from jose import JWTError, jwt
+import geopy.distance as geopy
 
 # needed for create_access_token()
 SECRET_KEY = "55e52afbc03148bafc1c6f430c40041548ece633da626d5126738888239afe10"
@@ -30,10 +33,6 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 #start api
 app = FastAPI()
-
-
-#if __name__ == "__main__":
-#    uvicorn.run(app, host="0.0.0.0", port=8000)
 
 # Dependency
 # needed for closing the database session after request
@@ -60,6 +59,21 @@ def authenticate_user(username: str, password: str, db):
     if not verify_password(password, user.password):
         return False
     return user
+
+def calculate_distance_with_coordinates(coords):
+    last_point = None
+    absolute_distance = 0
+    print(coords)
+    for x in coords:
+        print(x)
+    for point in coords:
+        if last_point:
+            absolute_distance += geopy.distance(point, last_point).km
+        last_point = point
+        print(point)
+
+    return absolute_distance
+
 
 async def get_current_user(db: Session, token: str = Depends(oauth2_scheme)):
     credentials_exception = HTTPException(
@@ -114,7 +128,6 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 
 ##--------------------------------- User Routes -------------------------------------------------------------#
 
-## !! need some /users/me , which gets the user by accestoken ... TODO
 @app.get("/users/me/", response_model=schemas.UserBase, tags=['users'])
 async def read_users_me(current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     user = await get_current_user(db=db, token=current_user)
@@ -130,6 +143,7 @@ async def read_users_me(current_user: schemas.UserBase = Depends(oauth2_scheme),
 @app.post("/users/create", response_model=schemas.User, tags=['users'])
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
+    db_user_by_name = crud.get_user_by_name(db, user_name=user.userName)
 
     # Hash password and write it into the user
     hashed_pwd = pwd_context.hash(user.password)
@@ -137,6 +151,8 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
+    if db_user_by_name:
+        raise HTTPException(status_code=400, detail="Username alread taken")
     return crud.create_user(db=db, user=user)
 
 
@@ -156,14 +172,13 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
 
 ### ------------------  History Routes --------------------------------------------------#
 
-# Get history for a user TODO
-# Fixed! We dont need a response_model here
-@app.get("/history/{user_name}", tags=['history'])
-def get_history(user_name: str, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+@app.get("/history/me", tags=['history'])
+async def get_history(current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     # db_user = crud.get_user_by_name(db, user_name=user_name)
     # if db_user is None:
     #     raise HTTPException(status_code=404, detail="User not found")
-    user = get_current_user(db=db, token=current_user)
+    user = await get_current_user(db=db, token=current_user)
+
     if not current_user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -171,51 +186,105 @@ def get_history(user_name: str, current_user: schemas.UserBase = Depends(oauth2_
             headers={"WWW-Authenticate": "Bearer"}
         )
 
-    history = crud.get_history_by_user_name(db, user_name=user_name)
+    history = crud.get_history_by_user_name(db, user_name=user.userName)
     if history == []:
         raise HTTPException(status_code=404, detail="User has no History")
     return history
 
 
-@app.post("/history/create", response_model=schemas.History, tags=['history'])
-def create_history(history: schemas.HistoryCreate, db: Session = Depends(get_db)):
-    return crud.create_history(db=db, history=history)
+@app.post("/history/create", tags=['history'])
+async def create_history(history: schemas.HistoryCreate, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    user = await get_current_user(db=db, token=current_user)
+
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
+    
+    return crud.create_history(db=db, user_name=user, history=history)
 
 
-# Delete history 
 @app.post("/history/delete", tags=['history'])
-def delete_history(user_name: str, tour_id: int, db: Session = Depends(get_db)):
-    res = crud.delete_history(db, user_name=user_name, tour_id=tour_id)
+async def delete_history(history_id: int, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    user = await get_current_user(db=db, token=current_user)
+
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
+    
+    res = crud.delete_history(db, user_name=user.userName, history_id=history_id)
     if res == 0:
         raise HTTPException(status_code=404, detail="Could not delete history entry")
     return res
 
-# Delete user
-# Add coordinate point
+
 #-------------------------- Coordinate Routes ------------------------------------------------
 
 @app.post("/coordinates/create", tags=['coordinates'])
-def create_coord_data(coordinates: schemas.Coordinates, user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-    return crud.create_coordinate_entry(db=db, coordinates=coordinates)
+async def create_coord_data(coordinates: schemas.CoordinatesCreate, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    # TODO: I dont need that
+    user = await get_current_user(db=db, token=current_user)
+
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
+
+    
+    return crud.create_coordinate_entry(db=db, user_id = user.userID, coordinates=coordinates)
+
+@app.post("/coordinates/delete", tags=['coordinates'])
+async def delete_coordinates(tour_id: int, current_user: schemas.UserBase = Depends(oauth2_scheme),
+                         db: Session = Depends(get_db)):
+    user = await get_current_user(db=db, token=current_user)
+
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
+
+    res = crud.delete_all_coordinate(db, user_name=user.userName, tour_id=tour_id)
+    if res == 0:
+        raise HTTPException(status_code=404, detail="Could not delete coordinates entries")
+    return res
 
 
+@app.post("/coordinates/calculateDistance", tags=['coordinates'])
+async def calculate_distance(tour_id: int, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    # get all datasets from coordinates
+    user = await get_current_user(db=db, token=current_user)
 
-# tourID for grouping different points together
-# tourNumber to order the points (end token is -1)
-# userID as FK
-# TODO: Then add functions to add to this table
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
+    list_of_coords = crud.get_coord_by_tour_id(user_id=user.userID, tour_id=tour_id, db=db)
+    
+    distance = calculate_distance_with_coordinates(coords=list_of_coords)
+    hist = schemas.HistoryCreate(dateTime=datetime.now(), distanceTraveled=distance, receivedCoins=distance/2)
+
+    crud.create_history(user_name=user, history=hist, db=db)
+
+    crud.delete_all_coordinates(tour_id=tour_id, user_name=user.userName, db=db)
+
+    crud.user_update_coins(received_coins=distance/2, user=user, db=db)
+
+    return 0
+
     
 
 
-
-
-
-
-#@app.post("/users/{user_id}/History/", response_model=schemas.History)
-#def create_history_for_user(
-#    user_id: int, item: schemas.HistoryCreate, db: Session = Depends(get_db)
-#):
-#    return crud.create_user_item(db=db, item=item, user_id=user_id)
 
 
 

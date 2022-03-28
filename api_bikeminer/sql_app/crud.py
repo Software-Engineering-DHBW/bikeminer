@@ -11,13 +11,9 @@ from sqlalchemy.orm import Session
 
 # Methods for API Calls
 #CRUD  create read update delete
-
-
-
 # User Methods
 
-
-# This function might not be used much
+# ---------------------------- User specific queries ---------------------------------------------------------
 def get_user(db: Session, user_id: int):
     return db.query(models.Users).filter(models.Users.userID == user_id).first()
 
@@ -26,9 +22,6 @@ def get_user_by_name(db: Session, user_name: str):
 
 def get_user_by_email(db: Session, email: str):
     return db.query(models.Users).filter(models.Users.email == email).first()
-
-#def get_users(db: Session, skip: int = 0, limit: int = 100):
-#    return db.query(models.Users).offset(skip).limit(limit).all()
 
 def get_users(db: Session):
     users = []
@@ -43,24 +36,30 @@ def get_user_byname(db: Session, user_name: str):
 
 def create_user(db: Session, user: schemas.UserCreate):
     fake_hashed_password = user.password
-    db_user = models.Users(email=user.email, password=fake_hashed_password, userName=user.userName, coins=user.coins)
+    db_user = models.Users(email=user.email, password=fake_hashed_password, userName=user.userName, coins=0)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
     return db_user
 
-def create_history(db: Session, history: schemas.HistoryCreate):
-    user = db.query(models.Users).filter(models.Users.userName == history.userName).first()
-    db_history = models.History(userID=user.userID, receivedCoins=history.receivedCoins,
+def user_update_coins(received_coins: float, db: Session, user: str):
+    user.coins += received_coins
+    db.commit()
+    return 0
+
+##### -------------------------  History specific queries  ---------------------------------
+
+def create_history(db: Session, user_name: str,  history: schemas.HistoryCreate):
+    # user = db.query(models.Users).filter(models.Users.userName == history.userName).first()
+    db_history = models.History(userID=user_name.userID, receivedCoins=history.receivedCoins,
                                  distanceTraveled=history.distanceTraveled, dateTime=history.dateTime)
-    print(db_history)
+    
     db.add(db_history)
     db.commit()
     db.refresh(db_history)
-    return db_history
+    return 0
 
 def get_history_by_user_name(db: Session, user_name: str):
-    # db.query
     try:
         user = db.query(models.Users).filter(models.Users.userName == user_name).first()
 
@@ -70,35 +69,53 @@ def get_history_by_user_name(db: Session, user_name: str):
         pass
     return hist
 
-    # Why does this not work??
-    # return db.query(models.History, models.Users).join(models.Users, models.History.userID == models.Users.userID, isouter=True).filter(models.Users.userName == user_name).all()
 
-
-def delete_history(db: Session, user_name: str, tour_id: int):
+def delete_history(db: Session, user_name: str, history_id: int):
     result = None
     try:
         user = db.query(models.Users).filter(models.Users.userName == user_name).first()
         print(user.userID)
         result = db.query(models.History).filter(models.History.userID == user.userID,
-                                                    models.History.historyID == tour_id).delete()
+                                                    models.History.historyID == history_id).delete()
         db.commit()
     except AttributeError:
         print("can't delete")
     return result
 
+#####------------------------- Coordinates specific queries ------------------------
 
-
-
-def create_coordinate_entry(db: Session, coordinates: schemas.Coordinates):
-    user = db.query(models.Users).filter(models.Users.userID == coordinates.userID).first()
-    db_coordinates = models.Coordinates(userID=user.userID, tourID=coordinates.tourID, tourNumber=coordinates.tourNumber,
+def create_coordinate_entry(db: Session, user_id: int, coordinates: schemas.Coordinates):
+    #user = db.query(models.Users).filter(user_id == coordinates.userID).first()
+    db_coordinates = models.Coordinates(userID=user_id, tourID=coordinates.tourID, tourNumber=coordinates.tourNumber,
                                         longitude=coordinates.longitude, latitude=coordinates.latitude, datetime=coordinates.datetime)
 
-    print(db_coordinates)
     db.add(db_coordinates)
     db.commit()
     db.refresh(db_coordinates)
-    return db_coordinates
+    return 0
+
+def delete_all_coordinates(db: Session, user_name: str, tour_id: int):
+    result = None
+    try:
+        user = db.query(models.Users).filter(models.Users.userName == user_name).first()
+        print(user.userID)
+        result = db.query(models.Coordinates).filter(models.Coordinates.userID == user.userID,
+                                                    models.Coordinates.tourID == tour_id).delete()
+        db.commit()
+    except AttributeError:
+        print("can't delete")
+    return result
+
+def get_coord_by_tour_id(db:Session, user_id: int, tour_id: int):
+    all_coordinates = []
+    all_coordinates = [coord for coord in db.query(models.Coordinates.longitude, models.Coordinates.latitude).filter(models.Coordinates.userID == user_id, models.Coordinates.tourID == tour_id).all()]
+
+    db.commit()
+    return all_coordinates
+
+
+
+
 
 
 
