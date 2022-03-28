@@ -63,14 +63,11 @@ def authenticate_user(username: str, password: str, db):
 def calculate_distance_with_coordinates(coords):
     last_point = None
     absolute_distance = 0
-    print(coords)
-    for x in coords:
-        print(x)
     for point in coords:
+        c = (point.latitude, point.longitude)
         if last_point:
-            absolute_distance += geopy.distance(point, last_point).km
-        last_point = point
-        print(point)
+            absolute_distance += geopy.distance(c, last_point).km
+        last_point = c
 
     return absolute_distance
 
@@ -169,6 +166,19 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
+
+
+@app.post("/users/get_balance", tags=['users'])
+async def get_balance(current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    user = await get_current_user(db=db, token=current_user)
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    return schemas.UserBalance(coins=user.coins)
 
 ### ------------------  History Routes --------------------------------------------------#
 
