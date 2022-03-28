@@ -11,6 +11,10 @@ class UserBase(BaseModel):
     email: str
     coins: float
 
+class UserBalance(BaseModel):
+    coins: float
+
+
 class UserCreate(UserBase):
     userName: str
     password: str

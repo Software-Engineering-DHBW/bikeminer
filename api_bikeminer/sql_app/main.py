@@ -155,6 +155,17 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
+@app.get("/users/balance/", response_model=schemas.UserBalance, tags=['users'])
+async def get_balance(current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    user = await get_current_user(db=db, token=current_user)
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return schemas.UserBalance(coins=user.coins)
+
 ### ------------------  History Routes --------------------------------------------------#
 
 # Get history for a user TODO
