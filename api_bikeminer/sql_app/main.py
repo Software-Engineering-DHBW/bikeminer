@@ -112,7 +112,7 @@ async def get_current_user(db: Session, token: str = Depends(oauth2_scheme)):
 
 #-------------- API-Routes --------------------------------------------------##
 
-@app.post("/authenticate", response_model=schemas.Token, tags=['users'])
+@app.post("/token", response_model=schemas.Token, tags=['users'])
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = authenticate_user(form_data.username, form_data.password, db)
     if not user:
@@ -130,17 +130,18 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     return {"access_token": access_token, "token_type": "bearer"}
 
 ##--------------------------------- User Routes -------------------------------------------------------------#
+
+## !! need some /users/me , which gets the user by accestoken ... TODO
 @app.get("/users/me/", response_model=schemas.UserBase, tags=['users'])
 async def read_users_me(current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-    user = await get_current_user(db=db, token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqdyIsImV4cCI6MTY0ODQ2Mjg5M30.LrHlogUCg9PFH-JHYO2BsIxD9xTv6oZnmcVNZD0-wjQ")
+    user = await get_current_user(db=db, token=current_user)
     if not current_user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    return schemas.UserBase(id=user.id, name=user.name, role=user.role,
-                           password=user.password)
+    return schemas.UserBase( userName=user.userName, coins=user.coins, email=user.email)
 
 
 @app.post("/users/create", response_model=schemas.User, tags=['users'])
@@ -155,7 +156,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Email already registered")
     return crud.create_user(db=db, user=user)
 
-## !! need some /users/me , which gets the user by accestoken ... TODO
+
 
 @app.get("/users/all", response_model=list[schemas.User], tags=['users'])
 def read_users(db: Session = Depends(get_db)):
@@ -199,7 +200,7 @@ def create_history(history: schemas.HistoryCreate, db: Session = Depends(get_db)
 
 
 # Delete history 
-@app.post("/history/delete")
+@app.post("/history/delete", tags=['history'])
 def delete_history(user_name: str, tour_id: int, db: Session = Depends(get_db)):
     res = crud.delete_history(db, user_name=user_name, tour_id=tour_id)
     if res == 0:
