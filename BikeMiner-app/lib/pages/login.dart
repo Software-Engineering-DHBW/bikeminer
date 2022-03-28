@@ -217,31 +217,49 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  // ignore: body_might_complete_normally_nullable
   String? validatepassword(input) {
-    return input!.length < 8
-        ? "Password should be longer than 8 characters"
-        : null;
+    if (input!.length < 1) {
+      return "The Password is too short!";
+    }
+    widget._api
+        .getlogintoken(_userController.text, _passController.text)
+        .then((value) {
+      var statuscode = value["statusCode"];
+      if (statuscode == 200) {
+        debugPrint("Loged in");
+        return null;
+      } else {
+        return "${value['detail']}";
+      }
+    }).catchError((onError) {
+      return onError;
+    });
+    // return "Anything failed!";
   }
 
   String? validateusername(input) {
-    return input!.length < 8
-        ? "Password should be longer than 8 characters"
-        : null;
+    return input!.length < 1 ? "The Username is too short!" : null;
   }
 
   void login() {
-    // TODO: login validation aktivieren
-    bool user = true; //_userKey.currentState!.validate();
-    bool passwd = true; //_passKey.currentState!.validate();
-    if (user && passwd) {
+    bool user = _userKey.currentState!.validate();
+    bool pass = _passKey.currentState!.validate();
+    if (user && pass) {
       var _user = _userController.text;
       var _passwd = _passController.text;
       if (_remember) {
-        widget._sa.updateElementwithKey("Username", _user);
-        widget._sa.updateElementwithKey("Password", _passwd);
+        debugPrint("Writing to storage?");
+        widget._sa.updateElementwithKey("Username", _user).then((value) {
+          widget._sa.updateElementwithKey("Password", _passwd).then((value) {
+            Navigator.pop(context);
+            Navigator.pushNamed(context, route.mapPage);
+          });
+        });
+      } else {
+        Navigator.pop(context);
+        Navigator.pushNamed(context, route.mapPage);
       }
-      Navigator.pop(context);
-      Navigator.pushNamed(context, route.mapPage);
     }
   }
 }

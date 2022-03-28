@@ -1,41 +1,61 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class APIConnector {
-  final _server_url = Uri.parse(
-      "https://nominatim.openstreetmap.org/search?q=mannheim&format=json");
-  var client = http.Client();
-
-  bool _logedin = false;
+  String _access_token = "";
+  final _server = "192.168.2.147";
+  final _port = "8000";
   String _username = "";
   String _password = "";
 
-  bool postRequest() {
-    return true;
-  }
-
-  void getRequest() async {
-    http.Response response = await client.get(_server_url);
-    var body = response.body;
-
-    var object = json.decode(body);
-
-    for (int i = 0; i < object.length; i++) {
-      print(object[i]);
-    }
-    // return object;
-  }
-
-  bool islogedin() {
-    return _logedin;
-  }
-
-  bool login(username, password) {
-    if (_logedin) {
+  bool hasaccestoken() {
+    if (_access_token != "") {
       return true;
-    } else {
-      return false;
     }
     return false;
+  }
+
+  void logout() {
+    _username = "";
+    _password = "";
+    _access_token = "";
+  }
+
+  String getusername() {
+    return _username;
+  }
+
+  Future<Map<String, dynamic>> getlogintoken(username, password) async {
+    _username = username;
+    _password = password;
+    Map<String, dynamic> formMap = {
+      "grant_type": "",
+      "username": "$username",
+      "password": "$password",
+      "scope": "",
+      "client_id": "",
+      "client_secret": ""
+    };
+    final response = await post(Uri.parse('http://$_server:$_port/token'),
+        body: formMap,
+        headers: {
+          "accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded"
+        });
+    debugPrint("${response.statusCode}${response.body}");
+    if (response.statusCode == 200) {
+      Map<String, dynamic> res = {
+        "statusCode": response.statusCode,
+      };
+      _access_token = json.decode(response.body)['access_token'];
+      return res;
+    } else {
+      Map<String, dynamic> res = {
+        "statusCode": response.statusCode,
+        "detail": json.decode(response.body)["detail"]
+      };
+      return res;
+    }
   }
 }

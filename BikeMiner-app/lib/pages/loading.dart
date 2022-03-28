@@ -15,7 +15,7 @@ class LoadingPage extends StatefulWidget {
 
 class _LoadingPageState extends State<LoadingPage> {
   // final StorageAdapter _sa = StorageAdapter();
-  late String? _password;
+  // late String? _password;
   late BuildContext _context;
 
   @override
@@ -30,17 +30,26 @@ class _LoadingPageState extends State<LoadingPage> {
         debugPrint("Logindata are available in Storage!");
         debugPrint("Try to Login!");
 
-        try {
-          // TODO: LOGIN to API
-          debugPrint("Loged in!");
-        } catch (e) {
+        widget._api.getlogintoken(username, password).then((value) {
+          var statuscode = value["statusCode"];
+          if (statuscode == 200) {
+            debugPrint("Loged in!");
+            Navigator.pop(context);
+            Navigator.pushNamed(context, route.mapPage);
+          } else {
+            debugPrint("Login failed!");
+            widget._sa.deleteAll();
+            Navigator.pop(_context);
+            Navigator.pushNamed(_context, route.loginPage);
+          }
+        }).catchError((onError) {
           debugPrint("Login failed!");
           widget._sa.deleteAll();
           Navigator.pop(_context);
           Navigator.pushNamed(_context, route.loginPage);
-        }
+        });
       }
-    }).timeout(const Duration(seconds: 3));
+    }).timeout(const Duration(seconds: 5));
     super.initState();
   }
 

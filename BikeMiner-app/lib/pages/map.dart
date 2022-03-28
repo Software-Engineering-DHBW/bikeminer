@@ -72,7 +72,7 @@ class _MapState extends State<Map> {
       _mapcontext = context;
     });
     return Scaffold(
-      drawer: NavigationDrawerWidget(context, () => logout()),
+      drawer: NavigationDrawerWidget(context, () => logout(), widget._api),
       appBar: AppBar(
         title: const Text(
           "BikeMiner",
@@ -348,13 +348,16 @@ class _MapState extends State<Map> {
   }
 
   /// for canceling the location subscription and for logging out
-  void logout() {
+  Future<int> logout() async {
     if (_islocationsubscriped) {
       setState(() {
         riding = false;
       });
       _locationSubscription.cancel();
     }
+    widget._api.logout();
+    widget._sa.deleteAll();
+    return 0;
   }
 
   /// load the markerimage in bytedata
