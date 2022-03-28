@@ -1,3 +1,4 @@
+from lib2to3.pgen2 import token
 from typing import Optional, List
 from datetime import datetime, timedelta
 from wsgiref import headers
@@ -164,7 +165,7 @@ async def get_history(current_user: schemas.UserBase = Depends(oauth2_scheme), d
     # if db_user is None:
     #     raise HTTPException(status_code=404, detail="User not found")
     user = await get_current_user(db=db, token=current_user)
-    
+
     if not current_user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -185,8 +186,17 @@ def create_history(history: schemas.HistoryCreate, db: Session = Depends(get_db)
 
 # Delete history 
 @app.post("/history/delete", tags=['history'])
-def delete_history(user_name: str, tour_id: int, db: Session = Depends(get_db)):
-    res = crud.delete_history(db, user_name=user_name, tour_id=tour_id)
+async def delete_history(tour_id: int, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    user = await get_current_user(db=db, token=current_user)
+
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
+    
+    res = crud.delete_history(db, user_name=user.userName, tour_id=tour_id)
     if res == 0:
         raise HTTPException(status_code=404, detail="Could not delete history entry")
     return res
