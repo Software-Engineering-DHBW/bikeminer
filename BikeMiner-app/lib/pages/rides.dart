@@ -10,14 +10,11 @@ class RidesPage extends StatefulWidget {
 }
 
 class _RidesPageState extends State<RidesPage> {
-  APIConnector n = APIConnector();
   List _items = [];
 
-  //late var text = "";
-
   void getR() {
-    n.getHistory().then((value){
-      setState((){
+    widget._api.getHistory().then((value) {
+      setState(() {
         _items = value;
       });
     });
@@ -28,10 +25,12 @@ class _RidesPageState extends State<RidesPage> {
     getR();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     const title = 'Rides';
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: title,
       home: Scaffold(
         appBar: AppBar(
@@ -58,41 +57,41 @@ class _RidesPageState extends State<RidesPage> {
               // Display the data loaded from sample.json
               _items.isNotEmpty
                   ? Expanded(
-                child: ListView.builder(
-                  itemCount: _items.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: ListTile(
-                        leading: Column(
-                          children: [
-                            const Text("Datum: "),
-                            Text(_items[index]["dateTime"].toString())
-                          ],
-                        ),
-                        title: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Gefahrene Strecke: "),
-                            Text(_items[index]["distanceTraveled"].toString())
-                          ],
-                        ),
-                        subtitle: Column(
-                          children: [
-                            Text("History-ID: " +
-                                _items[index]["historyID"].toString()),
-                          ],
-                        ),
-                        trailing: Column(
-                          children: [
-                            Text("User-ID: "),
-                            Text(_items[index]["userID"].toString())
-                          ],
-                        ),
+                      child: ListView.builder(
+                        itemCount: _items.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            child: ListTile(
+                              leading: Column(
+                                children: [
+                                  const Text("Datum: "),
+                                  Text(_items[index]["dateTime"].toString())
+                                ],
+                              ),
+                              title: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text("Gefahrene Strecke: "),
+                                  Text("${_items[index]["distanceTraveled"]}km")
+                                ],
+                              ),
+                              subtitle: Column(
+                                children: [
+                                  Text("History-ID: " +
+                                      _items[index]["historyID"].toString()),
+                                ],
+                              ),
+                              trailing: Column(
+                                children: [
+                                  const Text("User-ID: "),
+                                  Text(_items[index]["userID"].toString())
+                                ],
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
-              )
+                    )
                   : Container()
             ],
           ),

@@ -10,15 +10,13 @@ class WalletPage extends StatefulWidget {
 }
 
 class _WalletPageState extends State<WalletPage> {
-
-  APIConnector n = APIConnector();
-  List _items = [];
+  double _items = 0;
 
   //late var text = "";
 
   void getR() {
-    n.getusersall().then((value){
-      setState((){
+    widget._api.getbalance().then((value) {
+      setState(() {
         _items = value;
       });
     });
@@ -45,43 +43,14 @@ class _WalletPageState extends State<WalletPage> {
         child: Column(
           children: [
             // Display the data loaded from sample.json
-            _items.isNotEmpty
-                ? Expanded(
-              child: ListView.builder(
-                itemCount: _items.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    child: ListTile(
-                      leading: Column(
-                        children: [
-                          const Text("User: "),
-                          Text(_items[index]["userName"].toString())
-                        ],
-                      ),
-                      title: Column(
-                        children: [
-                          const Text("Coins: "),
-                          Text(_items[index]["coins"].toString())
-                        ],
-                      ),
-                      subtitle: Column(
-                        children: [
-                          Text("Email: " +
-                              _items[index]["email"].toString()),
-                        ],
-                      ),
-                      trailing: Column(
-                        children: [
-                          const Text("User-ID: "),
-                          Text(_items[index]["userID"].toString())
-                        ],
-                      ),
-                    ),
-                  );
-                },
+
+            Card(
+              child: ListTile(
+                title: Column(
+                  children: [const Text("Coins: "), Text(_items.toString())],
+                ),
               ),
-            )
-                : Container()
+            ),
           ],
         ),
       ),

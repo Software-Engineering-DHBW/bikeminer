@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
+import 'package:intl/intl.dart';
 import 'package:bikeminer/backend/api_connector.dart';
 import 'package:bikeminer/backend/storage_adapter.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,8 @@ class _MapState extends State<Map> {
   double zoomlevel = 10.0;
   bool follow = false;
   bool riding = false;
+
+  DateTime lastsend = DateTime(2000);
 
   // bool _serviceEnabled = false;
   // late PermissionStatus _permissionGranted;
@@ -153,6 +156,9 @@ class _MapState extends State<Map> {
                 onPressed: () {
                   if (!riding) {
                     getCurrentLocation();
+                  } else {
+                    debugPrint("aufhören");
+                    widget._api.stopriding();
                   }
                   setState(() {
                     riding = !riding;
@@ -205,71 +211,10 @@ class _MapState extends State<Map> {
     }
   }
 
-  /// check if the app has the permission to run in the background
-  // void permissionBackground() {
-  //   FlutterBackground.hasPermissions.then((value) {
-  //     setState(() {
-  //       backgroundpermission = value;
-  //     });
-  //     debugPrint("BackgroundPermission id: $value!");
-  //   }).catchError((error) {
-  //     setState(() {
-  //       backgroundpermission = false;
-  //     });
-  //     debugPrint("Get BackgroundPermission failed!");
-  //   });
-  // }
-
   /// set the current zoom level
   Future<void> setzoomlevel() async {
     zoomlevel = await _controller.getZoomLevel();
   }
-
-  // /// Permission Location
-  // bool getLocationPermission() {
-  //   try {
-  //     _locationTracker.serviceEnabled().then((value) {
-  //       _serviceEnabled = value;
-
-  //       if (!_serviceEnabled) {
-  //         _locationTracker.requestService().then((value) {
-  //           _serviceEnabled = value;
-  //           if (!_serviceEnabled) return false;
-  //         });
-  //       }
-  //     });
-  //     _locationTracker.hasPermission().then((value) {
-  //       _permissionGranted = value;
-
-  //       if (_permissionGranted == PermissionStatus.denied) {
-  //         _locationTracker.requestPermission().then((value) {
-  //           setState(() {
-  //             _permissionGranted = value;
-  //           });
-  //         });
-  //         if (_permissionGranted != PermissionStatus.granted) {
-  //           showMyDialog(
-  //               context,
-  //               "Permission ERROR",
-  //               "Die App besitzt momentan nicht die Berechtigungen die sie benötigt!",
-  //               "Damit Sie den vollen Funktionsumfang der App nutzen können, erlauben sie der App in den Einstellungen unter Settings > Apps & notifications Zugriff auf ihre Standortdaten!");
-
-  //           return false;
-  //         } else {
-  //           return true;
-  //         }
-  //       }
-  //     });
-  //   } catch (err) {
-  //     showMyDialog(
-  //         context,
-  //         "ERROR",
-  //         "Ein Fehler bei der Abfrage der Berechtigung ist aufgetreten!",
-  //         "$err");
-  //   }
-
-  //   return false;
-  // }
 
   /// subscripe the location data and set the
   void getCurrentLocation() async {
@@ -371,9 +316,15 @@ class _MapState extends State<Map> {
 
   /// for start the intervall gps location upload to the server
   void startRiding(LocationData newLocalData) {
-    int timestamp = DateTime.now().millisecondsSinceEpoch;
-    debugPrint(
-        "Timestamp: $timestamp, Lat: ${newLocalData.latitude}, Long: ${newLocalData.longitude}");
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-ddTkk:mm:ss').format(now);
+    if (now.difference(lastsend).inSeconds > 8) {
+      lastsend = now;
+      debugPrint(
+          "Timestamp: $formattedDate, Lat: ${newLocalData.latitude}, Long: ${newLocalData.longitude}");
+      widget._api.sendcoordinates(
+          newLocalData.latitude, newLocalData.longitude, formattedDate);
+    }
   }
 
   /// for updating the positionmarker on the map

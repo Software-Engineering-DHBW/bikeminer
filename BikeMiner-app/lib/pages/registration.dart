@@ -306,7 +306,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
-  Future<String> validate_registration(user, email, password) async {
+  Future<String> validateregistration(user, email, password) async {
     var value = await widget._api.createUser(user, email, password);
 
     var statuscode = value["statusCode"];
@@ -328,7 +328,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       var _email = _emailController.text;
       var _passwd = _passwdController.text;
 
-      validate_registration(_user, _email, _passwd).then((value) {
+      validateregistration(_user, _email, _passwd).then((value) {
         if (value == "") {
           debugPrint("$_user, $_email, $_passwd");
           Navigator.pop(context);
