@@ -100,8 +100,12 @@ def create_coordinate_entry(db: Session, coordinates: schemas.Coordinates):
     return 0
 
 def get_coord_by_tour_id(db:Session, user_id: int, tour_id: int):
-    all_coordinates = db.query(models.Coordinates).filter(models.Coordinates.userID == user_id, models.Coordinates.tourID == tour_id)
+    all_coordinates = []
+    all_coordinates = [coord for coord in db.query(models.Coordinates).filter(models.Coordinates.userID == user_id, models.Coordinates.tourID == tour_id).all()]
     print(all_coordinates)
+
+    for x in all_coordinates:
+        print(x)
     db.commit()
     return all_coordinates
 

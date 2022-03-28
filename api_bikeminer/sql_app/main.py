@@ -13,6 +13,7 @@ from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 from fastapi.responses import StreamingResponse
 from jose import JWTError, jwt
+import geopy.distance as geopy
 
 # needed for create_access_token()
 SECRET_KEY = "55e52afbc03148bafc1c6f430c40041548ece633da626d5126738888239afe10"
@@ -61,6 +62,19 @@ def authenticate_user(username: str, password: str, db):
     if not verify_password(password, user.password):
         return False
     return user
+
+def calculate_distance(tour_id: int, db):
+    # get entrys
+    coords = []
+    # calc distance
+    last_point = None
+    for point in coords:
+        if last_point:
+            pass
+        # last_point = ()
+    # return distance
+    pass
+
 
 async def get_current_user(db: Session, token: str = Depends(oauth2_scheme)):
     credentials_exception = HTTPException(
@@ -155,17 +169,6 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
-@app.get("/users/balance/", response_model=schemas.UserBalance, tags=['users'])
-async def get_balance(current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-    user = await get_current_user(db=db, token=current_user)
-    if not current_user:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    return schemas.UserBalance(coins=user.coins)
-
 ### ------------------  History Routes --------------------------------------------------#
 
 # Get history for a user TODO
@@ -217,9 +220,37 @@ async def delete_history(tour_id: int, current_user: schemas.UserBase = Depends(
 # Add coordinate point
 #-------------------------- Coordinate Routes ------------------------------------------------
 
-@app.post("/coordinates/create", tags=['coordinates'])
-def create_coord_data(coordinates: schemas.Coordinates, user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+@app.post("/coordinates/create", response_model=schemas.CoordinatesCreate , tags=['coordinates'])
+async def create_coord_data(coordinates: schemas.CoordinatesCreate, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    # TODO: I dont need that
+    user = await get_current_user(db=db, token=current_user)
+
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
+
+    # coordinates.userID = user.userID
+    
     return crud.create_coordinate_entry(db=db, coordinates=coordinates)
+
+@app.post("/coordinates/calculateDistance", tags=['coordinates'])
+async def calculate_distance(tour_id: int, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    # get all datasets from coordinates
+    user = await get_current_user(db=db, token=current_user)
+
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
+    return crud.get_coord_by_tour_id(user_id=user.userID, tour_id=tour_id, db=db)
+    
+    # return calculate_distance(db=db, user_id = user.userID, tour_id=tour_id)
+    # 
 
 
 
