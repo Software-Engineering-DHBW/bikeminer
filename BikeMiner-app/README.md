@@ -9,13 +9,13 @@ Diese App ist in Flutter geschrieben.
 
 2. Mit ANdroid Studio oder anderer flutter fähiger IDE öffnen.
 3. Auf aufgepoppte Nachricht rechts unten mit "get dependency" (flutter pub get) drücken/ausführen.
-    -Keine Nachricht?
-        -Terminal im Pfad öffenen
-        -"Flutter pub get" ausführen 
+    - Keine Nachricht?
+        - Terminal im Pfad öffenen
+        - "Flutter pub get" ausführen 
 
 4. Android Smartphone an Rechner anschließen (oder Virtuelles Gerät im Device Manager erstellen)
-    -Achtung: Gerät muss Google Play fähig sein
-    -Alte Geräte müssen ggf. zunächst ein Google Services Update durchführen
+    - Achtung: Gerät muss Google Play fähig sein
+    - Alte Geräte müssen ggf. zunächst ein Google Services Update durchführen
 
 5. Datei lib/main.dart aufrufen
 6. rechts oben auf debuggen drücken
