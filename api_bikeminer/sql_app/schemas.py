@@ -42,15 +42,15 @@ class History(HistoryBase):
         orm_mode = True
 
 
-class Coordinates(BaseModel):
-    coordID: int
+class CoordinatesCreate(BaseModel):
     tourID: int
     tourNumber: int
     userID: int
     longitude: float
     latitude: float
     datetime: datetime
-
+class Coordinates(CoordinatesCreate):
+    coordID: int
 
 
 ## for authentication
