@@ -222,7 +222,7 @@ async def delete_history(history_id: int, current_user: schemas.UserBase = Depen
 
 #-------------------------- Coordinate Routes ------------------------------------------------
 
-@app.post("/coordinates/create", response_model=schemas.CoordinatesCreate , tags=['coordinates'])
+@app.post("/coordinates/create", tags=['coordinates'])
 async def create_coord_data(coordinates: schemas.CoordinatesCreate, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     # TODO: I dont need that
     user = await get_current_user(db=db, token=current_user)
@@ -272,6 +272,10 @@ async def calculate_distance(tour_id: int, current_user: schemas.UserBase = Depe
     hist = schemas.HistoryCreate(dateTime=datetime.now(), distanceTraveled=distance, receivedCoins=distance/2)
 
     crud.create_history(user_name=user, history=hist, db=db)
+
+    crud.delete_all_coordinates(tour_id=tour_id, user_name=user.userName, db=db)
+
+    crud.user_update_coins(received_coins=distance/2, user=user, db=db)
 
     
 

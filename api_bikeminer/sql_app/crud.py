@@ -42,8 +42,10 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.refresh(db_user)
     return db_user
 
-def user_update_coins(db: Session, user: str):
-    pass
+def user_update_coins(received_coins: float, db: Session, user: str):
+    user.coins += received_coins
+    db.commit()
+    return 0
 
 ##### -------------------------  History specific queries  ---------------------------------
 
@@ -92,7 +94,7 @@ def create_coordinate_entry(db: Session, user_id: int, coordinates: schemas.Coor
     db.refresh(db_coordinates)
     return 0
 
-def delete_all_coordinate(db: Session, user_name: str, tour_id: int):
+def delete_all_coordinates(db: Session, user_name: str, tour_id: int):
     result = None
     try:
         user = db.query(models.Users).filter(models.Users.userName == user_name).first()
