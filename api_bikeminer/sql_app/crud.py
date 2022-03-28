@@ -49,7 +49,7 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.refresh(db_user)
     return db_user
 
-def create_history(db: Session, history: schemas.HistoryCreate):
+def create_history(db: Session, user_name: str,  history: schemas.HistoryCreate):
     user = db.query(models.Users).filter(models.Users.userName == history.userName).first()
     db_history = models.History(userID=user.userID, receivedCoins=history.receivedCoins,
                                  distanceTraveled=history.distanceTraveled, dateTime=history.dateTime)
