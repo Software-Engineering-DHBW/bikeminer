@@ -99,6 +99,18 @@ def create_coordinate_entry(db: Session, user_id: int, coordinates: schemas.Coor
     db.refresh(db_coordinates)
     return 0
 
+def delete_all_coordinate(db: Session, user_name: str, tour_id: int):
+    result = None
+    try:
+        user = db.query(models.Users).filter(models.Users.userName == user_name).first()
+        print(user.userID)
+        result = db.query(models.Coordinates).filter(models.Coordinates.userID == user.userID,
+                                                    models.Coordinates.tourID == tour_id).delete()
+        db.commit()
+    except AttributeError:
+        print("can't delete")
+    return result
+
 def get_coord_by_tour_id(db:Session, user_id: int, tour_id: int):
     all_coordinates = []
     all_coordinates = [coord for coord in db.query(models.Coordinates).filter(models.Coordinates.userID == user_id, models.Coordinates.tourID == tour_id).all()]

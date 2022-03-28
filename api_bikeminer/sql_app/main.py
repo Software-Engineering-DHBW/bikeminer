@@ -243,6 +243,24 @@ async def create_coord_data(coordinates: schemas.CoordinatesCreate, current_user
     return crud.create_coordinate_entry(db=db, user_id=user.userID, coordinates=coordinates)
 
 
+@app.post("/coordinates/delete", tags=['coordinates'])
+async def delete_coordinates(tour_id: int, current_user: schemas.UserBase = Depends(oauth2_scheme),
+                         db: Session = Depends(get_db)):
+    user = await get_current_user(db=db, token=current_user)
+
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
+
+    res = crud.delete_all_coordinate(db, user_name=user.userName, tour_id=tour_id)
+    if res == 0:
+        raise HTTPException(status_code=404, detail="Could not delete coordinates entries")
+    return res
+
+
 @app.post("/coordinates/calculateDistance", tags=['coordinates'])
 async def calculate_distance(tour_id: int, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     # get all datasets from coordinates
