@@ -91,24 +91,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None, c
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-async def get_current_user(db: Session, token: str = Depends(oauth2_scheme)):
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
-        if username is None:
-            raise credentials_exception
-        token_data = schemas.TokenData(username=username)
-    except JWTError:
-        raise credentials_exception
-    user = crud.get_user_byname(user_name=token_data.username, db=db)
-    if user is None:
-        raise credentials_exception
-    return user
+
 
 #-------------- API-Routes --------------------------------------------------##
 
@@ -158,7 +141,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 
 
-@app.get("/users/all", response_model=list[schemas.User], tags=['users'])
+@app.get("/users/all", tags=['users'])
 def read_users(db: Session = Depends(get_db)):
     users = crud.get_users(db)
     return users
