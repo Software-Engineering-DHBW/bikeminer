@@ -36,6 +36,6 @@ CREATE TABLE bikeminer.Coordinates (
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );
-INSERT INTO `Users` VALUES (1,'testUser','password123','t@gmx.de',10.5);
+INSERT INTO `Users` VALUES (1,'testUser','$2b$12$n6/ZBtuxnqe5pYxxoMYqLOo47AeOuljLcZio8/.0R8YwbNfoBeJTu','t@gmx.de',10.5);
 INSERT INTO `History` VALUES (1,1,0.5,12000,'2022-03-11 15:25:00');
 GRANT ALL PRIVILEGES ON *.* TO 'profi'@'%';

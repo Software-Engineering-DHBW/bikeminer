@@ -34,10 +34,6 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 #start api
 app = FastAPI()
 
-
-#if __name__ == "__main__":
-#    uvicorn.run(app, host="0.0.0.0", port=8000)
-
 # Dependency
 # needed for closing the database session after request
 def get_db():
@@ -132,7 +128,6 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 
 ##--------------------------------- User Routes -------------------------------------------------------------#
 
-## !! need some /users/me , which gets the user by accestoken ... TODO
 @app.get("/users/me/", response_model=schemas.UserBase, tags=['users'])
 async def read_users_me(current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     user = await get_current_user(db=db, token=current_user)
@@ -174,8 +169,6 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
 
 ### ------------------  History Routes --------------------------------------------------#
 
-# Get history for a user TODO
-# Fixed! We dont need a response_model here
 @app.get("/history/me", tags=['history'])
 async def get_history(current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     # db_user = crud.get_user_by_name(db, user_name=user_name)
@@ -210,9 +203,8 @@ async def create_history(history: schemas.HistoryCreate, current_user: schemas.U
     return crud.create_history(db=db, user_name=user, history=history)
 
 
-# Delete history 
 @app.post("/history/delete", tags=['history'])
-async def delete_history(tour_id: int, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+async def delete_history(history_id: int, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     user = await get_current_user(db=db, token=current_user)
 
     if not current_user:
@@ -222,13 +214,12 @@ async def delete_history(tour_id: int, current_user: schemas.UserBase = Depends(
             headers={"WWW-Authenticate": "Bearer"}
         )
     
-    res = crud.delete_history(db, user_name=user.userName, tour_id=tour_id)
+    res = crud.delete_history(db, user_name=user.userName, history_id=history_id)
     if res == 0:
         raise HTTPException(status_code=404, detail="Could not delete history entry")
     return res
 
-# Delete user
-# Add coordinate point
+
 #-------------------------- Coordinate Routes ------------------------------------------------
 
 @app.post("/coordinates/create", response_model=schemas.CoordinatesCreate , tags=['coordinates'])
@@ -243,9 +234,26 @@ async def create_coord_data(coordinates: schemas.CoordinatesCreate, current_user
             headers={"WWW-Authenticate": "Bearer"}
         )
 
-    # coordinates.userID = user.userID
     
-    return crud.create_coordinate_entry(db=db, coordinates=coordinates)
+    return crud.create_coordinate_entry(db=db, user_id = user.userID, coordinates=coordinates)
+
+@app.post("/coordinates/delete", tags=['coordinates'])
+async def delete_coordinates(tour_id: int, current_user: schemas.UserBase = Depends(oauth2_scheme),
+                         db: Session = Depends(get_db)):
+    user = await get_current_user(db=db, token=current_user)
+
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
+
+    res = crud.delete_all_coordinate(db, user_name=user.userName, tour_id=tour_id)
+    if res == 0:
+        raise HTTPException(status_code=404, detail="Could not delete coordinates entries")
+    return res
+
 
 @app.post("/coordinates/calculateDistance", tags=['coordinates'])
 async def calculate_distance(tour_id: int, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
@@ -268,23 +276,6 @@ async def calculate_distance(tour_id: int, current_user: schemas.UserBase = Depe
     
 
 
-
-# tourID for grouping different points together
-# tourNumber to order the points (end token is -1)
-# userID as FK
-# TODO: Then add functions to add to this table
-    
-
-
-
-
-
-
-#@app.post("/users/{user_id}/History/", response_model=schemas.History)
-#def create_history_for_user(
-#    user_id: int, item: schemas.HistoryCreate, db: Session = Depends(get_db)
-#):
-#    return crud.create_user_item(db=db, item=item, user_id=user_id)
 
 
 
