@@ -67,13 +67,24 @@ def calculate_distance(tour_id: int, db):
     # get entrys
     coords = []
     # calc distance
+
+def calculate_distance_with_coordinates(coords):
+
     last_point = None
     for point in coords:
         if last_point:
+
             pass
         # last_point = ()
     # return distance
     pass
+
+            absolute_distance += geopy.distance(point, last_point).km
+        last_point = point
+        print(point)
+
+    return absolute_distance
+
 
 
 async def get_current_user(db: Session, token: str = Depends(oauth2_scheme)):
@@ -250,6 +261,10 @@ async def calculate_distance(tour_id: int, current_user: schemas.UserBase = Depe
         )
     return crud.get_coord_by_tour_id(user_id=user.userID, tour_id=tour_id, db=db)
     
+
+
+    distance = calculate_distance_with_coordinates(coords=list_of_coords, tour_id=tour_id, db=db)
+
     # return calculate_distance(db=db, user_id = user.userID, tour_id=tour_id)
     # 
 
