@@ -224,6 +224,7 @@ async def delete_history(tour_id: int, current_user: schemas.UserBase = Depends(
 async def create_coord_data(coordinates: schemas.CoordinatesCreate, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     # TODO: I dont need that
     user = await get_current_user(db=db, token=current_user)
+    user_id = user.userID
 
     if not current_user:
         raise HTTPException(
@@ -234,7 +235,7 @@ async def create_coord_data(coordinates: schemas.CoordinatesCreate, current_user
 
     # coordinates.userID = user.userID
     
-    return crud.create_coordinate_entry(db=db, coordinates=coordinates)
+    return crud.create_coordinate_entry(db=db, user_id=user_id, coordinates=coordinates)
 
 @app.post("/coordinates/calculateDistance", tags=['coordinates'])
 async def calculate_distance(tour_id: int, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
