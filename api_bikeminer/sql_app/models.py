@@ -25,6 +25,9 @@ class History(Base):
 
     def __str__(self) -> str:
         return f"History: \nID: {self.historyID}\nUserID: {self.userID}\nCoins: {self.receivedCoins}\nDistance: {self.distanceTraveled}\nDatetime: {self.dateTime}"
+    # def __str__(self) -> str:
+    #     return f"History: \nID: {self.historyID}\nUserID: {self.userID}\nCoins: {self.receivedCoins}\nDistance: {self.distanceTraveled}\nDatetime: {self.dateTime}"
+
     #users = relationship("Users", back_populates=History)
 
 class Coordinates(Base):

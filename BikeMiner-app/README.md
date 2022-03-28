@@ -5,7 +5,7 @@ Diese App ist in Flutter geschrieben.
 ## Setup and run
 
 1. Flutter installieren
-    [Flutter Installation](https://docs.flutter.dev/get-started/install/windows)
+    [Flutter Installation](https://docs.flutter.dev/get-started/install)
 
 2. Mit ANdroid Studio oder anderer flutter fähiger IDE öffnen.
 3. Auf aufgepoppte Nachricht rechts unten mit "get dependency" (flutter pub get) drücken/ausführen.
