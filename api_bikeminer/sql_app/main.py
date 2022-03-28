@@ -63,14 +63,11 @@ def authenticate_user(username: str, password: str, db):
 def calculate_distance_with_coordinates(coords):
     last_point = None
     absolute_distance = 0
-    print(coords)
-    for x in coords:
-        print(x)
     for point in coords:
+        c = (point.latitude, point.longitude)
         if last_point:
-            absolute_distance += geopy.distance(point, last_point).km
-        last_point = point
-        print(point)
+            absolute_distance += geopy.distance(c, last_point).km
+        last_point = c
 
     return absolute_distance
 
