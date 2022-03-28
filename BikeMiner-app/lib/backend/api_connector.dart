@@ -4,10 +4,9 @@ import 'package:http/http.dart';
 
 class APIConnector {
   String _access_token = "";
-  final _server = "10.0.2.2";
+  final _server = "192.168.2.147";
   final _port = "8000";
   String _username = "";
-  String _password = "";
 
   bool hasaccestoken() {
     if (_access_token != "") {
@@ -18,7 +17,6 @@ class APIConnector {
 
   void logout() {
     _username = "";
-    _password = "";
     _access_token = "";
   }
 
@@ -28,7 +26,6 @@ class APIConnector {
 
   Future<Map<String, dynamic>> getlogintoken(username, password) async {
     _username = username;
-    _password = password;
     Map<String, dynamic> formMap = {
       "grant_type": "",
       "username": "$username",
@@ -58,6 +55,39 @@ class APIConnector {
       return res;
     }
   }
+
+  Future<Map<String, dynamic>> createUser(username, email, password) async {
+    Map<String, String> formMap = {
+      "userName": "$username",
+      "email": "$email",
+      "password": "$password"
+    };
+    var data =
+        '{"userName": "$username","email": "$email","password": "$password"}';
+
+    final response = await post(
+        Uri.parse('http://$_server:$_port/users/create'),
+        body: data,
+        headers: {
+          "accept": "application/json",
+          "Content-Type": "application/json"
+        });
+    debugPrint("${response.statusCode}${response.body}");
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> res = {
+        "statusCode": response.statusCode,
+      };
+      return res;
+    } else {
+      Map<String, dynamic> res = {
+        "statusCode": response.statusCode,
+        "detail": json.decode(response.body)["detail"]
+      };
+      return res;
+    }
+  }
+
   ///Alle Benutzerdaten
   Future<List> getusersall() async {
     // var _request = Uri.parse("http://$_server:$_port/users/all");
@@ -69,6 +99,7 @@ class APIConnector {
       throw Exception('Failed to fetch');
     }
   }
+
   ///Historie-Daten
   Future<List> getHistory() async {
     // var _request = Uri.parse("http://$_server:$_port/users/all");
@@ -82,6 +113,5 @@ class APIConnector {
       throw Exception('Failed to fetch');
       //return "";
     }
-
   }
 }

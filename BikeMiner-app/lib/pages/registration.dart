@@ -15,6 +15,7 @@ class RegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<RegistrationPage> {
   bool _hidePassword = true;
+  String _registration_error_text = "";
   final TextEditingController _userController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwdController = TextEditingController();
@@ -28,6 +29,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   void dispose() {
     _userController.dispose();
+    _emailController.dispose();
     _passwdController.dispose();
     _passwdvController.dispose();
     super.dispose();
@@ -114,8 +116,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           // onSaved: ,
                           validator: (input) =>
                               EmailValidator.validate("$input")
-                                  ? "Email is not valid"
-                                  : null,
+                                  ? null
+                                  : "Email is not valid",
                           decoration: InputDecoration(
                             hintText: "E-Mail",
                             enabledBorder: UnderlineInputBorder(
@@ -241,19 +243,21 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         height: 30,
                       ),
 
+                      // Errortext
+                      Text(
+                        _registration_error_text,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+
+                      // Abstand
+                      const SizedBox(
+                        height: 5,
+                      ),
+
                       // Registrationbutton
                       ElevatedButton(
                         onPressed: () {
-                          bool user = _userKey.currentState!.validate();
-                          bool passwd = _passKey.currentState!.validate();
-                          bool passwdvalid =
-                              _passvalidKey.currentState!.validate();
-                          if (user && passwd && passwdvalid) {
-                            var _user = _userController.text;
-                            var _passwd = _passwdController.text;
-                            Navigator.pop(context);
-                            Navigator.pushNamed(context, route.loginPage);
-                          }
+                          registration();
                         },
                         child: const Text(
                           "Registrate",
@@ -300,5 +304,41 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ),
       ),
     );
+  }
+
+  Future<String> validate_registration(user, email, password) async {
+    var value = await widget._api.createUser(user, email, password);
+
+    var statuscode = value["statusCode"];
+    if (statuscode == 200) {
+      debugPrint("Registarted");
+      return "";
+    } else {
+      return "${value['detail']}";
+    }
+  }
+
+  void registration() {
+    bool user = _userKey.currentState!.validate();
+    bool email = _emailKey.currentState!.validate();
+    bool pass = _passKey.currentState!.validate();
+    bool passvalid = _passvalidKey.currentState!.validate();
+    if (user && email && pass && passvalid) {
+      var _user = _userController.text;
+      var _email = _emailController.text;
+      var _passwd = _passwdController.text;
+
+      validate_registration(_user, _email, _passwd).then((value) {
+        if (value == "") {
+          debugPrint("$_user, $_email, $_passwd");
+          Navigator.pop(context);
+          Navigator.pushNamed(context, route.loginPage);
+        } else {
+          setState(() {
+            _registration_error_text = value;
+          });
+        }
+      });
+    }
   }
 }
