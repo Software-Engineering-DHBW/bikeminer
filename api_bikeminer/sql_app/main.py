@@ -1,4 +1,5 @@
 from lib2to3.pgen2 import token
+from msilib.schema import Error
 from typing import Optional, List
 from datetime import datetime, timedelta
 from wsgiref import headers
@@ -63,28 +64,16 @@ def authenticate_user(username: str, password: str, db):
         return False
     return user
 
-def calculate_distance(tour_id: int, db):
-    # get entrys
-    coords = []
-    # calc distance
-
 def calculate_distance_with_coordinates(coords):
-
     last_point = None
+    absolute_distance = 0
     for point in coords:
         if last_point:
-
-            pass
-        # last_point = ()
-    # return distance
-    pass
-
             absolute_distance += geopy.distance(point, last_point).km
         last_point = point
         print(point)
 
     return absolute_distance
-
 
 
 async def get_current_user(db: Session, token: str = Depends(oauth2_scheme)):
@@ -235,7 +224,6 @@ async def delete_history(tour_id: int, current_user: schemas.UserBase = Depends(
 async def create_coord_data(coordinates: schemas.CoordinatesCreate, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     # TODO: I dont need that
     user = await get_current_user(db=db, token=current_user)
-    user_id = user.userID
 
     if not current_user:
         raise HTTPException(
@@ -246,7 +234,7 @@ async def create_coord_data(coordinates: schemas.CoordinatesCreate, current_user
 
     # coordinates.userID = user.userID
     
-    return crud.create_coordinate_entry(db=db, user_id=user_id, coordinates=coordinates)
+    return crud.create_coordinate_entry(db=db, coordinates=coordinates)
 
 @app.post("/coordinates/calculateDistance", tags=['coordinates'])
 async def calculate_distance(tour_id: int, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
@@ -259,12 +247,9 @@ async def calculate_distance(tour_id: int, current_user: schemas.UserBase = Depe
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"}
         )
-    return crud.get_coord_by_tour_id(user_id=user.userID, tour_id=tour_id, db=db)
+    list_of_coords = crud.get_coord_by_tour_id(user_id=user.userID, tour_id=tour_id, db=db)
     
-
-
     distance = calculate_distance_with_coordinates(coords=list_of_coords, tour_id=tour_id, db=db)
-
     # return calculate_distance(db=db, user_id = user.userID, tour_id=tour_id)
     # 
 
