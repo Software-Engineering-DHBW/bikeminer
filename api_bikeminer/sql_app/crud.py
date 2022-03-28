@@ -92,15 +92,11 @@ def create_coordinate_entry(db: Session, coordinates: schemas.Coordinates):
     db_coordinates = models.Coordinates(userID=user.userID, tourID=coordinates.tourID, tourNumber=coordinates.tourNumber,
                                         longitude=coordinates.longitude, latitude=coordinates.latitude, datetime=coordinates.datetime)
 
-    print("-------------------------")
     print(db_coordinates)
     db.add(db_coordinates)
-    print("-------------------------")
     db.commit()
-    print("-------------------------")
     db.refresh(db_coordinates)
-    print("-------------------------")
-    return db_coordinates
+    return 0
 
 
 
