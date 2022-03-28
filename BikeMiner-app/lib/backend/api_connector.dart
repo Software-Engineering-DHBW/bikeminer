@@ -7,7 +7,6 @@ class APIConnector {
   final _server = "192.168.2.147";
   final _port = "8000";
   String _username = "";
-  String _password = "";
 
   bool hasaccestoken() {
     if (_access_token != "") {
@@ -18,7 +17,6 @@ class APIConnector {
 
   void logout() {
     _username = "";
-    _password = "";
     _access_token = "";
   }
 
@@ -28,7 +26,6 @@ class APIConnector {
 
   Future<Map<String, dynamic>> getlogintoken(username, password) async {
     _username = username;
-    _password = password;
     Map<String, dynamic> formMap = {
       "grant_type": "",
       "username": "$username",

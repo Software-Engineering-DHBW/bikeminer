@@ -1,5 +1,4 @@
 import 'package:bikeminer/backend/api_connector.dart';
-// import 'package:bikeminer/backend/storage_adapter.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:bikeminer/route.dart' as route;
@@ -113,9 +112,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           // onSaved: ,
-                          validator: (input) => EmailValidator.validate(email)
-                              ? "Email is not valid"
-                              : null,
+                          validator: (input) =>
+                              EmailValidator.validate("$input")
+                                  ? "Email is not valid"
+                                  : null,
                           decoration: InputDecoration(
                             hintText: "E-Mail",
                             enabledBorder: UnderlineInputBorder(
