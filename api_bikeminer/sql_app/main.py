@@ -158,13 +158,13 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
 
 # Get history for a user TODO
 # Fixed! We dont need a response_model here
-@app.get("/history/{user_name}", tags=['history'])
-def get_history(user_name: str, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+@app.get("/history/me", tags=['history'])
+async def get_history(current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     # db_user = crud.get_user_by_name(db, user_name=user_name)
     # if db_user is None:
     #     raise HTTPException(status_code=404, detail="User not found")
-    user = get_current_user(db=db, token=current_user)
-    # Hier weiter
+    user = await get_current_user(db=db, token=current_user)
+    
     if not current_user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -172,7 +172,7 @@ def get_history(user_name: str, current_user: schemas.UserBase = Depends(oauth2_
             headers={"WWW-Authenticate": "Bearer"}
         )
 
-    history = crud.get_history_by_user_name(db, user_name=user_name)
+    history = crud.get_history_by_user_name(db, user_name=user.userName)
     if history == []:
         raise HTTPException(status_code=404, detail="User has no History")
     return history
