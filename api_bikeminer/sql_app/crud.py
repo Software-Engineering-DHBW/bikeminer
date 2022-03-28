@@ -86,7 +86,7 @@ def delete_history(db: Session, user_name: str, tour_id: int):
         print("can't delete")
     return result
 
-
+#####------------------------- Coordinates specific queries ------------------------
 
 def create_coordinate_entry(db: Session, coordinates: schemas.Coordinates):
     user = db.query(models.Users).filter(models.Users.userName == coordinates.userName).first()
@@ -98,6 +98,12 @@ def create_coordinate_entry(db: Session, coordinates: schemas.Coordinates):
     db.commit()
     db.refresh(db_coordinates)
     return 0
+
+def get_coord_by_tour_id(db:Session, user_id: int, tour_id: int):
+    all_coordinates = db.query(models.Coordinates).filter(models.Coordinates.userID == user_id, models.Coordinates.tourID == tour_id)
+    print(all_coordinates)
+    db.commit()
+    return all_coordinates
 
 
 
