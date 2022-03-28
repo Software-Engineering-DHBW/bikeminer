@@ -64,11 +64,7 @@ def authenticate_user(username: str, password: str, db):
         return False
     return user
 
-def calculate_distance_with_coordinates(coords, tour_id: int, db):
-    # get entrys
-    # coords = []
-
-    # calc distance
+def calculate_distance_with_coordinates(coords):
     last_point = None
     absolute_distance = 0
     for point in coords:
@@ -76,15 +72,8 @@ def calculate_distance_with_coordinates(coords, tour_id: int, db):
             absolute_distance += geopy.distance(point, last_point).km
         last_point = point
         print(point)
-        # last_point = ()
-    # return distance
-    print("absolute distance: " + str(absolute_distance))
-    try:
-        test_distance = geopy.distance(coords.km)
-        print(test_distance)
-    except BaseException:
-        print("geht nicht")
-    pass
+
+    return absolute_distance
 
 
 async def get_current_user(db: Session, token: str = Depends(oauth2_scheme)):
@@ -260,7 +249,7 @@ async def calculate_distance(tour_id: int, current_user: schemas.UserBase = Depe
         )
     list_of_coords = crud.get_coord_by_tour_id(user_id=user.userID, tour_id=tour_id, db=db)
     
-    calculate_distance_with_coordinates(coords=list_of_coords, tour_id=tour_id, db=db)
+    distance = calculate_distance_with_coordinates(coords=list_of_coords, tour_id=tour_id, db=db)
     # return calculate_distance(db=db, user_id = user.userID, tour_id=tour_id)
     # 
 
