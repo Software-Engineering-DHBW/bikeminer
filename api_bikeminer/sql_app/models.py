@@ -27,3 +27,12 @@ class History(Base):
         return f"History: \nID: {self.historyID}\nUserID: {self.userID}\nCoins: {self.recievedCoins}\nDistance: {self.distanceTraveled}\nDatetime: {self.dateTime}"
     #users = relationship("Users", back_populates=History)
 
+class Coordinates(Base):
+    __tablename__ = "Coordinates"
+    coordID = Column(Integer, primary_key=True, index=True)
+    tourID = Column(Integer)
+    tourNumber = Column(Integer)
+    userID = Column(Integer, ForeignKey("Users.userID"), index=True)
+    longitude = Column(Float)
+    latitude = Column(Float)
+    datetime = Column(DateTime)

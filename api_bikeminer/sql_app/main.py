@@ -34,7 +34,7 @@ app = FastAPI()
 #if __name__ == "__main__":
 #    uvicorn.run(app, host="0.0.0.0", port=8000)
 
-# Dependency#
+# Dependency
 # needed for closing the database session after request
 def get_db():
     db = SessionLocal()
@@ -90,7 +90,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
-
+##--------------------------------- User Routes -------------------------------------------------------------#
 @app.post("/users/create", response_model=schemas.User, tags=['users'])
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
@@ -103,6 +103,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Email already registered")
     return crud.create_user(db=db, user=user)
 
+## !! need some /users/me , which gets the user by accestoken ... TODO
 
 @app.get("/users/all", response_model=list[schemas.User], tags=['users'])
 def read_users(db: Session = Depends(get_db)):
@@ -117,6 +118,7 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
+### ------------------  History Routes --------------------------------------------------#
 
 # Get history for a user TODO
 # Fixed! We dont need a response_model here
@@ -146,6 +148,11 @@ def delete_history(user_name: str, tour_id: int, db: Session = Depends(get_db)):
 
 # Delete user
 # Add coordinate point
+
+@app.post("/coordinates/create", response_model=schemas.History, tags=['history'])
+def create_history(history: schemas.HistoryCreate, db: Session = Depends(get_db)):
+    return crud.create_history(db=db, history=history)
+
 
 
 # tourID for grouping different points together
