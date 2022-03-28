@@ -6,3 +6,5 @@ python_jose==3.3.0
 rsa==4.8
 SQLAlchemy==1.4.32
 uvicorn==0.17.6
+bcrypt==3.2.0
+mysqlclient==2.1.0
