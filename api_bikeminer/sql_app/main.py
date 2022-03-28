@@ -1,5 +1,6 @@
 from typing import Optional, List
 from datetime import datetime, timedelta
+from wsgiref import headers
 import rsa
 import uvicorn
 from fastapi import Depends, FastAPI, HTTPException, status, Request, File, UploadFile
@@ -71,6 +72,25 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None, c
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
+async def get_current_user(db: Session, token: str = Depends(oauth2_scheme)):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            raise credentials_exception
+        token_data = schemas.TokenData(username=username)
+    except JWTError:
+        raise credentials_exception
+    user = crud.get_user_byname(user_name=token_data.username, db=db)
+    if user is None:
+        raise credentials_exception
+    return user
+
 #-------------- API-Routes --------------------------------------------------##
 
 @app.post("/authenticate", response_model=schemas.Token, tags=['users'])
@@ -123,10 +143,18 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
 # Get history for a user TODO
 # Fixed! We dont need a response_model here
 @app.get("/history/{user_name}", tags=['history'])
-def get_history(user_name: str, db: Session = Depends(get_db)):
+def get_history(user_name: str, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     # db_user = crud.get_user_by_name(db, user_name=user_name)
     # if db_user is None:
     #     raise HTTPException(status_code=404, detail="User not found")
+    user = get_current_user(db=db, token=current_user)
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
+
     history = crud.get_history_by_user_name(db, user_name=user_name)
     if history == []:
         raise HTTPException(status_code=404, detail="User has no History")

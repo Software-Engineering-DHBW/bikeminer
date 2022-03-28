@@ -19,12 +19,12 @@ class History(Base):
     __tablename__ = "History"
     historyID = Column(Integer, primary_key=True, index=True)
     userID = Column(String, ForeignKey("Users.userID"), index=True)
-    recievedCoins = Column(String)
+    receivedCoins = Column(String)
     distanceTraveled = Column(Float)
     dateTime = Column(DateTime)
 
-    def __str__(self) -> str:
-        return f"History: \nID: {self.historyID}\nUserID: {self.userID}\nCoins: {self.recievedCoins}\nDistance: {self.distanceTraveled}\nDatetime: {self.dateTime}"
+    # def __str__(self) -> str:
+    #     return f"History: \nID: {self.historyID}\nUserID: {self.userID}\nCoins: {self.receivedCoins}\nDistance: {self.distanceTraveled}\nDatetime: {self.dateTime}"
     #users = relationship("Users", back_populates=History)
 
 class Coordinates(Base):
