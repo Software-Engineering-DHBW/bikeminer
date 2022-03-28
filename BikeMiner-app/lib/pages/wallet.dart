@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:bikeminer/backend/api_connector.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class WalletPage extends StatefulWidget {
   final APIConnector _api;
@@ -13,26 +10,24 @@ class WalletPage extends StatefulWidget {
 }
 
 class _WalletPageState extends State<WalletPage> {
+
+  APIConnector n = APIConnector();
   List _items = [];
+
+  //late var text = "";
+
+  void getR() {
+    n.getusersall().then((value){
+      setState((){
+        _items = value;
+      });
+    });
+  }
 
   @override
   void initState() {
-    readJson();
+    getR();
     super.initState();
-  }
-
-  /// Lese inhalt aus der hinterlegten JSON-Datei
-  Future<void> readJson() async {
-    /// Lade den JSON-String von jeweiligenm Datei-Pfad
-    final String response =
-        await rootBundle.loadString('assets/walletSample.json');
-
-    /// Dekodiere das JSON-Format
-    final data = await json.decode(response);
-
-    setState(() {
-      _items = data;
-    });
   }
 
   @override
@@ -52,40 +47,40 @@ class _WalletPageState extends State<WalletPage> {
             // Display the data loaded from sample.json
             _items.isNotEmpty
                 ? Expanded(
-                    child: ListView.builder(
-                      itemCount: _items.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          child: ListTile(
-                            leading: Column(
-                              children: [
-                                const Text("User: "),
-                                Text(_items[index]["userName"].toString())
-                              ],
-                            ),
-                            title: Column(
-                              children: [
-                                const Text("Coins: "),
-                                Text(_items[index]["email"].toString())
-                              ],
-                            ),
-                            subtitle: Column(
-                              children: [
-                                Text("Datum: " +
-                                    _items[index]["coins"].toString()),
-                              ],
-                            ),
-                            trailing: Column(
-                              children: [
-                                const Text("User-ID: "),
-                                Text(_items[index]["userID"].toString())
-                              ],
-                            ),
-                          ),
-                        );
-                      },
+              child: ListView.builder(
+                itemCount: _items.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      leading: Column(
+                        children: [
+                          const Text("User: "),
+                          Text(_items[index]["userName"].toString())
+                        ],
+                      ),
+                      title: Column(
+                        children: [
+                          const Text("Coins: "),
+                          Text(_items[index]["coins"].toString())
+                        ],
+                      ),
+                      subtitle: Column(
+                        children: [
+                          Text("Email: " +
+                              _items[index]["email"].toString()),
+                        ],
+                      ),
+                      trailing: Column(
+                        children: [
+                          const Text("User-ID: "),
+                          Text(_items[index]["userID"].toString())
+                        ],
+                      ),
                     ),
-                  )
+                  );
+                },
+              ),
+            )
                 : Container()
           ],
         ),

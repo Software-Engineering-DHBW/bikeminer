@@ -4,7 +4,7 @@ import 'package:http/http.dart';
 
 class APIConnector {
   String _access_token = "";
-  final _server = "192.168.2.147";
+  final _server = "10.0.2.2";
   final _port = "8000";
   String _username = "";
   String _password = "";
@@ -57,5 +57,31 @@ class APIConnector {
       };
       return res;
     }
+  }
+  ///Alle Benutzerdaten
+  Future<List> getusersall() async {
+    // var _request = Uri.parse("http://$_server:$_port/users/all");
+    final response = await get(Uri.parse('http://10.0.2.2:8000/users/all'));
+    // ignore: unused_local_variable
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to fetch');
+    }
+  }
+  ///Historie-Daten
+  Future<List> getHistory() async {
+    // var _request = Uri.parse("http://$_server:$_port/users/all");
+    final response = await get(Uri.parse('http://10.0.2.2:8000/history/Hallo'));
+    // ignore: unused_local_variable
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to fetch');
+      //return "";
+    }
+
   }
 }

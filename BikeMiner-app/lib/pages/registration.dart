@@ -113,7 +113,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           // onSaved: ,
-                          validator: (input) => EmailValidator.validate(email)
+                          validator: (input) => EmailValidator.validate("$input")
                               ? "Email is not valid"
                               : null,
                           decoration: InputDecoration(
