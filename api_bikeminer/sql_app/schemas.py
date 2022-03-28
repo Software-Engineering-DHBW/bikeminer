@@ -32,7 +32,7 @@ class HistoryBase(BaseModel):
 
 class HistoryCreate(HistoryBase):
     userName: str
-    recievedCoins: float
+    receivedCoins: float
 
 class History(HistoryBase):
     historyID: int
