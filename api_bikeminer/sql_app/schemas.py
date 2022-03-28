@@ -35,8 +35,10 @@ class HistoryBase(BaseModel):
     distanceTraveled: float
 
 class HistoryCreate(HistoryBase):
-    userName: str
     receivedCoins: float
+
+    class Config:
+        orm_mode = True
 
 class History(HistoryBase):
     historyID: int

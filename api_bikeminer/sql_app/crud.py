@@ -50,14 +50,14 @@ def create_user(db: Session, user: schemas.UserCreate):
     return db_user
 
 def create_history(db: Session, user_name: str,  history: schemas.HistoryCreate):
-    user = db.query(models.Users).filter(models.Users.userName == history.userName).first()
-    db_history = models.History(userID=user.userID, receivedCoins=history.receivedCoins,
+    # user = db.query(models.Users).filter(models.Users.userName == history.userName).first()
+    db_history = models.History(userID=user_name.userID, receivedCoins=history.receivedCoins,
                                  distanceTraveled=history.distanceTraveled, dateTime=history.dateTime)
-    print(db_history)
+    
     db.add(db_history)
     db.commit()
     db.refresh(db_history)
-    return db_history
+    return 0
 
 def get_history_by_user_name(db: Session, user_name: str):
     # db.query

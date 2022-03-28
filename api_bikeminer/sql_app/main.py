@@ -193,9 +193,17 @@ async def get_history(current_user: schemas.UserBase = Depends(oauth2_scheme), d
     return history
 
 
-@app.post("/history/create", response_model=schemas.History, tags=['history'])
-async def create_history(history: schemas.HistoryCreate,current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+@app.post("/history/create", tags=['history'])
+async def create_history(history: schemas.HistoryCreate, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     user = await get_current_user(db=db, token=current_user)
+
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
+    
     return crud.create_history(db=db, user_name=user, history=history)
 
 
