@@ -49,6 +49,10 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.refresh(db_user)
     return db_user
 
+def user_update_coins(db: Session, user: str)
+
+##### -------------------------  History specific queries  ---------------------------------
+
 def create_history(db: Session, user_name: str,  history: schemas.HistoryCreate):
     # user = db.query(models.Users).filter(models.Users.userName == history.userName).first()
     db_history = models.History(userID=user_name.userID, receivedCoins=history.receivedCoins,

@@ -262,12 +262,10 @@ async def calculate_distance(tour_id: int, current_user: schemas.UserBase = Depe
     
     distance = calculate_distance_with_coordinates(coords=list_of_coords)
     hist = schemas.HistoryCreate(dateTime=datetime.now(), distanceTraveled=distance, receivedCoins=distance/2)
-    # hist.dateTime = datetime.now()
-    # hist.distanceTraveled = distance
-    # hist.receivedCoins = distance / 2
+
     crud.create_history(user_name=user, history=hist, db=db)
-    # return calculate_distance(db=db, user_id = user.userID, tour_id=tour_id)
-    # 
+
+    
 
 
 
