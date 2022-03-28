@@ -164,6 +164,7 @@ def get_history(user_name: str, current_user: schemas.UserBase = Depends(oauth2_
     # if db_user is None:
     #     raise HTTPException(status_code=404, detail="User not found")
     user = get_current_user(db=db, token=current_user)
+    # Hier weiter
     if not current_user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
