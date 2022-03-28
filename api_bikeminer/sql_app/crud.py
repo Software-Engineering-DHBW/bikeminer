@@ -36,7 +36,7 @@ def get_user_byname(db: Session, user_name: str):
 
 def create_user(db: Session, user: schemas.UserCreate):
     fake_hashed_password = user.password
-    db_user = models.Users(email=user.email, password=fake_hashed_password, userName=user.userName, coins=user.coins)
+    db_user = models.Users(email=user.email, password=fake_hashed_password, userName=user.userName, coins=0)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)

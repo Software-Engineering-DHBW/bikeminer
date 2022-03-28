@@ -143,6 +143,7 @@ async def read_users_me(current_user: schemas.UserBase = Depends(oauth2_scheme),
 @app.post("/users/create", response_model=schemas.User, tags=['users'])
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
+    db_user_by_name = crud.get_user_by_name(db, user_name=user.userName)
 
     # Hash password and write it into the user
     hashed_pwd = pwd_context.hash(user.password)
@@ -150,6 +151,8 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
+    if db_user_by_name:
+        raise HTTPException(status_code=400, detail="Username alread taken")
     return crud.create_user(db=db, user=user)
 
 
@@ -276,6 +279,8 @@ async def calculate_distance(tour_id: int, current_user: schemas.UserBase = Depe
     crud.delete_all_coordinates(tour_id=tour_id, user_name=user.userName, db=db)
 
     crud.user_update_coins(received_coins=distance/2, user=user, db=db)
+
+    return 0
 
     
 
