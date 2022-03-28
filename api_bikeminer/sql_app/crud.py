@@ -87,8 +87,24 @@ def delete_history(db: Session, user_name: str, tour_id: int):
     return result
 
 
+def create_coordinate_entry(db: Session, coordinates: schemas.Coordinates):
+    user = db.query(models.Users).filter(models.Users.userName == coordinates.userName).first()
+    db_coordinates = models.Coordinates(userID=user.userID, tourID=coordinates.tourID, tourNumber=coordinates.tourNumber,
+                                        longitude=coordinates.longitude, latitude=coordinates.latitude, datetime=coordinates.datetime)
+
+    print("-------------------------")
+    print(db_coordinates)
+    db.add(db_coordinates)
+    print("-------------------------")
+    db.commit()
+    print("-------------------------")
+    db.refresh(db_coordinates)
+    print("-------------------------")
+    return db_coordinates
 
 
+
+"""
 def create_coordinate_entry(db: Session, coordinates: schemas.CoordinatesCreate):
     user = db.query(models.Users).filter(models.Users.userID == coordinates.userID).first()
     db_coordinates = models.CoordinatesCreate(userID=user.userID, tourID=coordinates.tourID, tourNumber=coordinates.tourNumber,
@@ -99,7 +115,7 @@ def create_coordinate_entry(db: Session, coordinates: schemas.CoordinatesCreate)
     db.commit()
     db.refresh(db_coordinates)
     return db_coordinates
-
+"""
 
 
 

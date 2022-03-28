@@ -45,7 +45,7 @@ class History(HistoryBase):
 class CoordinatesCreate(BaseModel):
     tourID: int
     tourNumber: int
-    userID: int
+    userName: str
     longitude: float
     latitude: float
     datetime: datetime

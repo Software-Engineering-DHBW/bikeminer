@@ -206,8 +206,19 @@ async def delete_history(tour_id: int, current_user: schemas.UserBase = Depends(
 # Add coordinate point
 #-------------------------- Coordinate Routes ------------------------------------------------
 
-@app.post("/coordinates/create", tags=['coordinates'])
-def create_coord_data(coordinates: schemas.Coordinates, user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+@app.post("/coordinates/create", response_model=schemas.CoordinatesCreate , tags=['coordinates'])
+async def create_coord_data(coordinates: schemas.CoordinatesCreate, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    user = await get_current_user(db=db, token=current_user)
+
+    if not current_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
+
+    # coordinates.userID = user.userID
+    
     return crud.create_coordinate_entry(db=db, coordinates=coordinates)
 
 
