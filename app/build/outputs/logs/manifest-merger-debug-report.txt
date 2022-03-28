@@ -1,0 +1,311 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:2:1-56:12
+INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:2:1-56:12
+INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:2:1-56:12
+INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:2:1-56:12
+MERGED from [androidx.databinding:viewbinding:7.1.0] /home/jeanz/.gradle/caches/transforms-3/8b16c7e188d6497e442b1b253738e07f/transformed/jetified-viewbinding-7.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.material:material:1.5.0] /home/jeanz/.gradle/caches/transforms-3/eac9e08fa28d6671a6f932ada5a5a9c7/transformed/material-1.5.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.3] /home/jeanz/.gradle/caches/transforms-3/2c899494aa059aa353c8693e5bb9c70d/transformed/constraintlayout-2.1.3/AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.appcompat:appcompat:1.4.1] /home/jeanz/.gradle/caches/transforms-3/97988b0f28a513a04038e9dd724181a1/transformed/appcompat-1.4.1/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:17:1-44:12
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/e7169441fcc569dcbb8890b3832d5ade/transformed/jetified-viewpager2-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.gms:play-services-base:18.0.1] /home/jeanz/.gradle/caches/transforms-3/4e81f3c3b062888fece961428284f9c6/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:16:1-24:12
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] /home/jeanz/.gradle/caches/transforms-3/7ff8f0c8286025dea45b753ac10dcf76/transformed/jetified-play-services-tasks-18.0.1/AndroidManifest.xml:2:1-6:12
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] /home/jeanz/.gradle/caches/transforms-3/07f38d52944a8d00e22f7921b9ffd0af/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:16:1-26:12
+MERGED from [androidx.fragment:fragment:1.3.6] /home/jeanz/.gradle/caches/transforms-3/b497f96fe258c69fab9a7dbedcb5971d/transformed/fragment-1.3.6/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.activity:activity:1.2.4] /home/jeanz/.gradle/caches/transforms-3/cdab481e51984801ec56d9fecb78d0e7/transformed/jetified-activity-1.2.4/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.appcompat:appcompat-resources:1.4.1] /home/jeanz/.gradle/caches/transforms-3/f17a294544289977f9a463363ba1bf00/transformed/jetified-appcompat-resources-1.4.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.emoji2:emoji2-views-helper:1.0.0] /home/jeanz/.gradle/caches/transforms-3/f0fff8a6e644cd22d842d53c32b16e79/transformed/jetified-emoji2-views-helper-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:17:1-37:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] /home/jeanz/.gradle/caches/transforms-3/8a76b6997bb9e0ebcd565fb59d2b5191/transformed/drawerlayout-1.1.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /home/jeanz/.gradle/caches/transforms-3/121e3847daf018e9ad4563b862e57b41/transformed/coordinatorlayout-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] /home/jeanz/.gradle/caches/transforms-3/29e1d9ab961da49de4f24ec20069fef0/transformed/dynamicanimation-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.transition:transition:1.2.0] /home/jeanz/.gradle/caches/transforms-3/2104a3b47c2ad91cbf74de817ce56cb2/transformed/transition-1.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /home/jeanz/.gradle/caches/transforms-3/e8aa565060f205ca64e08b1c945eb0ee/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /home/jeanz/.gradle/caches/transforms-3/a6d8c703e4dd07a7280a3954ce0bffce/transformed/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] /home/jeanz/.gradle/caches/transforms-3/d60bf579b964a722f8cb44f81fad0ee0/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /home/jeanz/.gradle/caches/transforms-3/6aab3b11836e18c263be3a542ebcf766/transformed/legacy-support-core-utils-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] /home/jeanz/.gradle/caches/transforms-3/865ff83c11d207a48da98f1b11f320f8/transformed/loader-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] /home/jeanz/.gradle/caches/transforms-3/ae3e2ef5c66c1a88aefe7bb6a302f2e5/transformed/recyclerview-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.customview:customview:1.1.0] /home/jeanz/.gradle/caches/transforms-3/414cb492746683a4183bab6b3d303375/transformed/customview-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.core:core:1.7.0] /home/jeanz/.gradle/caches/transforms-3/46678933633e897331f6cbff7aabb141/transformed/core-1.7.0/AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /home/jeanz/.gradle/caches/transforms-3/b5d39852e6a666256f87ee42d2b48944/transformed/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.1] /home/jeanz/.gradle/caches/transforms-3/a02f9a2904d7802a3b63a2a7adf40f76/transformed/jetified-lifecycle-viewmodel-savedstate-2.3.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.savedstate:savedstate:1.1.0] /home/jeanz/.gradle/caches/transforms-3/f6335e3503cec60afe4ca8767928b945/transformed/jetified-savedstate-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.3.1] /home/jeanz/.gradle/caches/transforms-3/fe359a465c368be3cc6eeb4f6d16e10d/transformed/lifecycle-viewmodel-2.3.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.cardview:cardview:1.0.0] /home/jeanz/.gradle/caches/transforms-3/b8f3cd1adc2299894ae656ed8cc2c6e7/transformed/cardview-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/jeanz/.gradle/caches/transforms-3/2df74d9279148af31c563a4f985550aa/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.4.0] /home/jeanz/.gradle/caches/transforms-3/86073857aad360c8a4bae9b934e55cac/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:17:1-37:12
+MERGED from [androidx.startup:startup-runtime:1.0.0] /home/jeanz/.gradle/caches/transforms-3/8a0fe8b1bde829f28680860e8b135f53/transformed/jetified-startup-runtime-1.0.0/AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.tracing:tracing:1.0.0] /home/jeanz/.gradle/caches/transforms-3/b6a8579929616b428338349e2f827a54/transformed/jetified-tracing-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /home/jeanz/.gradle/caches/transforms-3/b97a8f40b63810244ab41e2fa0059751/transformed/lifecycle-livedata-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.3.1] /home/jeanz/.gradle/caches/transforms-3/05e9b55f5c591fbb0f5d6ca416656aae/transformed/lifecycle-livedata-core-2.3.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.4.0] /home/jeanz/.gradle/caches/transforms-3/103aa8018b440ad9ce2201ab7bc819cb/transformed/lifecycle-runtime-2.4.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.arch.core:core-runtime:2.1.0] /home/jeanz/.gradle/caches/transforms-3/ac30691d8566f4f9cef55d99ccfb03a4/transformed/core-runtime-2.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/jeanz/.gradle/caches/transforms-3/00cc0f5b3215ee1f60046e4e5c8104d7/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] /home/jeanz/.gradle/caches/transforms-3/099ec21cb31cf6c527e845124037106b/transformed/documentfile-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /home/jeanz/.gradle/caches/transforms-3/42e3b2b67944f4744bed163492aa1591/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] /home/jeanz/.gradle/caches/transforms-3/c35deb218a42f6b1ccb34889e38f5e8d/transformed/print-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.annotation:annotation-experimental:1.1.0] /home/jeanz/.gradle/caches/transforms-3/fbfc5bdfc5ab314b7e57d9519930a100/transformed/jetified-annotation-experimental-1.1.0/AndroidManifest.xml:17:1-24:12
+INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:2:1-56:12
+INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:2:1-56:12
+INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:2:1-56:12
+	package
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:3:5-37
+		INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml
+		INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:2:1-56:12
+		INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:2:1-56:12
+		INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:10:5-79
+	android:name
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:10:22-76
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:11:5-81
+	android:name
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:11:22-78
+application
+ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:16:5-54:19
+MERGED from [com.google.android.material:material:1.5.0] /home/jeanz/.gradle/caches/transforms-3/eac9e08fa28d6671a6f932ada5a5a9c7/transformed/material-1.5.0/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.material:material:1.5.0] /home/jeanz/.gradle/caches/transforms-3/eac9e08fa28d6671a6f932ada5a5a9c7/transformed/material-1.5.0/AndroidManifest.xml:22:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.3] /home/jeanz/.gradle/caches/transforms-3/2c899494aa059aa353c8693e5bb9c70d/transformed/constraintlayout-2.1.3/AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.3] /home/jeanz/.gradle/caches/transforms-3/2c899494aa059aa353c8693e5bb9c70d/transformed/constraintlayout-2.1.3/AndroidManifest.xml:9:5-20
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:36:5-42:19
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:36:5-42:19
+MERGED from [com.google.android.gms:play-services-base:18.0.1] /home/jeanz/.gradle/caches/transforms-3/4e81f3c3b062888fece961428284f9c6/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:19:5-23:19
+MERGED from [com.google.android.gms:play-services-base:18.0.1] /home/jeanz/.gradle/caches/transforms-3/4e81f3c3b062888fece961428284f9c6/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:19:5-23:19
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] /home/jeanz/.gradle/caches/transforms-3/7ff8f0c8286025dea45b753ac10dcf76/transformed/jetified-play-services-tasks-18.0.1/AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] /home/jeanz/.gradle/caches/transforms-3/7ff8f0c8286025dea45b753ac10dcf76/transformed/jetified-play-services-tasks-18.0.1/AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] /home/jeanz/.gradle/caches/transforms-3/07f38d52944a8d00e22f7921b9ffd0af/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:20:5-24:19
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] /home/jeanz/.gradle/caches/transforms-3/07f38d52944a8d00e22f7921b9ffd0af/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:20:5-24:19
+MERGED from [androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:25:5-35:19
+MERGED from [androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:25:5-35:19
+MERGED from [androidx.core:core:1.7.0] /home/jeanz/.gradle/caches/transforms-3/46678933633e897331f6cbff7aabb141/transformed/core-1.7.0/AndroidManifest.xml:24:5-89
+MERGED from [androidx.core:core:1.7.0] /home/jeanz/.gradle/caches/transforms-3/46678933633e897331f6cbff7aabb141/transformed/core-1.7.0/AndroidManifest.xml:24:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/jeanz/.gradle/caches/transforms-3/2df74d9279148af31c563a4f985550aa/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/jeanz/.gradle/caches/transforms-3/2df74d9279148af31c563a4f985550aa/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.4.0] /home/jeanz/.gradle/caches/transforms-3/86073857aad360c8a4bae9b934e55cac/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:25:5-35:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.4.0] /home/jeanz/.gradle/caches/transforms-3/86073857aad360c8a4bae9b934e55cac/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:25:5-35:19
+MERGED from [androidx.startup:startup-runtime:1.0.0] /home/jeanz/.gradle/caches/transforms-3/8a0fe8b1bde829f28680860e8b135f53/transformed/jetified-startup-runtime-1.0.0/AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.startup:startup-runtime:1.0.0] /home/jeanz/.gradle/caches/transforms-3/8a0fe8b1bde829f28680860e8b135f53/transformed/jetified-startup-runtime-1.0.0/AndroidManifest.xml:25:5-31:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.7.0] /home/jeanz/.gradle/caches/transforms-3/46678933633e897331f6cbff7aabb141/transformed/core-1.7.0/AndroidManifest.xml:24:18-86
+	android:supportsRtl
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:21:9-35
+	android:label
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:19:9-41
+	android:roundIcon
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:20:9-54
+	android:icon
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:18:9-43
+	android:allowBackup
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:17:9-35
+	android:theme
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:22:9-47
+meta-data#com.google.android.geo.API_KEY
+ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:32:9-34:71
+	android:value
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:34:13-68
+	android:name
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:33:13-58
+activity#com.example.bike_miner.MapsActivity
+ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:36:9-45:20
+	android:label
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:39:13-56
+	android:exported
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:38:13-36
+	android:name
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:37:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:40:13-44:29
+action#android.intent.action.MAIN
+ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:41:17-69
+	android:name
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:41:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:43:17-77
+	android:name
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:43:27-74
+service#com.example.bike_miner.MapsActivity
+ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:48:9-52:19
+	android:foregroundServiceType
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:50:13-53
+	android:name
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:49:13-40
+uses-sdk
+INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml
+INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml
+MERGED from [androidx.databinding:viewbinding:7.1.0] /home/jeanz/.gradle/caches/transforms-3/8b16c7e188d6497e442b1b253738e07f/transformed/jetified-viewbinding-7.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.databinding:viewbinding:7.1.0] /home/jeanz/.gradle/caches/transforms-3/8b16c7e188d6497e442b1b253738e07f/transformed/jetified-viewbinding-7.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.material:material:1.5.0] /home/jeanz/.gradle/caches/transforms-3/eac9e08fa28d6671a6f932ada5a5a9c7/transformed/material-1.5.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.5.0] /home/jeanz/.gradle/caches/transforms-3/eac9e08fa28d6671a6f932ada5a5a9c7/transformed/material-1.5.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.3] /home/jeanz/.gradle/caches/transforms-3/2c899494aa059aa353c8693e5bb9c70d/transformed/constraintlayout-2.1.3/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.3] /home/jeanz/.gradle/caches/transforms-3/2c899494aa059aa353c8693e5bb9c70d/transformed/constraintlayout-2.1.3/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.appcompat:appcompat:1.4.1] /home/jeanz/.gradle/caches/transforms-3/97988b0f28a513a04038e9dd724181a1/transformed/appcompat-1.4.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.4.1] /home/jeanz/.gradle/caches/transforms-3/97988b0f28a513a04038e9dd724181a1/transformed/appcompat-1.4.1/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/e7169441fcc569dcbb8890b3832d5ade/transformed/jetified-viewpager2-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/e7169441fcc569dcbb8890b3832d5ade/transformed/jetified-viewpager2-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.gms:play-services-base:18.0.1] /home/jeanz/.gradle/caches/transforms-3/4e81f3c3b062888fece961428284f9c6/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-base:18.0.1] /home/jeanz/.gradle/caches/transforms-3/4e81f3c3b062888fece961428284f9c6/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] /home/jeanz/.gradle/caches/transforms-3/7ff8f0c8286025dea45b753ac10dcf76/transformed/jetified-play-services-tasks-18.0.1/AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] /home/jeanz/.gradle/caches/transforms-3/7ff8f0c8286025dea45b753ac10dcf76/transformed/jetified-play-services-tasks-18.0.1/AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] /home/jeanz/.gradle/caches/transforms-3/07f38d52944a8d00e22f7921b9ffd0af/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] /home/jeanz/.gradle/caches/transforms-3/07f38d52944a8d00e22f7921b9ffd0af/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:18:5-43
+MERGED from [androidx.fragment:fragment:1.3.6] /home/jeanz/.gradle/caches/transforms-3/b497f96fe258c69fab9a7dbedcb5971d/transformed/fragment-1.3.6/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.3.6] /home/jeanz/.gradle/caches/transforms-3/b497f96fe258c69fab9a7dbedcb5971d/transformed/fragment-1.3.6/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.2.4] /home/jeanz/.gradle/caches/transforms-3/cdab481e51984801ec56d9fecb78d0e7/transformed/jetified-activity-1.2.4/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.2.4] /home/jeanz/.gradle/caches/transforms-3/cdab481e51984801ec56d9fecb78d0e7/transformed/jetified-activity-1.2.4/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.4.1] /home/jeanz/.gradle/caches/transforms-3/f17a294544289977f9a463363ba1bf00/transformed/jetified-appcompat-resources-1.4.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.4.1] /home/jeanz/.gradle/caches/transforms-3/f17a294544289977f9a463363ba1bf00/transformed/jetified-appcompat-resources-1.4.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.emoji2:emoji2-views-helper:1.0.0] /home/jeanz/.gradle/caches/transforms-3/f0fff8a6e644cd22d842d53c32b16e79/transformed/jetified-emoji2-views-helper-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.emoji2:emoji2-views-helper:1.0.0] /home/jeanz/.gradle/caches/transforms-3/f0fff8a6e644cd22d842d53c32b16e79/transformed/jetified-emoji2-views-helper-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] /home/jeanz/.gradle/caches/transforms-3/8a76b6997bb9e0ebcd565fb59d2b5191/transformed/drawerlayout-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] /home/jeanz/.gradle/caches/transforms-3/8a76b6997bb9e0ebcd565fb59d2b5191/transformed/drawerlayout-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /home/jeanz/.gradle/caches/transforms-3/121e3847daf018e9ad4563b862e57b41/transformed/coordinatorlayout-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /home/jeanz/.gradle/caches/transforms-3/121e3847daf018e9ad4563b862e57b41/transformed/coordinatorlayout-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] /home/jeanz/.gradle/caches/transforms-3/29e1d9ab961da49de4f24ec20069fef0/transformed/dynamicanimation-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] /home/jeanz/.gradle/caches/transforms-3/29e1d9ab961da49de4f24ec20069fef0/transformed/dynamicanimation-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.transition:transition:1.2.0] /home/jeanz/.gradle/caches/transforms-3/2104a3b47c2ad91cbf74de817ce56cb2/transformed/transition-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.2.0] /home/jeanz/.gradle/caches/transforms-3/2104a3b47c2ad91cbf74de817ce56cb2/transformed/transition-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /home/jeanz/.gradle/caches/transforms-3/e8aa565060f205ca64e08b1c945eb0ee/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /home/jeanz/.gradle/caches/transforms-3/e8aa565060f205ca64e08b1c945eb0ee/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /home/jeanz/.gradle/caches/transforms-3/a6d8c703e4dd07a7280a3954ce0bffce/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /home/jeanz/.gradle/caches/transforms-3/a6d8c703e4dd07a7280a3954ce0bffce/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager:viewpager:1.0.0] /home/jeanz/.gradle/caches/transforms-3/d60bf579b964a722f8cb44f81fad0ee0/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /home/jeanz/.gradle/caches/transforms-3/d60bf579b964a722f8cb44f81fad0ee0/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /home/jeanz/.gradle/caches/transforms-3/6aab3b11836e18c263be3a542ebcf766/transformed/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /home/jeanz/.gradle/caches/transforms-3/6aab3b11836e18c263be3a542ebcf766/transformed/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /home/jeanz/.gradle/caches/transforms-3/865ff83c11d207a48da98f1b11f320f8/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /home/jeanz/.gradle/caches/transforms-3/865ff83c11d207a48da98f1b11f320f8/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] /home/jeanz/.gradle/caches/transforms-3/ae3e2ef5c66c1a88aefe7bb6a302f2e5/transformed/recyclerview-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] /home/jeanz/.gradle/caches/transforms-3/ae3e2ef5c66c1a88aefe7bb6a302f2e5/transformed/recyclerview-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.1.0] /home/jeanz/.gradle/caches/transforms-3/414cb492746683a4183bab6b3d303375/transformed/customview-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.1.0] /home/jeanz/.gradle/caches/transforms-3/414cb492746683a4183bab6b3d303375/transformed/customview-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.7.0] /home/jeanz/.gradle/caches/transforms-3/46678933633e897331f6cbff7aabb141/transformed/core-1.7.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.7.0] /home/jeanz/.gradle/caches/transforms-3/46678933633e897331f6cbff7aabb141/transformed/core-1.7.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /home/jeanz/.gradle/caches/transforms-3/b5d39852e6a666256f87ee42d2b48944/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /home/jeanz/.gradle/caches/transforms-3/b5d39852e6a666256f87ee42d2b48944/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.1] /home/jeanz/.gradle/caches/transforms-3/a02f9a2904d7802a3b63a2a7adf40f76/transformed/jetified-lifecycle-viewmodel-savedstate-2.3.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.1] /home/jeanz/.gradle/caches/transforms-3/a02f9a2904d7802a3b63a2a7adf40f76/transformed/jetified-lifecycle-viewmodel-savedstate-2.3.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.1.0] /home/jeanz/.gradle/caches/transforms-3/f6335e3503cec60afe4ca8767928b945/transformed/jetified-savedstate-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.1.0] /home/jeanz/.gradle/caches/transforms-3/f6335e3503cec60afe4ca8767928b945/transformed/jetified-savedstate-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.3.1] /home/jeanz/.gradle/caches/transforms-3/fe359a465c368be3cc6eeb4f6d16e10d/transformed/lifecycle-viewmodel-2.3.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.3.1] /home/jeanz/.gradle/caches/transforms-3/fe359a465c368be3cc6eeb4f6d16e10d/transformed/lifecycle-viewmodel-2.3.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.cardview:cardview:1.0.0] /home/jeanz/.gradle/caches/transforms-3/b8f3cd1adc2299894ae656ed8cc2c6e7/transformed/cardview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] /home/jeanz/.gradle/caches/transforms-3/b8f3cd1adc2299894ae656ed8cc2c6e7/transformed/cardview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/jeanz/.gradle/caches/transforms-3/2df74d9279148af31c563a4f985550aa/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/jeanz/.gradle/caches/transforms-3/2df74d9279148af31c563a4f985550aa/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-process:2.4.0] /home/jeanz/.gradle/caches/transforms-3/86073857aad360c8a4bae9b934e55cac/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.lifecycle:lifecycle-process:2.4.0] /home/jeanz/.gradle/caches/transforms-3/86073857aad360c8a4bae9b934e55cac/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.startup:startup-runtime:1.0.0] /home/jeanz/.gradle/caches/transforms-3/8a0fe8b1bde829f28680860e8b135f53/transformed/jetified-startup-runtime-1.0.0/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.startup:startup-runtime:1.0.0] /home/jeanz/.gradle/caches/transforms-3/8a0fe8b1bde829f28680860e8b135f53/transformed/jetified-startup-runtime-1.0.0/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.tracing:tracing:1.0.0] /home/jeanz/.gradle/caches/transforms-3/b6a8579929616b428338349e2f827a54/transformed/jetified-tracing-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] /home/jeanz/.gradle/caches/transforms-3/b6a8579929616b428338349e2f827a54/transformed/jetified-tracing-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /home/jeanz/.gradle/caches/transforms-3/b97a8f40b63810244ab41e2fa0059751/transformed/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /home/jeanz/.gradle/caches/transforms-3/b97a8f40b63810244ab41e2fa0059751/transformed/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.3.1] /home/jeanz/.gradle/caches/transforms-3/05e9b55f5c591fbb0f5d6ca416656aae/transformed/lifecycle-livedata-core-2.3.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.3.1] /home/jeanz/.gradle/caches/transforms-3/05e9b55f5c591fbb0f5d6ca416656aae/transformed/lifecycle-livedata-core-2.3.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.4.0] /home/jeanz/.gradle/caches/transforms-3/103aa8018b440ad9ce2201ab7bc819cb/transformed/lifecycle-runtime-2.4.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.4.0] /home/jeanz/.gradle/caches/transforms-3/103aa8018b440ad9ce2201ab7bc819cb/transformed/lifecycle-runtime-2.4.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.1.0] /home/jeanz/.gradle/caches/transforms-3/ac30691d8566f4f9cef55d99ccfb03a4/transformed/core-runtime-2.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.1.0] /home/jeanz/.gradle/caches/transforms-3/ac30691d8566f4f9cef55d99ccfb03a4/transformed/core-runtime-2.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/jeanz/.gradle/caches/transforms-3/00cc0f5b3215ee1f60046e4e5c8104d7/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/jeanz/.gradle/caches/transforms-3/00cc0f5b3215ee1f60046e4e5c8104d7/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] /home/jeanz/.gradle/caches/transforms-3/099ec21cb31cf6c527e845124037106b/transformed/documentfile-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] /home/jeanz/.gradle/caches/transforms-3/099ec21cb31cf6c527e845124037106b/transformed/documentfile-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /home/jeanz/.gradle/caches/transforms-3/42e3b2b67944f4744bed163492aa1591/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /home/jeanz/.gradle/caches/transforms-3/42e3b2b67944f4744bed163492aa1591/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] /home/jeanz/.gradle/caches/transforms-3/c35deb218a42f6b1ccb34889e38f5e8d/transformed/print-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] /home/jeanz/.gradle/caches/transforms-3/c35deb218a42f6b1ccb34889e38f5e8d/transformed/print-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.1.0] /home/jeanz/.gradle/caches/transforms-3/fbfc5bdfc5ab314b7e57d9519930a100/transformed/jetified-annotation-experimental-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.annotation:annotation-experimental:1.1.0] /home/jeanz/.gradle/caches/transforms-3/fbfc5bdfc5ab314b7e57d9519930a100/transformed/jetified-annotation-experimental-1.1.0/AndroidManifest.xml:20:5-22:41
+INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml
+INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml
+		INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml
+		ADDED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml
+		INJECTED from /home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:23:5-79
+	android:name
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:23:22-76
+uses-permission#android.permission.INTERNET
+ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:24:5-67
+	android:name
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:24:22-64
+uses-feature#0x00020000
+ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:26:5-28:35
+	android:glEsVersion
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:27:9-41
+	android:required
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:28:9-32
+queries
+ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:30:5-34:15
+package#com.google.android.apps.maps
+ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:33:9-64
+	android:name
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:33:18-61
+uses-library#org.apache.http.legacy
+ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:39:9-41:40
+	android:required
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:41:13-37
+	android:name
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:40:13-50
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [com.google.android.gms:play-services-base:18.0.1] /home/jeanz/.gradle/caches/transforms-3/4e81f3c3b062888fece961428284f9c6/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+	android:exported
+		ADDED from [com.google.android.gms:play-services-base:18.0.1] /home/jeanz/.gradle/caches/transforms-3/4e81f3c3b062888fece961428284f9c6/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+	android:theme
+		ADDED from [com.google.android.gms:play-services-base:18.0.1] /home/jeanz/.gradle/caches/transforms-3/4e81f3c3b062888fece961428284f9c6/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+	android:name
+		ADDED from [com.google.android.gms:play-services-base:18.0.1] /home/jeanz/.gradle/caches/transforms-3/4e81f3c3b062888fece961428284f9c6/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:18.0.0] /home/jeanz/.gradle/caches/transforms-3/07f38d52944a8d00e22f7921b9ffd0af/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:21:9-23:69
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:18.0.0] /home/jeanz/.gradle/caches/transforms-3/07f38d52944a8d00e22f7921b9ffd0af/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:23:13-66
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:18.0.0] /home/jeanz/.gradle/caches/transforms-3/07f38d52944a8d00e22f7921b9ffd0af/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:22:13-58
+provider#androidx.startup.InitializationProvider
+ADDED from [androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:26:9-34:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.4.0] /home/jeanz/.gradle/caches/transforms-3/86073857aad360c8a4bae9b934e55cac/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:26:9-34:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.4.0] /home/jeanz/.gradle/caches/transforms-3/86073857aad360c8a4bae9b934e55cac/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:26:9-34:20
+MERGED from [androidx.startup:startup-runtime:1.0.0] /home/jeanz/.gradle/caches/transforms-3/8a0fe8b1bde829f28680860e8b135f53/transformed/jetified-startup-runtime-1.0.0/AndroidManifest.xml:26:9-30:34
+MERGED from [androidx.startup:startup-runtime:1.0.0] /home/jeanz/.gradle/caches/transforms-3/8a0fe8b1bde829f28680860e8b135f53/transformed/jetified-startup-runtime-1.0.0/AndroidManifest.xml:26:9-30:34
+	tools:node
+		ADDED from [androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:30:13-31
+	android:authorities
+		ADDED from [androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:28:13-68
+	android:exported
+		ADDED from [androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:29:13-37
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:27:13-67
+meta-data#androidx.emoji2.text.EmojiCompatInitializer
+ADDED from [androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:31:13-33:52
+	android:value
+		ADDED from [androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:33:17-49
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:32:17-75
+meta-data#androidx.lifecycle.ProcessLifecycleInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.4.0] /home/jeanz/.gradle/caches/transforms-3/86073857aad360c8a4bae9b934e55cac/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:31:13-33:52
+	android:value
+		ADDED from [androidx.lifecycle:lifecycle-process:2.4.0] /home/jeanz/.gradle/caches/transforms-3/86073857aad360c8a4bae9b934e55cac/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:33:17-49
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.4.0] /home/jeanz/.gradle/caches/transforms-3/86073857aad360c8a4bae9b934e55cac/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:32:17-78

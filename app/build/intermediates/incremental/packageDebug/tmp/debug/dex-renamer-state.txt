@@ -1,0 +1,13 @@
+#Fri Feb 04 12:03:08 CET 2022
+path.3=8/classes.dex
+path.2=11/classes.dex
+path.1=0/classes.dex
+path.0=classes.dex
+base.3=/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/build/intermediates/dex/debug/mergeProjectDexDebug/8/classes.dex
+base.2=/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/build/intermediates/dex/debug/mergeProjectDexDebug/11/classes.dex
+base.1=/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
+base.0=/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
+renamed.3=classes4.dex
+renamed.2=classes3.dex
+renamed.1=classes2.dex
+renamed.0=classes.dex

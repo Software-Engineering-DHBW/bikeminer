@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_maps.xml",
+        "source": "/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/res/layout/activity_maps.xml"
+    },
+    {
+        "merged": "/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/location.xml",
+        "source": "/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/res/layout/location.xml"
+    }
+]

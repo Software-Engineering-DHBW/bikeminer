@@ -9,7 +9,10 @@ from fastapi.responses import FileResponse
 class UserBase(BaseModel):
     userName: str
     email: str
+
+class UserBalance(BaseModel):
     coins: float
+
 
 class UserCreate(UserBase):
     userName: str
@@ -31,8 +34,10 @@ class HistoryBase(BaseModel):
     distanceTraveled: float
 
 class HistoryCreate(HistoryBase):
-    userName: str
     receivedCoins: float
+
+    class Config:
+        orm_mode = True
 
 class History(HistoryBase):
     historyID: int
@@ -42,15 +47,15 @@ class History(HistoryBase):
         orm_mode = True
 
 
-class Coordinates(BaseModel):
-    coordID: int
+class CoordinatesCreate(BaseModel):
     tourID: int
     tourNumber: int
-    userID: int
+    #userID: int
     longitude: float
     latitude: float
     datetime: datetime
-
+class Coordinates(CoordinatesCreate):
+    coordID: int
 
 
 ## for authentication

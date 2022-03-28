@@ -1,0 +1,6 @@
+com/example/bike_miner/MapsActivity.java
+ com.example.bike_miner.MapsActivity
+com/example/bike_miner/BuildConfig.java
+ com.example.bike_miner.BuildConfig
+com/example/bike_miner/databinding/ActivityMapsBinding.java
+ com.example.bike_miner.databinding.ActivityMapsBinding

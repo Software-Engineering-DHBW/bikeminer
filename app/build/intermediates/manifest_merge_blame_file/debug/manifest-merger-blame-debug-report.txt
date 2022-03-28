@@ -1,0 +1,168 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.bike_miner"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+8-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="31" />
+9-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml
+10
+11    <!--
+12         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+13         Google Maps Android API v2, but you must specify either coarse or fine
+14         location permissions for the "MyLocation" functionality.
+15    -->
+16    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+16-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:10:5-79
+16-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:10:22-76
+17    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+17-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:11:5-81
+17-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:11:22-78
+18    <!--
+19    Include only if your app benefits from precise location access.
+20    added for testing fine location access in foreground mode
+21    -->
+22    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+22-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:10:5-79
+22-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:10:22-76
+23
+24    <!-- Include required permissions for Google Maps API to run. -->
+25    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+25-->[com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:23:5-79
+25-->[com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:23:22-76
+26    <uses-permission android:name="android.permission.INTERNET" />
+26-->[com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:24:5-67
+26-->[com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:24:22-64
+27
+28    <uses-feature
+28-->[com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:26:5-28:35
+29        android:glEsVersion="0x00020000"
+29-->[com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:27:9-41
+30        android:required="true" />
+30-->[com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:28:9-32
+31
+32    <queries>
+32-->[com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:30:5-34:15
+33
+34        <!-- Needs to be explicitly declared on Android R+ -->
+35        <package android:name="com.google.android.apps.maps" />
+35-->[com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:33:9-64
+35-->[com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:33:18-61
+36    </queries>
+37
+38    <application
+38-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:16:5-54:19
+39        android:allowBackup="true"
+39-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:17:9-35
+40        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+40-->[androidx.core:core:1.7.0] /home/jeanz/.gradle/caches/transforms-3/46678933633e897331f6cbff7aabb141/transformed/core-1.7.0/AndroidManifest.xml:24:18-86
+41        android:debuggable="true"
+42        android:icon="@mipmap/ic_launcher"
+42-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:18:9-43
+43        android:label="@string/app_name"
+43-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:19:9-41
+44        android:roundIcon="@mipmap/ic_launcher_round"
+44-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:20:9-54
+45        android:supportsRtl="true"
+45-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:21:9-35
+46        android:testOnly="true"
+47        android:theme="@style/Theme.BikeMiner" >
+47-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:22:9-47
+48
+49        <!--
+50             The API key for Google Maps-based APIs is defined as a string resource.
+51             (See the file "res/values/google_maps_api.xml").
+52             Note that the API key is linked to the encryption key used to sign the APK.
+53             You need a different API key for each encryption key, including the release key that is used to
+54             sign the APK for publishing.
+55             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+56        -->
+57        <meta-data
+57-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:32:9-34:71
+58            android:name="com.google.android.geo.API_KEY"
+58-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:33:13-58
+59            android:value="AIzaSyBHAYaXX5iTqyrMpVeGI40JeUTTq7xBN5c" />
+59-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:34:13-68
+60
+61        <activity
+61-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:36:9-45:20
+62            android:name="com.example.bike_miner.MapsActivity"
+62-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:37:13-41
+63            android:exported="true"
+63-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:38:13-36
+64            android:label="@string/title_activity_maps" >
+64-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:39:13-56
+65            <intent-filter>
+65-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:40:13-44:29
+66                <action android:name="android.intent.action.MAIN" />
+66-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:41:17-69
+66-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:41:25-66
+67
+68                <category android:name="android.intent.category.LAUNCHER" />
+68-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:43:17-77
+68-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:43:27-74
+69            </intent-filter>
+70        </activity>
+71        <!-- Recommended for Android 9 (API level 28) and lower. -->
+72        <!-- Required for Android 10 (API level 29) and higher. -->
+73        <service
+73-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:48:9-52:19
+74            android:name="com.example.bike_miner.MapsActivity"
+74-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:49:13-40
+75            android:foregroundServiceType="location" >
+75-->/home/jeanz/nextcloud/dhbw/6semester/se2/bikeminer/app/src/main/AndroidManifest.xml:50:13-53
+76
+77            <!-- Any inner elements would go here. -->
+78        </service>
+79
+80        <!-- Needs to be explicitly declared on P+ -->
+81        <uses-library
+81-->[com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:39:9-41:40
+82            android:name="org.apache.http.legacy"
+82-->[com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:40:13-50
+83            android:required="false" />
+83-->[com.google.android.gms:play-services-maps:18.0.2] /home/jeanz/.gradle/caches/transforms-3/643dd6900a57ebbcc5ebb8ed583c308f/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:41:13-37
+84
+85        <activity
+85-->[com.google.android.gms:play-services-base:18.0.1] /home/jeanz/.gradle/caches/transforms-3/4e81f3c3b062888fece961428284f9c6/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+86            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+86-->[com.google.android.gms:play-services-base:18.0.1] /home/jeanz/.gradle/caches/transforms-3/4e81f3c3b062888fece961428284f9c6/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+87            android:exported="false"
+87-->[com.google.android.gms:play-services-base:18.0.1] /home/jeanz/.gradle/caches/transforms-3/4e81f3c3b062888fece961428284f9c6/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+88            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+88-->[com.google.android.gms:play-services-base:18.0.1] /home/jeanz/.gradle/caches/transforms-3/4e81f3c3b062888fece961428284f9c6/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+89
+90        <meta-data
+90-->[com.google.android.gms:play-services-basement:18.0.0] /home/jeanz/.gradle/caches/transforms-3/07f38d52944a8d00e22f7921b9ffd0af/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:21:9-23:69
+91            android:name="com.google.android.gms.version"
+91-->[com.google.android.gms:play-services-basement:18.0.0] /home/jeanz/.gradle/caches/transforms-3/07f38d52944a8d00e22f7921b9ffd0af/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:22:13-58
+92            android:value="@integer/google_play_services_version" />
+92-->[com.google.android.gms:play-services-basement:18.0.0] /home/jeanz/.gradle/caches/transforms-3/07f38d52944a8d00e22f7921b9ffd0af/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:23:13-66
+93
+94        <provider
+94-->[androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:26:9-34:20
+95            android:name="androidx.startup.InitializationProvider"
+95-->[androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:27:13-67
+96            android:authorities="com.example.bike_miner.androidx-startup"
+96-->[androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:28:13-68
+97            android:exported="false" >
+97-->[androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:29:13-37
+98            <meta-data
+98-->[androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:31:13-33:52
+99                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+99-->[androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:32:17-75
+100                android:value="androidx.startup" />
+100-->[androidx.emoji2:emoji2:1.0.0] /home/jeanz/.gradle/caches/transforms-3/76c467336cfde2066e93b5d8011c588c/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:33:17-49
+101            <meta-data
+101-->[androidx.lifecycle:lifecycle-process:2.4.0] /home/jeanz/.gradle/caches/transforms-3/86073857aad360c8a4bae9b934e55cac/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:31:13-33:52
+102                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+102-->[androidx.lifecycle:lifecycle-process:2.4.0] /home/jeanz/.gradle/caches/transforms-3/86073857aad360c8a4bae9b934e55cac/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:32:17-78
+103                android:value="androidx.startup" />
+103-->[androidx.lifecycle:lifecycle-process:2.4.0] /home/jeanz/.gradle/caches/transforms-3/86073857aad360c8a4bae9b934e55cac/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:33:17-49
+104        </provider>
+105    </application>
+106
+107</manifest>
