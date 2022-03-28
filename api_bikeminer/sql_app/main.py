@@ -1,4 +1,5 @@
 from lib2to3.pgen2 import token
+from msilib.schema import Error
 from typing import Optional, List
 from datetime import datetime, timedelta
 from wsgiref import headers
@@ -63,16 +64,26 @@ def authenticate_user(username: str, password: str, db):
         return False
     return user
 
-def calculate_distance(tour_id: int, db):
+def calculate_distance_with_coordinates(coords, tour_id: int, db):
     # get entrys
-    coords = []
+    # coords = []
+
     # calc distance
     last_point = None
+    absolute_distance = 0
     for point in coords:
         if last_point:
-            pass
+            absolute_distance += geopy.distance(point, last_point).km
+        last_point = point
+        print(point)
         # last_point = ()
     # return distance
+    print("absolute distance: " + str(absolute_distance))
+    try:
+        test_distance = geopy.distance(coords.km)
+        print(test_distance)
+    except BaseException:
+        print("geht nicht")
     pass
 
 
@@ -247,8 +258,9 @@ async def calculate_distance(tour_id: int, current_user: schemas.UserBase = Depe
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"}
         )
-    return crud.get_coord_by_tour_id(user_id=user.userID, tour_id=tour_id, db=db)
+    list_of_coords = crud.get_coord_by_tour_id(user_id=user.userID, tour_id=tour_id, db=db)
     
+    calculate_distance_with_coordinates(coords=list_of_coords, tour_id=tour_id, db=db)
     # return calculate_distance(db=db, user_id = user.userID, tour_id=tour_id)
     # 
 
