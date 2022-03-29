@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
 class APIConnector {
-  String _access_token = "";
+  String _accesstoken = "";
+  // TODO: change the IP-Address when necessary
   final _server = "192.168.2.147";
   final _port = "8000";
   String _username = "";
@@ -15,7 +15,7 @@ class APIConnector {
   void logout() {
     _username = "";
     _password = "";
-    _access_token = "";
+    _accesstoken = "";
     if (_tourNumber < 0) {
       _tourNumber = 0;
     }
@@ -38,17 +38,27 @@ class APIConnector {
       "client_id": "",
       "client_secret": ""
     };
-    final response = await post(Uri.parse('http://$_server:$_port/token'),
-        body: formMap,
-        headers: {
-          "accept": "application/json",
-          "Content-Type": "application/x-www-form-urlencoded"
-        });
+    Response response;
+    try {
+      response = await post(Uri.parse('http://$_server:$_port/token'),
+          body: formMap,
+          headers: {
+            "accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded"
+          });
+    } catch (e) {
+      Map<String, dynamic> res = {
+        "statusCode": 503,
+        "detail": "Server nicht erreichbar"
+      };
+      return res;
+    }
+
     if (response.statusCode == 200) {
       Map<String, dynamic> res = {
         "statusCode": response.statusCode,
       };
-      _access_token = json.decode(response.body)['access_token'];
+      _accesstoken = json.decode(response.body)['access_token'];
       return res;
     } else {
       Map<String, dynamic> res = {
@@ -64,13 +74,21 @@ class APIConnector {
     var data =
         '{"userName": "$username","email": "$email","password": "$password"}';
 
-    final response = await post(
-        Uri.parse('http://$_server:$_port/users/create'),
-        body: data,
-        headers: {
-          "accept": "application/json",
-          "Content-Type": "application/json"
-        });
+    Response response;
+    try {
+      response = await post(Uri.parse('http://$_server:$_port/users/create'),
+          body: data,
+          headers: {
+            "accept": "application/json",
+            "Content-Type": "application/json"
+          });
+    } catch (e) {
+      Map<String, dynamic> res = {
+        "statusCode": 503,
+        "detail": "Server nicht erreichbar"
+      };
+      return res;
+    }
 
     if (response.statusCode == 200) {
       Map<String, dynamic> res = {
@@ -87,96 +105,100 @@ class APIConnector {
   }
 
   /// send coordinates to the server
-  Future<void> sendcoordinates(lat, long, time) async {
+  Future<int> sendcoordinates(lat, long, time) async {
     var data =
         '{"tourID": 1,"tourNumber": $_tourNumber,"longitude": $long,"latitude": $lat, "datetime": "$time"}';
     _tourNumber += 1;
 
-    final response = await post(
-        Uri.parse('http://$_server:$_port/coordinates/create'),
-        body: data,
-        headers: {
-          "accept": "application/json",
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $_access_token"
-        });
+    Response response;
+    try {
+      response = await post(
+          Uri.parse('http://$_server:$_port/coordinates/create'),
+          body: data,
+          headers: {
+            "accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $_accesstoken"
+          }).timeout(const Duration(seconds: 10));
+    } catch (e) {
+      return 503;
+    }
+
     debugPrint("${response.statusCode}${response.body}");
 
-    if (response.statusCode == 200) {
-      return;
-    } else if (response.statusCode == 401) {
+    if (response.statusCode == 401) {
       getlogintoken(_username, _password);
     }
+    return response.statusCode;
   }
 
   /// tells the server to calculate the las ride
-  Future<void> stopriding() async {
-    final response = await post(
-        Uri.parse(
-            'http://$_server:$_port/coordinates/calculateDistance?tour_id=1'),
-        headers: {
-          "accept": "application/json",
-          "Authorization": "Bearer $_access_token"
-        });
+  Future<int> stopriding() async {
+    Response response;
+    try {
+      response = await post(
+          Uri.parse(
+              'http://$_server:$_port/coordinates/calculateDistance?tour_id=1'),
+          headers: {
+            "accept": "application/json",
+            "Authorization": "Bearer $_accesstoken"
+          });
+    } catch (e) {
+      return 503;
+    }
 
-    if (response.statusCode == 200) {
-      _tourNumber = 0;
-      return;
-    } else if (response.statusCode == 401) {
+    if (response.statusCode == 401) {
       getlogintoken(_username, _password).then((value) async {
-        final response = await post(
+        response = await post(
             Uri.parse(
                 'http://$_server:$_port/coordinates/calculateDistance?tour_id=1'),
             headers: {
               "accept": "application/json",
-              "Authorization": "Bearer $_access_token"
+              "Authorization": "Bearer $_accesstoken"
             });
       });
     }
     _tourNumber = 0;
+    return response.statusCode;
   }
 
   ///Alle Benutzerdaten
   Future<double> getbalance() async {
-    // final response = await get(Uri.parse('http://10.0.2.2:8000/users/all'));
-    final response = await post(
-        Uri.parse('http://$_server:$_port/users/get_balance'),
-        body: '',
-        headers: {
-          "accept": "application/json",
-          "Authorization": "Bearer $_access_token"
-        });
-
-    // debugPrint("${response.statusCode}${response.body}");
-    // ignore: unused_local_variable
+    Response response;
+    try {
+      response = await post(
+          Uri.parse('http://$_server:$_port/users/get_balance'),
+          body: '',
+          headers: {
+            "accept": "application/json",
+            "Authorization": "Bearer $_accesstoken"
+          });
+    } catch (e) {
+      return 0;
+    }
     if (response.statusCode == 200) {
       return json.decode(response.body)["coins"];
     } else {
-      // throw Exception('Failed to fetch');
       return 0;
     }
   }
 
   ///Historie-Daten
   Future<List> getHistory() async {
-    // final response = await get(Uri.parse('http://10.0.2.2:8000/history/Hallo'));
-    final response = await get(Uri.parse('http://$_server:$_port/history/me'),
-        // body: '',
-        headers: {
-          "accept": "application/json",
-          "Authorization": "Bearer $_access_token"
-        });
-
-    // debugPrint("${response.statusCode}${response.body}");
-    // ignore: unused_local_variable
+    Response response;
+    try {
+      response = await get(Uri.parse('http://$_server:$_port/history/me'),
+          headers: {
+            "accept": "application/json",
+            "Authorization": "Bearer $_accesstoken"
+          });
+    } catch (e) {
+      return [];
+    }
     if (response.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
       return json.decode(response.body);
     } else {
       return [];
-      // throw Exception('Failed to fetch');
-      //return "";
     }
   }
 }

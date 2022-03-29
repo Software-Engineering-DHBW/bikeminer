@@ -20,7 +20,7 @@ const String ridesPage = 'rides';
 StorageAdapter _sa = StorageAdapter();
 APIConnector _api = APIConnector();
 
-// controller function with switch statement to control page route flow
+/// controller function with switch statement to control page route flow
 Route<dynamic> controller(RouteSettings settings) {
   switch (settings.name) {
     case loadingPage:

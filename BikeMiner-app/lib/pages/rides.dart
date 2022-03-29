@@ -1,6 +1,7 @@
 import 'package:bikeminer/backend/api_connector.dart';
 import 'package:flutter/material.dart';
 
+/// Rides History
 class RidesPage extends StatefulWidget {
   final APIConnector _api;
   const RidesPage(this._api, {Key? key}) : super(key: key);

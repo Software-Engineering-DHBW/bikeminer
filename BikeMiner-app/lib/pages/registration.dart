@@ -15,7 +15,7 @@ class RegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<RegistrationPage> {
   bool _hidePassword = true;
-  String _registration_error_text = "";
+  String _registrationerrortext = "";
   final TextEditingController _userController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwdController = TextEditingController();
@@ -245,7 +245,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
                       // Errortext
                       Text(
-                        _registration_error_text,
+                        _registrationerrortext,
                         style: const TextStyle(color: Colors.red),
                       ),
 
@@ -306,6 +306,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
+  /// validate registration
   Future<String> validateregistration(user, email, password) async {
     var value = await widget._api.createUser(user, email, password);
 
@@ -318,6 +319,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     }
   }
 
+  /// registrate/create user when valid
   void registration() {
     bool user = _userKey.currentState!.validate();
     bool email = _emailKey.currentState!.validate();
@@ -335,7 +337,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           Navigator.pushNamed(context, route.loginPage);
         } else {
           setState(() {
-            _registration_error_text = value;
+            _registrationerrortext = value;
           });
         }
       });

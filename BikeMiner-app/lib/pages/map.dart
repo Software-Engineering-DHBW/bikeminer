@@ -41,9 +41,6 @@ class _MapState extends State<Map> {
 
   DateTime lastsend = DateTime(2000);
 
-  // bool _serviceEnabled = false;
-  // late PermissionStatus _permissionGranted;
-
   bool backgroundenabled = false;
   bool backgroundpermission = false;
   bool backgroundinit = false;
@@ -196,11 +193,6 @@ class _MapState extends State<Map> {
     if (_bgModeEnabled) {
       return true;
     } else {
-      // try {
-      //   await _locationTracker.enableBackgroundMode();
-      // } catch (e) {
-      //   debugPrint(e.toString());
-      // }
       try {
         _bgModeEnabled = await _locationTracker.enableBackgroundMode();
       } catch (e) {
@@ -270,9 +262,7 @@ class _MapState extends State<Map> {
                   });
                 });
               }
-              // debugPrint(
-              //     "BackgroundExecution is: ${FlutterBackground.isBackgroundExecutionEnabled}");
-              startRiding(newLocalData);
+              await startRiding(newLocalData);
             }
           } else if (backgroundenabled) {
             debugPrint("disable background!");
@@ -315,15 +305,23 @@ class _MapState extends State<Map> {
   }
 
   /// for start the intervall gps location upload to the server
-  void startRiding(LocationData newLocalData) {
+  Future<void> startRiding(LocationData newLocalData) async {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-ddTkk:mm:ss').format(now);
     if (now.difference(lastsend).inSeconds > 8) {
       lastsend = now;
       debugPrint(
           "Timestamp: $formattedDate, Lat: ${newLocalData.latitude}, Long: ${newLocalData.longitude}");
-      widget._api.sendcoordinates(
+      var res = await widget._api.sendcoordinates(
           newLocalData.latitude, newLocalData.longitude, formattedDate);
+      if (res == 503 && riding == true) {
+        riding = false;
+        showMyDialog(
+            _mapcontext,
+            "Server Error",
+            "The Server is not reachable!",
+            "Ensure the network connection is valid!");
+      }
     }
   }
 
