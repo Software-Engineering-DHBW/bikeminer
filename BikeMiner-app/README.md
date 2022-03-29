@@ -21,6 +21,13 @@ This a is written in Dart
 6. Click on "Run"-Button to execute the main.dart
 
 
+## Test
+
+Paste in the commandline
+flutter test/backend/api_connector_test.dart
+or open the testfile and start it with the IDE.
+
+
 ## Getting Started
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
