@@ -13,7 +13,7 @@ This a is written in Dart
         - Open up a terminal in this project 
         - Execute "Flutter pub get"
 
-4. onnect Android Smartphone with Computer or create/add a virtual Device per AndroidStudio's Device Manager
+4. Connect Android Smartphone with Computer or create/add a virtual Device per AndroidStudio's Device Manager
 
     Attention: Device must support Google Play Services
     Older Devices may need to perform a Google Services Update first
