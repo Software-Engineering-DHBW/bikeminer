@@ -14,8 +14,6 @@ class LoadingPage extends StatefulWidget {
 }
 
 class _LoadingPageState extends State<LoadingPage> {
-  // final StorageAdapter _sa = StorageAdapter();
-  // late String? _password;
   late BuildContext _context;
 
   @override

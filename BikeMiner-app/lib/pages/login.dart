@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:bikeminer/route.dart' as route;
 
 /// LoginPage
+///
+/// to login in the API and get a token
 class LoginPage extends StatefulWidget {
   final StorageAdapter _sa;
   final APIConnector _api;
@@ -17,7 +19,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _hidePassword = true;
   bool _remember = false;
-  String _login_error_text = "";
+  String _loginerrortext = "";
   final TextEditingController _passController = TextEditingController();
   final _passKey = GlobalKey<FormState>();
   final _userKey = GlobalKey<FormState>();
@@ -72,8 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                         key: _userKey,
                         child: TextFormField(
                           controller: _userController,
-                          // keyboardType: TextInputType.text,
-                          // onSaved: ,
+                          keyboardType: TextInputType.text,
                           validator: (input) => validateusername(input),
                           decoration: InputDecoration(
                             hintText: "Username",
@@ -105,8 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                         key: _passKey,
                         child: TextFormField(
                           controller: _passController,
-                          // keyboardType: TextInputType.text,
-                          // onSaved: ,
+                          keyboardType: TextInputType.text,
                           validator: (input) => validatepassword(input),
                           obscureText: _hidePassword,
                           decoration: InputDecoration(
@@ -170,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
 
                       // Errortext
                       Text(
-                        _login_error_text,
+                        _loginerrortext,
                         style: const TextStyle(color: Colors.red),
                       ),
 
@@ -201,6 +201,7 @@ class _LoginPageState extends State<LoginPage> {
                         height: 5,
                       ),
 
+                      // Text With "Sign up"
                       RichText(
                         text: TextSpan(
                             text: "Need an accound? ",
@@ -229,20 +230,18 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // ignore: body_might_complete_normally_nullable
+  /// validate password format
   String? validatepassword(input) {
-    if (input!.length < 1) {
-      return "The Password is too short!";
-    }
-
-    // return "Anything failed!";
+    return input!.length < 1 ? "The Password is too short!" : null;
   }
 
+  /// validate username format
   String? validateusername(input) {
     return input!.length < 1 ? "The Username is too short!" : null;
   }
 
-  Future<String> validate_login(user, password) async {
+  /// logindata validation
+  Future<String> validatelogin(user, password) async {
     var value = await widget._api.getlogintoken(user, password);
 
     var statuscode = value["statusCode"];
@@ -260,7 +259,7 @@ class _LoginPageState extends State<LoginPage> {
     if (user && pass) {
       var _user = _userController.text;
       var _passwd = _passController.text;
-      validate_login(_user, _passwd).then((value) {
+      validatelogin(_user, _passwd).then((value) {
         if (value == "") {
           if (_remember) {
             debugPrint("Writing to storage?");
@@ -278,7 +277,7 @@ class _LoginPageState extends State<LoginPage> {
           }
         } else {
           setState(() {
-            _login_error_text = value;
+            _loginerrortext = value;
           });
         }
       });

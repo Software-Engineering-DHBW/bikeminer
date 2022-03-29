@@ -5,6 +5,7 @@ void main() {
   runApp(const MyApp());
 }
 
+/// Main funktion
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -30,7 +31,6 @@ class MyApp extends StatelessWidget {
             onSurface: Colors.white),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
             elevation: 0, foregroundColor: Colors.white),
-        // primarySwatch: Colors.green,
         textTheme: const TextTheme(
           headline1: TextStyle(fontSize: 22.0, color: Colors.green),
           headline2: TextStyle(
@@ -48,6 +48,5 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: route.controller,
       initialRoute: route.loadingPage,
     );
-    // home: const LoginPage());
   }
 }

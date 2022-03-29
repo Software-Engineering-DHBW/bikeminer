@@ -1,6 +1,7 @@
 import 'package:bikeminer/backend/api_connector.dart';
 import 'package:flutter/material.dart';
 
+/// for showing the user the actual coints
 class WalletPage extends StatefulWidget {
   final APIConnector _api;
   const WalletPage(this._api, {Key? key}) : super(key: key);
@@ -11,8 +12,6 @@ class WalletPage extends StatefulWidget {
 
 class _WalletPageState extends State<WalletPage> {
   double _items = 0;
-
-  //late var text = "";
 
   void getR() {
     widget._api.getbalance().then((value) {
