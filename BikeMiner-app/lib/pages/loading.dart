@@ -28,24 +28,29 @@ class _LoadingPageState extends State<LoadingPage> {
         debugPrint("Logindata are available in Storage!");
         debugPrint("Try to Login!");
 
-        widget._api.getlogintoken(username, password).then((value) {
-          var statuscode = value["statusCode"];
-          if (statuscode == 200) {
-            debugPrint("Loged in!");
-            Navigator.pop(context);
-            Navigator.pushNamed(context, route.mapPage);
-          } else {
-            debugPrint("Login failed!");
-            widget._sa.deleteAll();
-            Navigator.pop(_context);
-            Navigator.pushNamed(_context, route.loginPage);
-          }
-        }).catchError((onError) {
-          debugPrint("Login failed!");
-          widget._sa.deleteAll();
-          Navigator.pop(_context);
-          Navigator.pushNamed(_context, route.loginPage);
-        });
+        widget._api
+            .getlogintoken(username, password)
+            .then((value) {
+              var statuscode = value["statusCode"];
+              if (statuscode == 200) {
+                debugPrint("Loged in!");
+                Navigator.pop(context);
+                Navigator.pushNamed(context, route.mapPage);
+              } else {
+                debugPrint("Login failed!");
+                widget._sa.deleteAll();
+                Navigator.pop(_context);
+                Navigator.pushNamed(_context, route.loginPage);
+              }
+            })
+            .timeout(const Duration(seconds: 5))
+            .catchError((onError) {
+              debugPrint("Login failed on ERROR!");
+              debugPrint("Server might not be available!");
+              widget._sa.deleteAll();
+              Navigator.pop(_context);
+              Navigator.pushNamed(_context, route.loginPage);
+            });
       }
     }).timeout(const Duration(seconds: 5));
     super.initState();

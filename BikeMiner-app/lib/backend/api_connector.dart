@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 class APIConnector {
   String _accesstoken = "";
   // TODO: change the IP-Address when necessary
-  final _server = "127.0.0.1";
+  final _server = "192.168.2.147";
   final _port = "8000";
   String _username = "";
   String _password = "";
