@@ -1,38 +1,41 @@
-import re
 from sqlalchemy.orm import Session
-from sqlalchemy.sql.expression import func
-#from passlib.context import CryptContext
 
 from . import models, schemas
-import uuid
-from datetime import date, datetime
 from sqlalchemy.orm import Session
 
 
-# Methods for API Calls
-#CRUD  create read update delete
+# Functions for API Calls
+# CRUD: Create Read Update Delete
 # User Methods
 
+
 # ---------------------------- User specific queries ---------------------------------------------------------
+
 def get_user(db: Session, user_id: int):
     return db.query(models.Users).filter(models.Users.userID == user_id).first()
+
 
 def get_user_by_name(db: Session, user_name: str):
     return db.query(models.Users).filter(models.Users.userName == user_name).first()
 
+
 def get_user_by_email(db: Session, email: str):
     return db.query(models.Users).filter(models.Users.email == email).first()
+
 
 def get_users(db: Session):
     users = []
     users = [user for user in db.query(models.Users).all()]
     return users
 
+
 def get_user_byid(db: Session, user_id: int):
     return db.query(models.Users).filter(models.Users.id == user_id).first()
 
+
 def get_user_byname(db: Session, user_name: str):
     return db.query(models.Users).filter(models.Users.userName == user_name).first()
+
 
 def create_user(db: Session, user: schemas.UserCreate):
     fake_hashed_password = user.password
@@ -42,12 +45,14 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.refresh(db_user)
     return db_user
 
+
 def user_update_coins(received_coins: float, db: Session, user: str):
     user.coins += received_coins
     db.commit()
     return 0
 
-##### -------------------------  History specific queries  ---------------------------------
+
+# -------------------------  History specific queries  ---------------------------------
 
 def create_history(db: Session, user_name: str,  history: schemas.HistoryCreate):
     # user = db.query(models.Users).filter(models.Users.userName == history.userName).first()
@@ -58,6 +63,7 @@ def create_history(db: Session, user_name: str,  history: schemas.HistoryCreate)
     db.commit()
     db.refresh(db_history)
     return 0
+
 
 def get_history_by_user_name(db: Session, user_name: str):
     try:
@@ -82,7 +88,8 @@ def delete_history(db: Session, user_name: str, history_id: int):
         print("can't delete")
     return result
 
-#####------------------------- Coordinates specific queries ------------------------
+
+# ------------------------- Coordinates specific queries ------------------------
 
 def create_coordinate_entry(db: Session, user_id: int, coordinates: schemas.Coordinates):
     #user = db.query(models.Users).filter(user_id == coordinates.userID).first()
@@ -93,6 +100,7 @@ def create_coordinate_entry(db: Session, user_id: int, coordinates: schemas.Coor
     db.commit()
     db.refresh(db_coordinates)
     return 0
+
 
 def delete_all_coordinates(db: Session, user_name: str, tour_id: int):
     result = None
@@ -106,51 +114,10 @@ def delete_all_coordinates(db: Session, user_name: str, tour_id: int):
         print("can't delete")
     return result
 
+
 def get_coord_by_tour_id(db:Session, user_id: int, tour_id: int):
     all_coordinates = []
     all_coordinates = [coord for coord in db.query(models.Coordinates.longitude, models.Coordinates.latitude).filter(models.Coordinates.userID == user_id, models.Coordinates.tourID == tour_id).all()]
 
     db.commit()
     return all_coordinates
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#def get_user_byname(db: Session, user_name: int):
-#    return db.query(models.User).filter(models.User.name == user_name).first()
-
-
-#def get_user_byid(db: Session, user_name: int):
-#    return db.query(models.User).filter(models.User.id == user_name).first()
-
-
-#def get_users(db: Session):
-#    users = []
-#    users = [user for user in db.query(models.User).all()]
-#    return users
-
-
-#def hash_password(password):
-#    return CryptContext(schemes=["bcrypt"], deprecated="auto").hash(password)
-
-
-
-
-
