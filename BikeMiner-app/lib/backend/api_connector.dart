@@ -59,7 +59,7 @@ class APIConnector {
     }
   }
 
-  /// Benutzer erstellen
+  /// create user
   Future<Map<String, dynamic>> createUser(username, email, password) async {
     var data =
         '{"userName": "$username","email": "$email","password": "$password"}';
@@ -147,7 +147,7 @@ class APIConnector {
           "Authorization": "Bearer $_access_token"
         });
 
-    debugPrint("${response.statusCode}${response.body}");
+    // debugPrint("${response.statusCode}${response.body}");
     // ignore: unused_local_variable
     if (response.statusCode == 200) {
       return json.decode(response.body)["coins"];
@@ -167,7 +167,7 @@ class APIConnector {
           "Authorization": "Bearer $_access_token"
         });
 
-    debugPrint("${response.statusCode}${response.body}");
+    // debugPrint("${response.statusCode}${response.body}");
     // ignore: unused_local_variable
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
