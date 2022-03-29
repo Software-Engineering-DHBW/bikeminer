@@ -1,10 +1,6 @@
 #version: '2'
 version: '3.3'
 
-  #volumes:
-  # nextcloud:
-  #nextcloud-db:
-
 services:
 
   bikedb:
@@ -25,7 +21,8 @@ services:
       - default
     ports:
       - 8080:3306
-        # first hostport then 3306
+        # expose:
+        #- 3306
 
   fastapi:
     build:
