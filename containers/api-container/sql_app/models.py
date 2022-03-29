@@ -1,9 +1,9 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Float
+from sqlalchemy import Column, Integer, String, Date, DateTime, ForeignKey, Float
+from sqlalchemy.orm import relationship
 from .database import Base
 
 # ORM Mapper for Database: Every Class represents one Database object
 # these classes are the sqlalchemy models
-
 
 class Users(Base):
     __tablename__ = "Users"
@@ -13,6 +13,7 @@ class Users(Base):
     email = Column(String, unique=True)
     coins = Column(Float)
 
+    #history = relationship("History", back_populates=Users)
 
 class History(Base):
     __tablename__ = "History"
@@ -22,6 +23,12 @@ class History(Base):
     distanceTraveled = Column(Float)
     dateTime = Column(DateTime)
 
+    def __str__(self) -> str:
+        return f"History: \nID: {self.historyID}\nUserID: {self.userID}\nCoins: {self.receivedCoins}\nDistance: {self.distanceTraveled}\nDatetime: {self.dateTime}"
+    # def __str__(self) -> str:
+    #     return f"History: \nID: {self.historyID}\nUserID: {self.userID}\nCoins: {self.receivedCoins}\nDistance: {self.distanceTraveled}\nDatetime: {self.dateTime}"
+
+    #users = relationship("Users", back_populates=History)
 
 class Coordinates(Base):
     __tablename__ = "Coordinates"

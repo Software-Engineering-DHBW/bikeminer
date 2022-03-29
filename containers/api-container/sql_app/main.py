@@ -1,31 +1,41 @@
+from lib2to3.pgen2 import token
+# from msilib.schema import Error
 from typing import Optional, List
 from datetime import datetime, timedelta
-from fastapi import Depends, FastAPI, HTTPException, status
+from wsgiref import headers
+import rsa
+import uvicorn
+from fastapi import Depends, FastAPI, HTTPException, status, Request, File, UploadFile
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from .database import SessionLocal, engine
 from . import crud, models, schemas
+import json
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
+from fastapi.responses import StreamingResponse
 from jose import JWTError, jwt
 import geopy.distance as geopy
 
-# Needed for create_access_token()
+# needed for create_access_token()
 SECRET_KEY = "55e52afbc03148bafc1c6f430c40041548ece633da626d5126738888239afe10"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
-# Needed for pw hashing
+# needed for pw hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 models.Base.metadata.create_all(bind=engine)
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+#f = open("tags_meta.conf", "r")
+#tags_metadata = json.loads(f.read())
 
 
-# Start api
+
+#start api
 app = FastAPI()
 
 # Dependency
-# Needed for closing the database session after request
+# needed for closing the database session after request
 def get_db():
     db = SessionLocal()
     try:
@@ -33,8 +43,7 @@ def get_db():
     finally:
         db.close()
 
-# ---------------- Authentication -------------------
-
+# Authentication:
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
@@ -50,8 +59,6 @@ def authenticate_user(username: str, password: str, db):
     if not verify_password(password, user.password):
         return False
     return user
-
-# ----------------- Helper functions -----------------
 
 def calculate_distance_with_coordinates(coords):
     last_point = None
@@ -97,9 +104,8 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None, c
 
 
 
-# -------------- API-Routes --------------------------------------------------
+#-------------- API-Routes --------------------------------------------------##
 
-# Login
 @app.post("/token", response_model=schemas.Token, tags=['users'])
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = authenticate_user(form_data.username, form_data.password, db)
@@ -117,9 +123,9 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
-# --------------------------------- User Routes --------------------------------
+##--------------------------------- User Routes -------------------------------------------------------------#
 
-@app.get("/users/me", response_model=schemas.UserBase, tags=['users'])
+@app.get("/users/me/", response_model=schemas.UserBase, tags=['users'])
 async def read_users_me(current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     user = await get_current_user(db=db, token=current_user)
     if not current_user:
@@ -147,10 +153,24 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return crud.create_user(db=db, user=user)
 
 
-@app.post("/users/get_balance", tags=['users'])
+
+@app.get("/users/all", tags=['users'])
+def read_users(db: Session = Depends(get_db)):
+    users = crud.get_users(db)
+    return users
+
+# get user by id
+@app.get("/users/{user_id}", response_model=schemas.User, tags=['users'])
+def read_user(user_id: int, db: Session = Depends(get_db)):
+    db_user = crud.get_user(db, user_id=user_id)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return db_user
+
+
+@app.get("/users/get_balance", tags=['users'])
 async def get_balance(current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     user = await get_current_user(db=db, token=current_user)
-
     if not current_user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -160,11 +180,13 @@ async def get_balance(current_user: schemas.UserBase = Depends(oauth2_scheme), d
 
     return schemas.UserBalance(coins=user.coins)
 
-
-# ------------------  History Routes --------------------------------------------------
+### ------------------  History Routes --------------------------------------------------#
 
 @app.get("/history/me", tags=['history'])
 async def get_history(current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    # db_user = crud.get_user_by_name(db, user_name=user_name)
+    # if db_user is None:
+    #     raise HTTPException(status_code=404, detail="User not found")
     user = await get_current_user(db=db, token=current_user)
 
     if not current_user:
@@ -211,7 +233,7 @@ async def delete_history(history_id: int, current_user: schemas.UserBase = Depen
     return res
 
 
-# -------------------------- Coordinate Routes ------------------------------------------------
+#-------------------------- Coordinate Routes ------------------------------------------------
 
 @app.post("/coordinates/create", tags=['coordinates'])
 async def create_coord_data(coordinates: schemas.CoordinatesCreate, current_user: schemas.UserBase = Depends(oauth2_scheme), db: Session = Depends(get_db)):
@@ -269,3 +291,12 @@ async def calculate_distance(tour_id: int, current_user: schemas.UserBase = Depe
     crud.user_update_coins(received_coins=distance/2, user=user, db=db)
 
     return 0
+
+    
+
+
+
+
+
+
+
