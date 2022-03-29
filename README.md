@@ -21,7 +21,9 @@ The goal of the Bikeminer is to develop a system that encourages users to ride t
     - **Attention:** Device must support Google Play Services
     - Older Devices may need to perform a Google Services Update first
 5. Run [Bikeminer-App](https://github.com/Software-Engineering-DHBW/bikeminer/tree/main/BikeMiner-app#readme)
-6. Run mariaDB-Database in a [Docker-Container](https://github.com/Software-Engineering-DHBW/bikeminer/blob/main/api_bikeminer/README.md) 
+    - **Tip:** Open Project <em>**bikeminer/Bikeminer-app**</em> in AndroidStudio 
+7. Run mariaDB-Database in a [Docker-Container](https://github.com/Software-Engineering-DHBW/bikeminer/blob/main/api_bikeminer/README.md)
+    - **Tip:** Open Project <em>**bikeminer**</em> in AndroidStudio 
 
 ## Systemarchitecture
 ![plot](./systemarchitecture_bikeminer.png)
