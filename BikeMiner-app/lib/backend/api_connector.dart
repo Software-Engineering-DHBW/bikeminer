@@ -51,6 +51,7 @@ class APIConnector {
         "statusCode": 503,
         "detail": "Server nicht erreichbar"
       };
+      debugPrint("ERROR 503: SERVER NOT AVAILABLE!");
       return res;
     }
 
@@ -87,6 +88,7 @@ class APIConnector {
         "statusCode": 503,
         "detail": "Server nicht erreichbar"
       };
+      debugPrint("ERROR 503: SERVER NOT AVAILABLE!");
       return res;
     }
 
@@ -144,6 +146,7 @@ class APIConnector {
             "Authorization": "Bearer $_accesstoken"
           });
     } catch (e) {
+      debugPrint("ERROR 503: SERVER NOT AVAILABLE!");
       return 503;
     }
 
@@ -174,6 +177,7 @@ class APIConnector {
             "Authorization": "Bearer $_accesstoken"
           });
     } catch (e) {
+      debugPrint("ERROR 503: SERVER NOT AVAILABLE!");
       return 0;
     }
     if (response.statusCode == 200) {
