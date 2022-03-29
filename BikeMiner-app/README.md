@@ -21,7 +21,7 @@ This a is written in Dart
 6. Click on "Run"-Button to execute the main.dart
 
 
-## Test
+## Testing
 
 - Paste in the commandline
 - flutter test/backend/api_connector_test.dart
