@@ -10,3 +10,6 @@ This repository is for the advanced software engineering lecture 2022 at DHBW-Ma
     - Older Devices may need to perform a Google Services Update first
 5. Run [Bikeminer-App](https://github.com/Software-Engineering-DHBW/bikeminer/tree/main/BikeMiner-app#readme)
 6. Run mariaDB-Database in a [Docker-Container](https://github.com/Software-Engineering-DHBW/bikeminer/blob/main/api_bikeminer/README.md) 
+
+## Systemarchitecture
+![plot](./systemarchitecture_bikeminer.png)
