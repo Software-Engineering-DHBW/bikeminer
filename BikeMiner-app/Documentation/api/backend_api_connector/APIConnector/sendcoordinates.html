@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the sendcoordinates method from the APIConnector class, for the Dart programming language.">
+  <title>sendcoordinates method - APIConnector class - api_connector library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">bikeminer</a></li>
+    <li><a href="../../backend_api_connector/backend_api_connector-library.html">api_connector</a></li>
+    <li><a href="../../backend_api_connector/APIConnector-class.html">APIConnector</a></li>
+    <li class="self-crumb">sendcoordinates method</li>
+  </ol>
+  <div class="self-name">sendcoordinates</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-method">sendcoordinates</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>&gt;</span></span>
+<span class="name ">sendcoordinates</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="sendcoordinates-param-lat"><span class="type-annotation">dynamic</span> <span class="parameter-name">lat</span>, </span></li>
+<li><span class="parameter" id="sendcoordinates-param-long"><span class="type-annotation">dynamic</span> <span class="parameter-name">long</span>, </span></li>
+<li><span class="parameter" id="sendcoordinates-param-time"><span class="type-annotation">dynamic</span> <span class="parameter-name">time</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>send coordinates to the server</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future&lt;int&gt; sendcoordinates(lat, long, time) async {
+  var data =
+      &#39;{&quot;tourID&quot;: 1,&quot;tourNumber&quot;: $_tourNumber,&quot;longitude&quot;: $long,&quot;latitude&quot;: $lat, &quot;datetime&quot;: &quot;$time&quot;}&#39;;
+  _tourNumber += 1;
+
+  Response response;
+  try {
+    response = await post(
+        Uri.parse(&#39;http:&#47;&#47;$_server:$_port&#47;coordinates&#47;create&#39;),
+        body: data,
+        headers: {
+          &quot;accept&quot;: &quot;application&#47;json&quot;,
+          &quot;Content-Type&quot;: &quot;application&#47;json&quot;,
+          &quot;Authorization&quot;: &quot;Bearer $_accesstoken&quot;
+        }).timeout(const Duration(seconds: 10));
+  } catch (e) {
+    return 503;
+  }
+
+  debugPrint(&quot;${response.statusCode}${response.body}&quot;);
+
+  if (response.statusCode == 401) {
+    getlogintoken(_username, _password);
+  }
+  return response.statusCode;
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">bikeminer</a></li>
+  <li><a href="../../backend_api_connector/backend_api_connector-library.html">api_connector</a></li>
+  <li><a href="../../backend_api_connector/APIConnector-class.html">APIConnector</a></li>
+  <li class="self-crumb">sendcoordinates method</li>
+</ol>
+
+
+    <h5>APIConnector class</h5>
+    <ol>
+
+    <li class="section-title"><a href="../../backend_api_connector/APIConnector-class.html#constructors">Constructors</a></li>
+    <li><a href="../../backend_api_connector/APIConnector/APIConnector.html">APIConnector</a></li>
+
+
+    <li class="section-title inherited">
+      <a href="../../backend_api_connector/APIConnector-class.html#instance-properties">Properties</a>
+    </li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+
+    <li class="section-title"><a href="../../backend_api_connector/APIConnector-class.html#instance-methods">Methods</a></li>
+    <li><a href="../../backend_api_connector/APIConnector/createUser.html">createUser</a></li>
+    <li><a href="../../backend_api_connector/APIConnector/getbalance.html">getbalance</a></li>
+    <li><a href="../../backend_api_connector/APIConnector/getHistory.html">getHistory</a></li>
+    <li><a href="../../backend_api_connector/APIConnector/getlogintoken.html">getlogintoken</a></li>
+    <li><a href="../../backend_api_connector/APIConnector/getusername.html">getusername</a></li>
+    <li><a href="../../backend_api_connector/APIConnector/logout.html">logout</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li><a href="../../backend_api_connector/APIConnector/sendcoordinates.html">sendcoordinates</a></li>
+    <li><a href="../../backend_api_connector/APIConnector/stopriding.html">stopriding</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+
+    <li class="section-title inherited"><a href="../../backend_api_connector/APIConnector-class.html#operators">Operators</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    bikeminer
+      1.0.0+1
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/script.js?v1"></script>
+
+
+
+</body>
+
+</html>
+
