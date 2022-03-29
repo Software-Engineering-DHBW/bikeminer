@@ -126,7 +126,7 @@ class APIConnector {
       return 503;
     }
 
-    debugPrint("${response.statusCode}${response.body}");
+    debugPrint("sendcoordinates: ${response.statusCode}${response.body}");
 
     if (response.statusCode == 401) {
       getlogintoken(_username, _password);
@@ -178,12 +178,13 @@ class APIConnector {
           });
     } catch (e) {
       debugPrint("ERROR 503: SERVER NOT AVAILABLE!");
-      return 0;
+      return 0.0;
     }
+    debugPrint("get_balance: ${response.statusCode}${response.body}");
     if (response.statusCode == 200) {
       return json.decode(response.body)["coins"];
     } else {
-      return 0;
+      return 0.0;
     }
   }
 
