@@ -1,24 +1,25 @@
-# bikeminer
+# Bikeminer-App
 
-Diese App ist in Flutter geschrieben.
+This a is written in Dart
 
 ## Setup and run
 
-1. Flutter installieren
+1. Install Flutter
     [Flutter Installation](https://docs.flutter.dev/get-started/install)
 
-2. Mit ANdroid Studio oder anderer flutter fähiger IDE öffnen.
-3. Auf aufgepoppte Nachricht rechts unten mit "get dependency" (flutter pub get) drücken/ausführen.
-    - Keine Nachricht?
-        - Terminal im Pfad öffenen
-        - "Flutter pub get" ausführen 
+2. Open this app with an IDE that supports flutter. (e.g. AndroidStudio, VSCode)
+3. If there appears a bar "get dependency" (flutter pub get), then press/execute
+    - No "get dependency" is shown?
+        - Open up a terminal in this project 
+        - Execute "Flutter pub get"
 
-4. Android Smartphone an Rechner anschließen (oder Virtuelles Gerät im Device Manager erstellen)
-    - Achtung: Gerät muss Google Play fähig sein
-    - Alte Geräte müssen ggf. zunächst ein Google Services Update durchführen
+4. onnect Android Smartphone with Computer or create/add a virtual Device per AndroidStudio's Device Manager
 
-5. Datei lib/main.dart aufrufen
-6. rechts oben auf debuggen drücken
+    Attention: Device must support Google Play Services
+    Older Devices may need to perform a Google Services Update first
+
+5. Open lib/main.dart
+6. Click on "Run"-Button to execute the main.dart
 
 
 ## Getting Started
