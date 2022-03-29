@@ -259,28 +259,38 @@ class _LoginPageState extends State<LoginPage> {
     if (user && pass) {
       var _user = _userController.text;
       var _passwd = _passController.text;
-      validatelogin(_user, _passwd).then((value) {
-        if (value == "") {
-          if (_remember) {
-            debugPrint("Writing to storage?");
-            widget._sa.updateElementwithKey("Username", _user).then((value) {
-              widget._sa
-                  .updateElementwithKey("Password", _passwd)
-                  .then((value) {
+      validatelogin(_user, _passwd)
+          .then((value) {
+            if (value == "") {
+              if (_remember) {
+                debugPrint("Writing to storage?");
+                widget._sa
+                    .updateElementwithKey("Username", _user)
+                    .then((value) {
+                  widget._sa
+                      .updateElementwithKey("Password", _passwd)
+                      .then((value) {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, route.mapPage);
+                  });
+                });
+              } else {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, route.mapPage);
+              }
+            } else {
+              setState(() {
+                _loginerrortext = value;
               });
+            }
+          })
+          .timeout(const Duration(seconds: 15))
+          .catchError((onError) {
+            setState(() {
+              _loginerrortext = "ERROR: SERVER NOT AVAILABLE";
             });
-          } else {
-            Navigator.pop(context);
-            Navigator.pushNamed(context, route.mapPage);
-          }
-        } else {
-          setState(() {
-            _loginerrortext = value;
+            debugPrint("SERVER TimeoutException");
           });
-        }
-      });
     }
   }
 }
