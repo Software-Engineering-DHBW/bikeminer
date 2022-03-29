@@ -4,8 +4,7 @@ This a is written in Dart
 
 ## Setup and run
 
-1. Install Flutter
-    [Flutter Installation](https://docs.flutter.dev/get-started/install)
+1. [Install Flutter](https://docs.flutter.dev/get-started/install)
 
 2. Open this app with an IDE that supports flutter. (e.g. AndroidStudio, VSCode)
 3. If there appears a bar "get dependency" (flutter pub get), then press/execute
