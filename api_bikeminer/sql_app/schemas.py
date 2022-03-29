@@ -1,7 +1,6 @@
 from typing import List, Optional
 from datetime import date, datetime
 from pydantic import BaseModel
-from fastapi.responses import FileResponse
 
 
 # BaseModels for FastAPI: Used as form_data and response objects --> Transforms db models to json objects
@@ -19,7 +18,6 @@ class UserCreate(UserBase):
     password: str
 
 
-
 class User(UserBase):
     userID: int
     userName: str
@@ -29,15 +27,18 @@ class User(UserBase):
     class Config:
         orm_mode = True
 
+
 class HistoryBase(BaseModel):
     dateTime: datetime
     distanceTraveled: float
+
 
 class HistoryCreate(HistoryBase):
     receivedCoins: float
 
     class Config:
         orm_mode = True
+
 
 class History(HistoryBase):
     historyID: int
@@ -50,15 +51,16 @@ class History(HistoryBase):
 class CoordinatesCreate(BaseModel):
     tourID: int
     tourNumber: int
-    #userID: int
     longitude: float
     latitude: float
     datetime: datetime
+
+
 class Coordinates(CoordinatesCreate):
     coordID: int
 
 
-## for authentication
+# For authentication
 class Token(BaseModel):
     access_token: str
     token_type: str
@@ -67,15 +69,3 @@ class Token(BaseModel):
 class TokenData(BaseModel):
     username: Optional[str] = None
     project: Optional[str] = None
-
-
-
-
-
-
-
-
-
-
-
-
