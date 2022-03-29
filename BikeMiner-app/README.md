@@ -1,6 +1,6 @@
 # Bikeminer-App
 
-This a is written in Dart
+This app is written in Dart
 
 [BikeMiner-app Documentation](https://htmlpreview.github.io/?https://github.com/Software-Engineering-DHBW/bikeminer/blob/main/BikeMiner-app/Documentation/api/index.html)
 
