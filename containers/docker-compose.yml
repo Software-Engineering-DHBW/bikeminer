@@ -19,10 +19,10 @@ services:
       - MYSQL_USER=profi
     networks:
       - default
-    ports:
-      - 8080:3306
-        # expose:
-        #- 3306
+        #ports:
+      # - 8080:3306
+    expose:
+      - 3306
 
   fastapi:
     build:
