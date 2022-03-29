@@ -27,4 +27,14 @@ services:
       - 8080:3306
         # first hostport then 3306
 
-
+  fastapi:
+    build:
+      context: ./api-container
+      dockerfile: Dockerfile
+    image: api-container
+    restart: always
+    networks:
+      - default
+    ports: 
+      - 8000:8000
+    
