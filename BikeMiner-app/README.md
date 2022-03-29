@@ -23,8 +23,8 @@ This a is written in Dart
 
 ## Testing
 
-- Paste in the commandline
-- flutter test/backend/api_connector_test.dart
+- Paste in the commandline:
+    - ```flutter test/backend/api_connector_test.dart```
 - or open the testfile and start it with the IDE.
 
 
