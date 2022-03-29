@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 
-DB_URL = "bikedb:3306"
+DB_URL = "127.0.0.1:8080"
 DB_USER = 'profi'
 DB_PW = 'bikeminerdb'
 DB_NAME = 'bikeminer'
