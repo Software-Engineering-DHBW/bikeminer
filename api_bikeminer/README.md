@@ -4,7 +4,7 @@
 - Docker Compose, latest version <https://docs.docker.com/compose/install/> - see installation guide for your OS
 
 # Build the container
-Change directory to 'containers'
+Change directory to 'bikeminer/containers'
 
 # Run the container
 ```
